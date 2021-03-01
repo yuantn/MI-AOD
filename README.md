@@ -1,6 +1,6 @@
 ## Introduction
 
-This is the code for *Multiple Instance Active Learning for Object Detection*, anonymous ID 453 for CVPR 2021.
+This is the code for *Multiple Instance Active Learning for Object Detection*, CVPR 2021.
 
 ## Installation
 
@@ -196,3 +196,13 @@ The explanation of each code file or folder is as follows:
   - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called by `./script.sh`.
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
 - **script.sh**: The script to run MIAL on a single GPU. You can run it to train and test MIAL simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
+
+
+If you find this repository useful for your publications, please consider citing our [paper](https://github.com/yuantn/MIAL/raw/master/paper.pdf).
+```angular2html
+@article{yuan2021mial,
+    title={Multiple Instance Active Learning for Object Detection},
+    author={Tianning Yuan, Fang Wan, Mengying Fu, Jianzhuang Liu, Songcen Xu, Xiangyang Ji and Qixiang Ye}
+    booktitle = {CVPR 2021},
+    year = {2021}
+}
