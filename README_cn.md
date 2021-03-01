@@ -4,6 +4,10 @@ Language: [简体中文](https://github.com/yuantn/MIAL/blob/master/README_cn.md
 
 这是 *Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习）*, CVPR 2021 一文的代码。
 
+![Illustration](MIAL.png)
+
+![Results](Results.png)
+
 ## 安装
 
 推荐使用 Linux 开发平台 (我们用的是 Ubuntu 18.04 LTS) 与 [anaconda3](https://www.anaconda.com/)，因为他们可以方便高效地安装与管理环境和 python 包。
