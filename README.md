@@ -123,7 +123,7 @@ You can also use other files in the directory ` './work_dirs/MIAL/ ` if you like
 
 ## Code Structure
 ```
-├── $YOUR_ANACONDA_TORY
+├── $YOUR_ANACONDA_DIRECTORY
 │   ├── anaconda3
 │   │   ├── envs
 │   │   │   ├── mial
