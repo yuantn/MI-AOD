@@ -4,6 +4,10 @@ Language: [简体中文](https://github.com/yuantn/MIAL/blob/master/README_cn.md
 
 This is the code for *Multiple Instance Active Learning for Object Detection*, CVPR 2021.
 
+![Illustration](MIAL.png)
+
+![Results](Results.png)
+
 ## Installation
 
 A Linux platform (Ours are Ubuntu 18.04 LTS) and [anaconda3](https://www.anaconda.com/) is recommended, since they can install and manage environments and packages conveniently and efficiently.
