@@ -2,7 +2,7 @@ Language: [简体中文](https://github.com/yuantn/MIAL/blob/master/README_cn.md
 
 ## Introduction
 
-This is the code for *Multiple Instance Active Learning for Object Detection*, CVPR 2021.
+This is the code for [*Multiple Instance Active Learning for Object Detection*](https://github.com/yuantn/MIAL/raw/master/paper.pdf), CVPR 2021.
 
 ![Illustration](MIAL.png)
 
