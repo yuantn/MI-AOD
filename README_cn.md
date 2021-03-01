@@ -2,7 +2,7 @@ Language: [简体中文](https://github.com/yuantn/MIAL/blob/master/README_cn.md
 
 ## 简介
 
-这是 *Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习）*, CVPR 2021 一文的代码。
+这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习）*](https://github.com/yuantn/MIAL/raw/master/paper.pdf), CVPR 2021 一文的代码。
 
 ![Illustration](MIAL.png)
 
