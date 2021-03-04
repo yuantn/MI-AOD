@@ -2,7 +2,7 @@ Language: [简体中文](./README_cn.md) | [English](./README.md)
 
 ## 简介
 
-这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习）*](./paper.pdf), CVPR 2021 一文的代码。
+这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习）*](https://github.com/yuantn/MIAL/raw/master/paper.pdf), CVPR 2021 一文的代码。
 
 ![Illustration](./MIAL.png)
 
@@ -204,7 +204,7 @@ chmod 777 ./script.sh
 - **script.sh**: 在单 GPU 上运行 MIAL 的脚本。当你准备好 conda 环境和 PASCAL VOC 2007+2012 数据集后，你可以像上面 **训练和测试** 部分提到的那样简单直接地运行它来训练和测试 MIAL。
 
 
-如果你觉得这个资料库对你的论文有用，请考虑引用我们的[论文](./paper.pdf)。
+如果你觉得这个资料库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MIAL/raw/master/paper.pdf)。
 ```angular2html
 @article{yuan2021mial,
     title={Multiple Instance Active Learning for Object Detection},
