@@ -206,9 +206,9 @@ chmod 777 ./script.sh
 
 如果你觉得这个资料库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MIAL/raw/master/paper.pdf)。
 ```angular2html
-@article{yuan2021mial,
-    title={Multiple Instance Active Learning for Object Detection},
-    author={Tianning Yuan, Fang Wan, Mengying Fu, Jianzhuang Liu, Songcen Xu, Xiangyang Ji and Qixiang Ye}
-    booktitle = {CVPR 2021},
-    year = {2021}
+@inproceedings{MIAL2021,
+    author    = {Tianning Yuan, Fang Wan, Mengying Fu, Jianzhuang Liu, Songcen Xu, Xiangyang Ji and Qixiang Ye},
+    title     = {Multiple Instance Active Learning for Object Detection},
+    booktitle = {CVPR},
+    year      = {2021}
 }
