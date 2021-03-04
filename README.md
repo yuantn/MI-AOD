@@ -206,9 +206,9 @@ The explanation of each code file or folder is as follows:
 
 If you find this repository useful for your publications, please consider citing our [paper](https://github.com/yuantn/MIAL/raw/master/paper.pdf).
 ```angular2html
-@article{yuan2021mial,
-    title={Multiple Instance Active Learning for Object Detection},
-    author={Tianning Yuan, Fang Wan, Mengying Fu, Jianzhuang Liu, Songcen Xu, Xiangyang Ji and Qixiang Ye}
-    booktitle = {CVPR 2021},
-    year = {2021}
+@inproceedings{MIAL2021,
+    author    = {Tianning Yuan, Fang Wan, Mengying Fu, Jianzhuang Liu, Songcen Xu, Xiangyang Ji and Qixiang Ye},
+    title     = {Multiple Instance Active Learning for Object Detection},
+    booktitle = {CVPR},
+    year      = {2021}
 }
