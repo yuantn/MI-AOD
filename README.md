@@ -1,12 +1,12 @@
-Language: [简体中文](https://github.com/yuantn/MIAL/blob/master/README_cn.md) | [English](https://github.com/yuantn/MIAL/blob/master/README.md)
+Language: [简体中文](./README_cn.md) | [English](./README.md)
 
 ## Introduction
 
-This is the code for [*Multiple Instance Active Learning for Object Detection*](https://github.com/yuantn/MIAL/raw/master/paper.pdf), CVPR 2021.
+This is the code for [*Multiple Instance Active Learning for Object Detection*](./paper.pdf), CVPR 2021.
 
-![Illustration](MIAL.png)
+![Illustration](./MIAL.png)
 
-![Results](Results.png)
+![Results](./Results.png)
 
 ## Installation
 
@@ -204,7 +204,7 @@ The explanation of each code file or folder is as follows:
 - **script.sh**: The script to run MIAL on a single GPU. You can run it to train and test MIAL simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
 
 
-If you find this repository useful for your publications, please consider citing our [paper](https://github.com/yuantn/MIAL/raw/master/paper.pdf).
+If you find this repository useful for your publications, please consider citing our [paper](./paper.pdf).
 ```angular2html
 @article{yuan2021mial,
     title={Multiple Instance Active Learning for Object Detection},
