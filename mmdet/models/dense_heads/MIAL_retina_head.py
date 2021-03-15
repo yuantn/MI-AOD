@@ -99,11 +99,11 @@ class MIALRetinaHead(MIALHead):
         y_head_f_1 = self.f_1_retina(f_1_feat)
         y_head_f_2 = self.f_2_retina(f_2_feat)
         y_head_f_r = self.f_r_retina(f_r_feat)
-        s = self.f_mil_retina(f_mil_feat)
-        y_head_f_mil_term2 = (y_head_f_1 + y_head_f_2) / 2
-        y_head_f_mil_term2 = y_head_f_mil_term2.detach()
-        s = s.permute(0, 2, 3, 1).reshape(y_head_f_1.shape[0], -1, self.cls_out_channels)
-        y_head_f_mil_term2 = y_head_f_mil_term2.permute(0, 2, 3, 1).reshape(y_head_f_1.shape[0],
+        y_head_f_mil = self.f_mil_retina(f_mil_feat)
+        y_head_cls_term2 = (y_head_f_1 + y_head_f_2) / 2
+        y_head_cls_term2 = y_head_cls_term2.detach()
+        y_head_f_mil = y_head_f_mil.permute(0, 2, 3, 1).reshape(y_head_f_1.shape[0], -1, self.cls_out_channels)
+        y_head_cls_term2 = y_head_cls_term2.permute(0, 2, 3, 1).reshape(y_head_f_1.shape[0],
                                                                             -1, self.cls_out_channels)
-        y_head_f_mil = s.softmax(2) * y_head_f_mil_term2.sigmoid().max(2, keepdim=True)[0].softmax(1)
-        return y_head_f_1, y_head_f_2, y_head_f_r, y_head_f_mil
+        y_head_cls = y_head_f_mil.softmax(2) * y_head_cls_term2.sigmoid().max(2, keepdim=True)[0].softmax(1)
+        return y_head_f_1, y_head_f_2, y_head_f_r, y_head_cls
