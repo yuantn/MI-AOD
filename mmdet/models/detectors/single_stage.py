@@ -96,7 +96,7 @@ class SingleStageDetector(BaseDetector):
             np.ndarray: proposals
         """
         x = self.extract_feat(x)
-        y_head_f_1, y_head_f_2, y_head_f_r, y_head_f_mil = self.bbox_head(x)
+        y_head_f_1, y_head_f_2, y_head_f_r, y_head_cls = self.bbox_head(x)
         if not return_box:
             y_head_f_1_1level = []
             y_head_f_2_1level = []
@@ -104,7 +104,7 @@ class SingleStageDetector(BaseDetector):
                 y_head_f_1_1level.append(y_head_f_i_single.permute(0,2,3,1).reshape(-1, self.bbox_head.C))
             for y_head_f_i_single in y_head_f_2:
                 y_head_f_2_1level.append(y_head_f_i_single.permute(0,2,3,1).reshape(-1, self.bbox_head.C))
-            return y_head_f_1_1level, y_head_f_2_1level, y_head_f_mil
+            return y_head_f_1_1level, y_head_f_2_1level, y_head_cls
         outs = (y_head_f_1, y_head_f_r)
         y_head_loc_cls = self.bbox_head.get_bboxes(*outs, img_metas, rescale=rescale)
         # skip post-processing when exporting to ONNX
