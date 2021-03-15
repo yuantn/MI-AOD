@@ -124,6 +124,24 @@ You can also use other files in the directory ` './work_dirs/MIAL/ ` if you like
   You can load the names of JPEG images of the labeled set and unlabeled set for each cycle from them.
 
   "L" is for the labeled set and "U" is for the unlabeled set. "07" is for the PASCAL VOC 2007 *trainval* set and "12" is for the PASCAL VOC 2012 *trainval* set.
+  
+An example output folder is provided on Google Drive and Baidu Drive, including the log file, the last trained model, and all other files above.
+
+- **Google Drive:**
+
+  [Log file](https://drive.google.com/file/d/1dC2k3SCC_C9yvp2oIlStiVHbsyyh2QuC/view?usp=sharing)
+  
+  [Last trained model (latest.pth)](https://drive.google.com/file/d/1gOaN3_R_QmeJ2bz0hczDmOXERTvMeSut/view?usp=sharing)
+  
+  [The whole example output folder](https://drive.google.com/file/d/1oRiT-BBx8wlTWaXEO1_3xSGls9YeiCDA/view?usp=sharing)
+
+- **Baidu Drive:**
+
+  [Log file (Extraction code: kqsj)](https://pan.baidu.com/s/1FL7si7fxX86vwqqaYC3B_g)
+  
+  [Last trained model (latest.pth) (Extraction code: 80v5)](https://pan.baidu.com/s/1EV4V-N1TeLc8IAF5rC0y2A)
+  
+  [The whole example output folder (Extraction code: 6kn2)](https://pan.baidu.com/s/1v_4frByp1_dNiPA_cuMqwQ)
 
 ## Code Structure
 ```
@@ -175,32 +193,59 @@ The code files and folders shown above are the main part of MIAL, while other co
 The explanation of each code file or folder is as follows:
 
 - **epoch_based_runner.py**: Code for training and test in each epoch, which can be called by `./apis/train.py`.
+
 - **configs**: Configuration folder, including running settings, model settings, dataset settings and other custom settings for active learning and MIAL.
+
   - **\_\_base\_\_**: Base configuration folder provided by MMDetection, which only need a little modification and then can be recalled by `.configs/MIAL.py`.
+
     - **default_runtime.py**: Configuration code for running settings, which can be called by `./configs/MIAL.py`.
+  
     - **retinanet_r50_fpn.py**: Configuration code for model training and test settings, which can be called by `./configs/MIAL.py`.
+ 
     - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data preprocessing, which can be called by `./configs/MIAL.py`.
+  
   - **MIAL.py**: Configuration code in general including most custom settings, containing active learning dataset settings, model training and test parameter settings, custom hyper-parameter settings, log file and model saving settings, which can be mainly called by `./tools/train.py`. The more detailed introduction of each parameter is in the comments of this file.
+
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
+
 - **mmdet**: The core code folder for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
+
   - **apis**: The inner training, test and calculating uncertainty code folder of MIAL.
+  
     - **\_\_init\_\_.py**: Some function initialization in the current folder.
+    
     - **test.py**: Code for testing the model and calculating uncertainty, which can be called by `epoch_based_runner.py` and `./tools/train.py`.
+    
     - **train.py**: Code for setting random seed and creating training dataloaders to prepare for the following epoch-level training, which can be called by `./tools/train.py`.
+    
   - **models**: The code folder with the details of network model architecture, training loss, forward propagation in test and calculating uncertainty.
+  
     - **dense_heads**: The code folder of training loss and the network model architecture, especially the well-designed head architecture.
+    
       - **\_\_init\_\_.py**: Some function initialization in the current folder.
+      
       - **MIAL_head.py**: Code for forwarding anchor-level model output, calculating anchor-level loss, generating pseudo labels and getting bounding boxes from existing model output in more details, which can be called by `./mmdet/models/dense_heads/base_dense_head.py` and `./mmdet/models/detectors/single_stage.py`.
+      
       - **MIAL_retina_head.py**: Code for building the MIAL model architecture, especially the well-designed head architecture, and define the forward output, which can be called by `./mmdet/models/dense_heads/MIAL_head.py`.
+      
       - **base_dense_head.py**: Code for choosing different equations to calculate loss, which can be called by `./mmdet/models/detectors/single_stage.py`.
+      
     - **detectors**: The code folder of the forward propogation and backward propogation in the overall training, test and calculating uncertainty process.
+    
       - **base.py**: Code for arranging training loss to print and returning the loss and image information, which can be called by `epoch_based_runner.py`.
+
       - **single_stage.py**: Code for extracting image features, getting bounding boxes from the model output and returning the loss, which can be called by `./mmdet/models/detectors/base.py`.
+      
   - **utils**: The code folder for creating active learning datasets.
+
     - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle, which can be called by `./tools/train.py`.
+
 - **tools**: The outer training and test code folder of MIAL.
+
   - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called by `./script.sh`.
+
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
+
 - **script.sh**: The script to run MIAL on a single GPU. You can run it to train and test MIAL simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
 
 
