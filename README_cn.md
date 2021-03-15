@@ -125,6 +125,24 @@ chmod 777 ./script.sh
   
   "L" 代表有标号， "U" 代表无标号。 "07" 代表 PASCAL VOC 2007 数据集的 *trainval* 部分， "12" 代表 PASCAL VOC 2012 数据集的 *trainval* 部分。
 
+我们在 Google 云端硬盘和百度网盘中上传了一个示例输出文件夹，包括日志文件，最后一次训练得到的模型，以及上面所述的其他所有文件。
+
+- **Google 云端硬盘:**
+
+  [日志文件](https://drive.google.com/file/d/1dC2k3SCC_C9yvp2oIlStiVHbsyyh2QuC/view?usp=sharing)
+  
+  [最后一次训练得到的模型 (latest.pth)](https://drive.google.com/file/d/1gOaN3_R_QmeJ2bz0hczDmOXERTvMeSut/view?usp=sharing)
+  
+  [整个示例输出文件夹](https://drive.google.com/file/d/1oRiT-BBx8wlTWaXEO1_3xSGls9YeiCDA/view?usp=sharing)
+
+- **百度网盘:**
+
+  [日志文件 (提取码: kqsj)](https://pan.baidu.com/s/1FL7si7fxX86vwqqaYC3B_g)
+  
+  [最后一次训练得到的模型 (latest.pth) (提取码: 80v5)](https://pan.baidu.com/s/1EV4V-N1TeLc8IAF5rC0y2A)
+  
+  [整个示例输出文件夹 (提取码: 6kn2)](https://pan.baidu.com/s/1v_4frByp1_dNiPA_cuMqwQ)
+
 ## 代码结构
 ```
 ├── $你的 ANACONDA 安装地址
@@ -175,32 +193,59 @@ chmod 777 ./script.sh
 每一个核心部分的代码文件和文件夹解释如下：
 
 - **epoch_based_runner.py**: 每个迭代中训练和测试的代码，在 `./apis/train.py` 中调用。
+
 - **configs**: 配置文件，包括运行设置，模型设置，数据集设置和其他主动学习和 MIAL 自定义的设置。
+
   - **\_\_base\_\_**: MMDetection 提供的基本配置文件夹，只需稍作修改就可以在 `.configs/MIAL.py` 中调用。
+
     - **default_runtime.py**: 运行设置的配置文件代码，在 `./configs/MIAL.py` 中调用。
+
     - **retinanet_r50_fpn.py**: 模型训练和测试的配置文件代码，在 `./configs/MIAL.py` 中调用。
+
     - **voc0712.py**: PASCAL VOC 数据集设置和数据预处理的配置文件代码，在 `./configs/MIAL.py` 中调用。
+
   - **MIAL.py**: MIAL 的常规配置代码，包括了主要的自定义设置，如主动学习数据集划分、模型训练和测试参数设置、自定义超参数设置、日志文件和模型存储设置，大多数都能在 `./tools/train.py` 中调用。在这个文件的注释中有每个参数更多的细节介绍。
+
 - **log_nohup**: 暂时存储每个 GPU 上输出日志的日志文件夹。
+
 - **mmdet**: MIAL 的核心代码文件夹，包括中间训练代码、目标检测器及其头部、以及主动学习数据集的划分。
+
   - **apis**: MIAL 的内层训练、测试、计算不确定度的代码文件夹。
+
     - **\_\_init\_\_.py**: 当前文件夹下一些函数的初始化。
+
     - **test.py**: 模型测试和计算不确定度的代码，在 `epoch_based_runner.py` 和 `./tools/train.py` 中调用。
+
     - **train.py**: 设置随机种子、创建训练用的 dataloader （为接下 epoch 级别的训练做好准备） 的代码，在 `./tools/train.py` 中调用。
+
   - **models**: 有关网络模型结构、训练损失（loss），测试过程中的前向传播、计算不确定度等细节的代码文件夹。
+
     - **dense_heads**: 训练损失（loss）和网络模型结构（尤其是精心设计的头部结构）的代码文件夹。
+
       - **\_\_init\_\_.py**: 当前文件夹下一些函数的初始化。
+
       - **MIAL_head.py**: 锚（anchor）级别的模型前向传播、计算损失（loss）、生成伪标号、从现有模型输出中得到检测框的代码，在 `./mmdet/models/dense_heads/base_dense_head.py` 和 `./mmdet/models/detectors/single_stage.py` 中调用。
+
       - **MIAL_retina_head.py**: 搭建 MIAL 网络结构（尤其是精心设计的头部结构）、定义前向输出的代码，在 `./mmdet/models/dense_heads/MIAL_head.py` 中调用。
+
       - **base_dense_head.py**: 选择不同公式计算损失（loss）的代码，在 `./mmdet/models/detectors/single_stage.py` 中调用。
+
     - **detectors**: 整体训练过程、测试过程、计算不确定度过程中前向传播和反向传播的代码文件夹。
+
       - **base.py**: 整理训练损失（loss）并输出、返回损失（loss）和图像信息的代码，在 `epoch_based_runner.py` 中调用。
+
       - **single_stage.py**: 提取图像特征、从模型输出中得到检测框、返回损失（loss）的代码，在 `./mmdet/models/detectors/base.py` 中调用。
+
   - **utils**: 划分主动学习数据集的代码文件夹。
+
     - **active_dataset.py**: 划分主动学习数据集的代码，包括创建初始的有标号集合、创建有标号和无标号的图像名称文件、在每次主动学习循环之后更新有标号和无标号的集合，在 `./tools/train.py` 中调用。
+
 - **tools**: MIAL 的外层训练和测试的代码文件夹。
+
   - **train.py**: MIAL 的训练和测试代码，主要包括生成用于主动学习的 PASCAL VOC 数据集、加载图像集合和模型、示例不确定度重加权、信息丰富的图像挑选，在 `./script.sh` 中调用。
+
 - **work_dirs**: 存放每个循环中有标号和无标号图像的名称和索引、所有日志和 json 文件输出、最后3个循环的模型状态参数字典（model state dictionary）的文件夹，在上面的 **训练和测试** 部分已经介绍过。
+
 - **script.sh**: 在单 GPU 上运行 MIAL 的脚本。当你准备好 conda 环境和 PASCAL VOC 2007+2012 数据集后，你可以像上面 **训练和测试** 部分提到的那样简单直接地运行它来训练和测试 MIAL。
 
 
