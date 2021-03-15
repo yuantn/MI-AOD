@@ -47,16 +47,16 @@ class BaseDenseHead(nn.Module, metaclass=ABCMeta):
                 losses: (dict[str, Tensor]): A dictionary of loss components.
                 proposal_list (list[Tensor]): Proposals of each image.
         """
-        y_head_f_1, y_head_f_2, y_head_f_r, y_head_f_mil = self(x)
+        y_head_f_1, y_head_f_2, y_head_f_r, y_head_cls = self(x)
         # Label set training
         if losstype.losstype == 0:
-            outs = (y_head_f_1, y_head_f_r, y_head_f_mil)
+            outs = (y_head_f_1, y_head_f_r, y_head_cls)
             if y_cls_img is None:
                 loss_inputs = outs + (y_loc_img, img_metas)
             else:
                 loss_inputs = outs + (y_loc_img, y_cls_img, img_metas)
             L_det_1 = self.L_det(*loss_inputs, y_loc_img_ignore=y_loc_img_ignore)
-            outs = (y_head_f_2, y_head_f_r, y_head_f_mil)
+            outs = (y_head_f_2, y_head_f_r, y_head_cls)
             if y_cls_img is None:
                 loss_inputs = outs + (y_loc_img, img_metas)
             else:
@@ -64,8 +64,8 @@ class BaseDenseHead(nn.Module, metaclass=ABCMeta):
             L_det_2 = self.L_det(*loss_inputs, y_loc_img_ignore=y_loc_img_ignore)
             l_det_cls = list(map(lambda m, n: (m + n)/2, L_det_1['l_det_cls'], L_det_2['l_det_cls']))
             l_det_loc = list(map(lambda m, n: (m + n)/2, L_det_1['l_det_loc'], L_det_2['l_det_loc']))
-            l_mil = list(map(lambda m, n: (m + n)/2, L_det_1['l_mil'], L_det_2['l_mil']))
-            L_det = dict(l_det_cls=l_det_cls, l_det_loc=l_det_loc, l_mil=l_mil)
+            l_imgcls = list(map(lambda m, n: (m + n)/2, L_det_1['l_imgcls'], L_det_2['l_imgcls']))
+            L_det = dict(l_det_cls=l_det_cls, l_det_loc=l_det_loc, l_imgcls=l_imgcls)
             if proposal_cfg is None:
                 return L_det
             else:
@@ -73,14 +73,14 @@ class BaseDenseHead(nn.Module, metaclass=ABCMeta):
                 return L_det, proposal_list
         # Re-weighting and minimizing instance uncertainty
         elif losstype.losstype == 1:
-            outs = ((y_head_f_1, y_head_f_2), y_head_f_r, y_head_f_mil)
+            outs = ((y_head_f_1, y_head_f_2), y_head_f_r, y_head_cls)
             if y_cls_img is None:
                 loss_inputs = outs + (y_loc_img, img_metas)
             else:
                 loss_inputs = outs + (y_loc_img, y_cls_img, img_metas)
             loss = self.L_wave_min(*loss_inputs, y_loc_img_ignore=y_loc_img_ignore)
             L_wave_min = dict(l_det_cls=loss['l_det_cls'], l_det_loc=loss['l_det_loc'],
-                              l_wave_dis=loss['l_wave_dis'], l_mil=loss['l_mil'])
+                              l_wave_dis=loss['l_wave_dis'], l_imgcls=loss['l_imgcls'])
             if proposal_cfg is None:
                 return L_wave_min
             else:
@@ -88,7 +88,7 @@ class BaseDenseHead(nn.Module, metaclass=ABCMeta):
                 return L_wave_min, proposal_list
         # Re-weighting and maximizing instance uncertainty
         else:
-            outs = ((y_head_f_1, y_head_f_2), y_head_f_r, y_head_f_mil)
+            outs = ((y_head_f_1, y_head_f_2), y_head_f_r, y_head_cls)
             if y_cls_img is None:
                 loss_inputs = outs + (y_loc_img, img_metas)
             else:
