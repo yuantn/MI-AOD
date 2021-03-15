@@ -22,7 +22,7 @@ def calculate_uncertainty(cfg, model, data_loader, return_box=False):
         with torch.no_grad():
             data['img'][0] = data['img'][0].cuda()
             data.update({'x': data.pop('img')})
-            y_head_f_1, y_head_f_2, y_head_f_mil = model(return_loss=False, rescale=True, return_box=return_box, **data)
+            y_head_f_1, y_head_f_2, y_head_cls = model(return_loss=False, rescale=True, return_box=return_box, **data)
             y_head_f_1 = torch.cat(y_head_f_1, 0)
             y_head_f_2 = torch.cat(y_head_f_2, 0)
             y_head_f_1 = nn.Sigmoid()(y_head_f_1)
