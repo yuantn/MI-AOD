@@ -78,7 +78,7 @@ class MIALHead(BaseDenseHead):
         self.bbox_coder = build_bbox_coder(bbox_coder)
         self.FL = build_loss(FL)
         self.SmoothL1 = build_loss(SmoothL1)
-        self.l_mil = nn.BCELoss()
+        self.l_imgcls = nn.BCELoss()
         self.train_cfg = train_cfg
         self.test_cfg = test_cfg
         if self.train_cfg:
@@ -371,7 +371,7 @@ class MIALHead(BaseDenseHead):
 
     # Label Set Training
     @force_fp32(apply_to=('y_f', 'y_f_r'))
-    def L_det(self, y_f, y_f_r, y_head_f_mil, y_loc_img, y_cls_img, img_metas, y_loc_img_ignore=None):
+    def L_det(self, y_f, y_f_r, y_head_cls, y_loc_img, y_cls_img, img_metas, y_loc_img_ignore=None):
         """Compute losses of the head.
 
         Args:
@@ -414,30 +414,30 @@ class MIALHead(BaseDenseHead):
                                            y_cls, label_weights_list, y_loc, bbox_weights_list,
                                            num_total_samples=num_total_samples)
         # compute mil loss
-        y_head_f_mil_1level, y_cls_1level = self.get_img_gtlabel_score(y_cls_img, y_head_f_mil)
-        l_mil = self.l_mil(y_head_f_mil_1level, y_cls_1level)
-        return dict(l_det_cls=l_det_cls, l_det_loc=l_det_loc, l_mil=[l_mil])
+        y_head_cls_1level, y_cls_1level = self.get_img_gtlabel_score(y_cls_img, y_head_cls)
+        l_imgcls = self.l_imgcls(y_head_cls_1level, y_cls_1level)
+        return dict(l_det_cls=l_det_cls, l_det_loc=l_det_loc, l_imgcls=[l_imgcls])
 
     @force_fp32(apply_to=('y_f', 'y_f_r'))
-    def get_img_gtlabel_score(self, y_cls_img, y_head_f_mil):
-        y_head_f_mil_1level = torch.zeros(len(y_cls_img), self.C).cuda(torch.cuda.current_device())
+    def get_img_gtlabel_score(self, y_cls_img, y_head_cls):
+        y_head_cls_1level = torch.zeros(len(y_cls_img), self.C).cuda(torch.cuda.current_device())
         y_cls_1level = torch.zeros(len(y_cls_img), self.C).cuda(torch.cuda.current_device())
         for i_img in range(len(y_cls_img)):
             for i_obj in range(len(y_cls_img[i_img])):
                 y_cls_1level[i_img, y_cls_img[i_img][i_obj]] = 1
-        for y_head_f_mil_single in y_head_f_mil:
-            y_head_f_mil_1level = torch.max(y_head_f_mil_1level, y_head_f_mil_single.sum(1))
-        y_head_f_mil_1level = y_head_f_mil_1level.clamp(1e-5, 1.0-1e-5)
-        return y_head_f_mil_1level, y_cls_1level
+        for y_head_cls_single in y_head_cls:
+            y_head_cls_1level = torch.max(y_head_cls_1level, y_head_cls_single.sum(1))
+        y_head_cls_1level = y_head_cls_1level.clamp(1e-5, 1.0-1e-5)
+        return y_head_cls_1level, y_cls_1level
 
-    def l_wave_dis(self, y_head_f_1_single, y_head_f_2_single, y_head_f_mil_single, y_head_f_r_single,
+    def l_wave_dis(self, y_head_f_1_single, y_head_f_2_single, y_head_cls_single, y_head_f_r_single,
                    x_i_single, y_cls_single, label_weights, y_loc_single, bbox_weights, num_total_samples):
         y_head_f_1_single = y_head_f_1_single.permute(0, 2, 3, 1).reshape(-1, self.cls_out_channels)
         y_head_f_2_single = y_head_f_2_single.permute(0, 2, 3, 1).reshape(-1, self.cls_out_channels)
         y_head_f_1_single = nn.Sigmoid()(y_head_f_1_single)
         y_head_f_2_single = nn.Sigmoid()(y_head_f_2_single)
         # mil weight
-        w_i = y_head_f_mil_single.detach()
+        w_i = y_head_cls_single.detach()
         l_det_cls_all = (abs(y_head_f_1_single - y_head_f_2_single) *
                          w_i.reshape(-1, self.C)).mean(dim=1).sum() * self.param_lambda
         l_det_loc = torch.tensor([0.0], device=y_head_f_1_single.device)
@@ -445,7 +445,7 @@ class MIALHead(BaseDenseHead):
 
     # Re-weighting and minimizing instance uncertainty
     @force_fp32(apply_to=('y_f', 'y_f_r'))
-    def L_wave_min(self, y_f, y_f_r, y_head_f_mil, y_loc_img, y_cls_img, img_metas, y_loc_img_ignore=None):
+    def L_wave_min(self, y_f, y_f_r, y_head_cls, y_loc_img, y_cls_img, img_metas, y_loc_img_ignore=None):
         featmap_sizes = [featmap.size()[-2:] for featmap in y_f[0]]
         assert len(featmap_sizes) == self.anchor_generator.num_levels
         device = y_f[0][0].device
@@ -466,7 +466,7 @@ class MIALHead(BaseDenseHead):
         for i in range(len(x_i)):
             concat_x_i.append(torch.cat(x_i[i]))
         all_x_i = images_to_levels(concat_x_i, num_level_anchors)
-        l_wave_dis, l_det_loc = multi_apply(self.l_wave_dis, y_f[0], y_f[1], y_head_f_mil, y_f_r, all_x_i, y_cls,
+        l_wave_dis, l_det_loc = multi_apply(self.l_wave_dis, y_f[0], y_f[1], y_head_cls, y_f_r, all_x_i, y_cls,
                                             label_weights_list, y_loc, bbox_weights_list,
                                             num_total_samples=num_total_samples)
         l_det_cls1, l_det_loc1 = multi_apply(self.l_det, y_f[0], y_f_r, all_x_i,
@@ -482,24 +482,24 @@ class MIALHead(BaseDenseHead):
                 if value.isnan():
                     l_det_loc[i].data = torch.tensor(0.0, device=device)
             # compute mil loss
-            y_head_f_mil_1level, y_pseudo = self.get_img_pseudolabel_score(y_f, y_head_f_mil)
+            y_head_cls_1level, y_pseudo = self.get_img_pseudolabel_score(y_f, y_head_cls)
             if (y_pseudo.sum(1) == 0).sum() > 0:  # ignore hard images
-                l_mil = self.l_mil(y_head_f_mil_1level, y_pseudo) * 0
+                l_imgcls = self.l_imgcls(y_head_cls_1level, y_pseudo) * 0
             else:
-                l_mil = self.l_mil(y_head_f_mil_1level, y_pseudo)
+                l_imgcls = self.l_imgcls(y_head_cls_1level, y_pseudo)
         else:
             l_det_cls = list(map(lambda m, n: (m + n) / 2, l_det_cls1, l_det_cls2))
             l_det_loc = list(map(lambda m, n: (m + n) / 2, l_det_loc1, l_det_loc2))
             l_wave_dis = list(map(lambda m: m * 0.0, l_wave_dis))
             # compute mil loss
-            y_head_f_mil_1level, y_cls_1level = self.get_img_gtlabel_score(y_cls_img, y_head_f_mil)
-            l_mil = self.l_mil(y_head_f_mil_1level, y_cls_1level)
-        return dict(l_det_cls=l_det_cls, l_det_loc=l_det_loc, l_wave_dis=l_wave_dis, l_mil=[l_mil])
+            y_head_cls_1level, y_cls_1level = self.get_img_gtlabel_score(y_cls_img, y_head_cls)
+            l_imgcls = self.l_imgcls(y_head_cls_1level, y_cls_1level)
+        return dict(l_det_cls=l_det_cls, l_det_loc=l_det_loc, l_wave_dis=l_wave_dis, l_imgcls=[l_imgcls])
 
     @force_fp32(apply_to=('y_f', 'y_f_r'))
-    def get_img_pseudolabel_score(self, y_f, y_head_f_mil):
-        batch_size = y_head_f_mil[0].shape[0]
-        y_head_f_mil_1level = torch.zeros(batch_size, self.C).cuda(torch.cuda.current_device())
+    def get_img_pseudolabel_score(self, y_f, y_head_cls):
+        batch_size = y_head_cls[0].shape[0]
+        y_head_cls_1level = torch.zeros(batch_size, self.C).cuda(torch.cuda.current_device())
         y_pseudo = torch.zeros(batch_size, self.C).cuda(torch.cuda.current_device())
         # predict image pseudo label
         with torch.no_grad():
@@ -511,19 +511,19 @@ class MIALHead(BaseDenseHead):
             y_pseudo[y_pseudo >= 0.5] = 1
             y_pseudo[y_pseudo < 0.5] = 0
         # mil image score
-        for y_head_f_mil_single in y_head_f_mil:
-            y_head_f_mil_1level = torch.max(y_head_f_mil_1level, y_head_f_mil_single.sum(1))
-        y_head_f_mil_1level = y_head_f_mil_1level.clamp(1e-5, 1.0 - 1e-5)
-        return y_head_f_mil_1level, y_pseudo.detach()
+        for y_head_cls_single in y_head_cls:
+            y_head_cls_1level = torch.max(y_head_cls_1level, y_head_cls_single.sum(1))
+        y_head_cls_1level = y_head_cls_1level.clamp(1e-5, 1.0 - 1e-5)
+        return y_head_cls_1level, y_pseudo.detach()
 
-    def l_wave_dis_minus(self, y_head_f_1_single, y_head_f_2_single, y_head_f_mil_single, y_head_f_r_single,
+    def l_wave_dis_minus(self, y_head_f_1_single, y_head_f_2_single, y_head_cls_single, y_head_f_r_single,
                          x_i_single, y_cls_single, label_weights, y_loc_single, bbox_weights, num_total_samples):
         y_head_f_1_single = y_head_f_1_single.permute(0, 2, 3, 1).reshape(-1, self.cls_out_channels)
         y_head_f_2_single = y_head_f_2_single.permute(0, 2, 3, 1).reshape(-1, self.cls_out_channels)
         y_head_f_1_single = nn.Sigmoid()(y_head_f_1_single)
         y_head_f_2_single = nn.Sigmoid()(y_head_f_2_single)
         # mil weight
-        w_i = y_head_f_mil_single.detach()
+        w_i = y_head_cls_single.detach()
         l_det_cls_all = ((1 - abs(y_head_f_1_single - y_head_f_2_single)) *
                          w_i.view(-1, self.C)).mean(dim=1).sum() * self.param_lambda
         l_det_loc = torch.tensor([0.0], device=y_head_f_1_single.device)
@@ -531,7 +531,7 @@ class MIALHead(BaseDenseHead):
 
     # Re-weighting and maximizing instance uncertainty
     @force_fp32(apply_to=('y_f', 'y_f_r'))
-    def L_wave_max(self, y_f, y_f_r, y_head_f_mil, y_loc_img, y_cls_img, img_metas, y_loc_img_ignore=None):
+    def L_wave_max(self, y_f, y_f_r, y_head_cls, y_loc_img, y_cls_img, img_metas, y_loc_img_ignore=None):
         featmap_sizes = [featmap.size()[-2:] for featmap in y_f[0]]
         assert len(featmap_sizes) == self.anchor_generator.num_levels
         device = y_f[0][0].device
@@ -552,7 +552,7 @@ class MIALHead(BaseDenseHead):
         for i in range(len(x_i)):
             concat_x_i.append(torch.cat(x_i[i]))
         all_x_i = images_to_levels(concat_x_i, num_level_anchors)
-        l_wave_dis_minus, l_det_loc = multi_apply(self.l_wave_dis_minus, y_f[0], y_f[1], y_head_f_mil, y_f_r, all_x_i,
+        l_wave_dis_minus, l_det_loc = multi_apply(self.l_wave_dis_minus, y_f[0], y_f[1], y_head_cls, y_f_r, all_x_i,
                                                   y_cls, label_weights_list, y_loc, bbox_weights_list,
                                                   num_total_samples=num_total_samples)
         l_det_cls1, l_det_loc1 = multi_apply(self.l_det, y_f[0], y_f_r, all_x_i,
