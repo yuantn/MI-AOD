@@ -263,3 +263,8 @@ chmod 777 ./script.sh
     booktitle = {CVPR},
     year      = {2021}
 }
+```
+
+## 致谢
+
+在这个代码库中，我们在 [mmdetection](https://github.com/open-mmlab/mmdetection) 的基础上在 PyTorch 上成功复现了 RetinaNet 检测网络。
