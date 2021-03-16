@@ -1,10 +1,16 @@
-Language: [简体中文](./README_cn.md) | [English](./README.md)
+# MIAL
+
+语言: [简体中文](./README_cn.md) | [English](./README.md)
 
 ## 简介
 
 这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://github.com/yuantn/MIAL/raw/master/paper.pdf), CVPR 2021 一文的代码。
 
+在本文中，我们提出了多示例主动学习（MIAL），通过观察示例级的不确定性来选择信息量最大的图像用于检测器的训练。多示例主动学习定义了示例不确定性学习模块，该模块利用在已标注集上训练的两个对抗性示例分类器的差异来预测未标注集的示例不确定性。多示例主动学习将未标注的图像视为示例包，并将图像中的特征锚视为示例，并通过以多示例学习（MIL）方式对示例重加权的方法来估计图像的不确定性。反复进行示例不确定性的学习和重加权有助于抑制噪声高的示例，来缩小示例不确定性和图像级不确定性之间的差距。
+
 ![Illustration](./MIAL.png)
+
+实验证明，多示例主动学习为示例级的主动学习设置了坚实的基线。在常用的目标检测数据集上，多示例主动学习和最新方法相比具有明显的优势，尤其是在已标注集很小的情况下。
 
 ![Results](./Results.png)
 
