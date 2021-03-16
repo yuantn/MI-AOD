@@ -248,6 +248,7 @@ The explanation of each code file or folder is as follows:
 
 - **script.sh**: The script to run MIAL on a single GPU. You can run it to train and test MIAL simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
 
+## Citation
 
 If you find this repository useful for your publications, please consider citing our [paper](https://github.com/yuantn/MIAL/raw/master/paper.pdf).
 ```angular2html
