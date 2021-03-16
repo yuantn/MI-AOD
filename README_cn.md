@@ -54,6 +54,8 @@ cd MIAL-master
 cp -v epoch_based_runner.py ~/anaconda3/envs/mial/lib/python3.7/site-packages/mmcv/runner/
 ```
 
+之后如果你修改了 mmcv 包中的任何文件（包括但不限于：更新/重新安装了 Python、PyTorch、mmdetection、mmcv、mmcv-full、conda 环境），都应该重新将这个代码库中的 ` epoch_base_runner.py ` 文件再次复制到上面的 mmcv 文件夹下。([Issue #3](../../issues/3))
+
 ## 数据集准备
 
 请从下面的链接处下载 VOC2007 数据集（*trainval* 部分 + *test* 部分）和 VOC2012 数据集（*trainval* 部分）：
