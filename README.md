@@ -263,3 +263,8 @@ If you find this repository useful for your publications, please consider citing
     booktitle = {CVPR},
     year      = {2021}
 }
+```
+
+## Acknowledgement
+
+In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection](https://github.com/open-mmlab/mmdetection).
