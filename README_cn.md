@@ -1,6 +1,6 @@
 # MIAL
 
-语言: [简体中文](./README_cn.md) | [English](./README.md)
+语言: 简体中文 | [English](./README.md)
 
 ## 简介
 
