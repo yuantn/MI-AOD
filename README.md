@@ -29,6 +29,21 @@ conda activate mial
 
 Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) and the [install.md](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md) of it for environment installation.
 
+And then please clone this repository as below:
+
+```
+git clone https://github.com/yuantn/MIAL.git
+cd MIAL
+```
+
+If it is too slow, you can also try downloading the repository like this:
+
+```
+wget https://github.com/yuantn/MIAL/archive/master.zip
+unzip MIAL.zip
+cd MIAL-master
+```
+
 ## Modification in the mmcv Package
 
 To train with two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the ` epoch_based_runner.py ` in the mmcv package.
