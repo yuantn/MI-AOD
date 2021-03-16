@@ -29,6 +29,21 @@ conda activate mial
 
 之后安装环境的过程请参见 [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) 和其中的 [install.md 文件](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md)。
 
+然后，请像下面这样克隆这个代码库：
+
+```
+git clone https://github.com/yuantn/MIAL.git
+cd MIAL
+```
+
+如果那样太慢的话，你也可以尝试像这样直接下载这个代码库：
+
+```
+wget https://github.com/yuantn/MIAL/archive/master.zip
+unzip MIAL.zip
+cd MIAL-master
+```
+
 ## 修改mmcv包
 
 为了能够同时训练两个 dataloader（即论文中提到的有标号的 dataloader 和无标号的 dataloader），需要修改 mmcv 包中的 ` epoch_based_runner.py ` 文件。
@@ -256,7 +271,7 @@ chmod 777 ./script.sh
 
 ## 引用
 
-如果你觉得这个资料库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MIAL/raw/master/paper.pdf)。
+如果你觉得这个代码库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MIAL/raw/master/paper.pdf)。
 ```angular2html
 @inproceedings{MIAL2021,
     author    = {Tianning Yuan and
