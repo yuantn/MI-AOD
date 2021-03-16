@@ -248,6 +248,7 @@ chmod 777 ./script.sh
 
 - **script.sh**: 在单 GPU 上运行 MIAL 的脚本。当你准备好 conda 环境和 PASCAL VOC 2007+2012 数据集后，你可以像上面 **训练和测试** 部分提到的那样简单直接地运行它来训练和测试 MIAL。
 
+## 引用
 
 如果你觉得这个资料库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MIAL/raw/master/paper.pdf)。
 ```angular2html
