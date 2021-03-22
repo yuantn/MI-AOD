@@ -171,7 +171,7 @@ An example output folder is provided on Google Drive and Baidu Drive, including 
 ├── $YOUR_ANACONDA_DIRECTORY
 │   ├── anaconda3
 │   │   ├── envs
-│   │   │   ├── mial
+│   │   │   ├── miaod
 │   │   │   │   ├── lib
 │   │   │   │   │   ├── python3.7
 │   │   │   │   │   │   ├── site-packages
