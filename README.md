@@ -1,16 +1,16 @@
-# MIAL
+# MI-AOD
 
 Language: [简体中文](./README_cn.md) | English
 
 ## Introduction
 
-This is the code for [*Multiple Instance Active Learning for Object Detection*](https://github.com/yuantn/MIAL/raw/master/paper.pdf), CVPR 2021.
+This is the code for [*Multiple Instance Active Learning for Object Detection*](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf), CVPR 2021.
 
-In this paper, we propose Multiple Instance Active Learning (MIAL), to select the most informative images for detector training by observing instance-level uncertainty. MIAL defines an instance uncertainty learning module, which leverages the discrepancy of two adversarial instance classifiers trained on the labeled set to predict instance uncertainty of the unlabeled set. MIAL treats unlabeled images as instance bags and feature anchors in images as instances, and estimates the image uncertainty by re-weighting instances in a multiple instance learning (MIL) fashion. Iterative instance uncertainty learning and re-weighting facilitate suppressing noisy instances, toward bridging the gap between instance uncertainty and image-level uncertainty.
+In this paper, we propose Multiple Instance Active Object Detection (MI-AOD), to select the most informative images for detector training by observing instance-level uncertainty. MI-AOD defines an instance uncertainty learning module, which leverages the discrepancy of two adversarial instance classifiers trained on the labeled set to predict instance uncertainty of the unlabeled set. MI-AOD treats unlabeled images as instance bags and feature anchors in images as instances, and estimates the image uncertainty by re-weighting instances in a multiple instance learning (MIL) fashion. Iterative instance uncertainty learning and re-weighting facilitate suppressing noisy instances, toward bridging the gap between instance uncertainty and image-level uncertainty.
 
-![Illustration](./MIAL.png)
+![Illustration](./MI-AOD.png)
 
-Experiments validate that MIAL sets a solid baseline for instance-level active learning. On commonly used object detection datasets, MIAL outperforms state-of-the-art methods with significant margins, particularly when the labeled sets are small.
+Experiments validate that MI-AOD sets a solid baseline for instance-level active learning. On commonly used object detection datasets, MI-AOD outperforms state-of-the-art methods with significant margins, particularly when the labeled sets are small.
 
 ![Results](./Results.png)
 
@@ -32,23 +32,23 @@ Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/t
 And then please clone this repository as below:
 
 ```
-git clone https://github.com/yuantn/MIAL.git
-cd MIAL
+git clone https://github.com/yuantn/MI-AOD.git
+cd MI-AOD
 ```
 
 If it is too slow, you can also try downloading the repository like this:
 
 ```
-wget https://github.com/yuantn/MIAL/archive/master.zip
-unzip MIAL.zip
-cd MIAL-master
+wget https://github.com/yuantn/MI-AOD/archive/master.zip
+unzip MI-AOD.zip
+cd MI-AOD-master
 ```
 
 ## Modification in the mmcv Package
 
 To train with two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the ` epoch_based_runner.py ` in the mmcv package.
 
-Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MIAL (i.e., the ` mial `environment created above).
+Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MI-AOD (i.e., the ` mial `environment created above).
 
 ```
 cp -v epoch_based_runner.py ~/anaconda3/envs/mial/lib/python3.7/site-packages/mmcv/runner/
@@ -211,13 +211,13 @@ An example output folder is provided on Google Drive and Baidu Drive, including 
 ├── script.sh
 ```
 
-The code files and folders shown above are the main part of MIAL, while other code files and folders are created following MMDetection to avoid potential problems.
+The code files and folders shown above are the main part of MI-AOD, while other code files and folders are created following MMDetection to avoid potential problems.
 
 The explanation of each code file or folder is as follows:
 
 - **epoch_based_runner.py**: Code for training and test in each epoch, which can be called by `./apis/train.py`.
 
-- **configs**: Configuration folder, including running settings, model settings, dataset settings and other custom settings for active learning and MIAL.
+- **configs**: Configuration folder, including running settings, model settings, dataset settings and other custom settings for active learning and MI-AOD.
 
   - **\_\_base\_\_**: Base configuration folder provided by MMDetection, which only need a little modification and then can be recalled by `.configs/MIAL.py`.
 
@@ -231,9 +231,9 @@ The explanation of each code file or folder is as follows:
 
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
 
-- **mmdet**: The core code folder for MIAL, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
+- **mmdet**: The core code folder for MI-AOD, including intermidiate training code, object detectors and detection heads and active learning dataset establishment.
 
-  - **apis**: The inner training, test and calculating uncertainty code folder of MIAL.
+  - **apis**: The inner training, test and calculating uncertainty code folder of MI-AOD.
   
     - **\_\_init\_\_.py**: Some function initialization in the current folder.
     
@@ -249,7 +249,7 @@ The explanation of each code file or folder is as follows:
       
       - **MIAL_head.py**: Code for forwarding anchor-level model output, calculating anchor-level loss, generating pseudo labels and getting bounding boxes from existing model output in more details, which can be called by `./mmdet/models/dense_heads/base_dense_head.py` and `./mmdet/models/detectors/single_stage.py`.
       
-      - **MIAL_retina_head.py**: Code for building the MIAL model architecture, especially the well-designed head architecture, and define the forward output, which can be called by `./mmdet/models/dense_heads/MIAL_head.py`.
+      - **MIAL_retina_head.py**: Code for building the MI-AOD model architecture, especially the well-designed head architecture, and define the forward output, which can be called by `./mmdet/models/dense_heads/MIAL_head.py`.
       
       - **base_dense_head.py**: Code for choosing different equations to calculate loss, which can be called by `./mmdet/models/detectors/single_stage.py`.
       
@@ -263,19 +263,19 @@ The explanation of each code file or folder is as follows:
 
     - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle, which can be called by `./tools/train.py`.
 
-- **tools**: The outer training and test code folder of MIAL.
+- **tools**: The outer training and test code folder of MI-AOD.
 
-  - **train.py**: Outer code for training and test for MIAL, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called by `./script.sh`.
+  - **train.py**: Outer code for training and test for MI-AOD, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called by `./script.sh`.
 
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
 
-- **script.sh**: The script to run MIAL on a single GPU. You can run it to train and test MIAL simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
+- **script.sh**: The script to run MI-AOD on a single GPU. You can run it to train and test MI-AOD simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
 
 ## Citation
 
-If you find this repository useful for your publications, please consider citing our [paper](https://github.com/yuantn/MIAL/raw/master/paper.pdf).
+If you find this repository useful for your publications, please consider citing our [paper](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf).
 ```angular2html
-@inproceedings{MIAL2021,
+@inproceedings{MIAOD2021,
     author    = {Tianning Yuan and
                  Fang Wan and
                  Mengying Fu and
