@@ -24,7 +24,7 @@ After anaconda3 installation, you can create a conda environment as below:
 
 ```
 conda create -n mial python=3.7 -y
-conda activate mial
+conda activate miaod
 ```
 
 Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) and the [install.md](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md) of it for environment installation.
@@ -48,7 +48,7 @@ cd MI-AOD-master
 
 To train with two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the ` epoch_based_runner.py ` in the mmcv package.
 
-Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MI-AOD (i.e., the ` mial `environment created above).
+Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MI-AOD (i.e., the ` miaod ` environment created above).
 
 ```
 cp -v epoch_based_runner.py ~/anaconda3/envs/mial/lib/python3.7/site-packages/mmcv/runner/
