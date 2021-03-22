@@ -23,7 +23,7 @@ A TITAN V GPU and [CUDA 10.2](https://developer.nvidia.com/cuda-toolkit-archive)
 After anaconda3 installation, you can create a conda environment as below:
 
 ```
-conda create -n mial python=3.7 -y
+conda create -n miaod python=3.7 -y
 conda activate miaod
 ```
 
@@ -51,7 +51,7 @@ To train with two dataloaders (i.e., the labeled set dataloader and the unlabele
 Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MI-AOD (i.e., the ` miaod ` environment created above).
 
 ```
-cp -v epoch_based_runner.py ~/anaconda3/envs/mial/lib/python3.7/site-packages/mmcv/runner/
+cp -v epoch_based_runner.py ~/anaconda3/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
 ```
 
 After that, if you have modified anything in the mmcv package (including but not limited to: updating/re-installing Python, PyTorch, mmdetection, mmcv, mmcv-full, conda environment), you are supposed to copy the “epoch_base_runner.py” provided in this repository to the mmcv directory again. ([Issue #3](../../issues/3))
