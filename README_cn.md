@@ -1,16 +1,16 @@
-# MIAL
+# MI-AOD
 
 语言: 简体中文 | [English](./README.md)
 
 ## 简介
 
-这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://github.com/yuantn/MIAL/raw/master/paper.pdf), CVPR 2021 一文的代码。
+这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf), CVPR 2021 一文的代码。
 
-在本文中，我们提出了多示例主动学习（MIAL），通过观察示例级的不确定性来选择信息量最大的图像用于检测器的训练。多示例主动学习定义了示例不确定性学习模块，该模块利用在已标注集上训练的两个对抗性示例分类器的差异来预测未标注集的示例不确定性。多示例主动学习将未标注的图像视为示例包，并将图像中的特征锚视为示例，并通过以多示例学习（MIL）方式对示例重加权的方法来估计图像的不确定性。反复进行示例不确定性的学习和重加权有助于抑制噪声高的示例，来缩小示例不确定性和图像级不确定性之间的差距。
+在本文中，我们提出了多示例主动目标检测（MI-AOD），通过观察示例级的不确定性来选择信息量最大的图像用于检测器的训练。多示例主动目标检测定义了示例不确定性学习模块，该模块利用在已标注集上训练的两个对抗性示例分类器的差异来预测未标注集的示例不确定性。多示例主动目标检测将未标注的图像视为示例包，并将图像中的特征锚视为示例，并通过以多示例学习（MIL）方式对示例重加权的方法来估计图像的不确定性。反复进行示例不确定性的学习和重加权有助于抑制噪声高的示例，来缩小示例不确定性和图像级不确定性之间的差距。
 
-![Illustration](./MIAL.png)
+![Illustration](./CVPR-MI-AOD.png)
 
-实验证明，多示例主动学习为示例级的主动学习设置了坚实的基线。在常用的目标检测数据集上，多示例主动学习和最新方法相比具有明显的优势，尤其是在已标注集很小的情况下。
+实验证明，多示例主动目标检测为示例级的主动学习设置了坚实的基线。在常用的目标检测数据集上，多示例主动目标检测和最新方法相比具有明显的优势，尤其是在已标注集很小的情况下。
 
 ![Results](./Results.png)
 
@@ -23,8 +23,8 @@
 在安装完anaconda3之后，你可以像这样创建一个 conda 环境：
 
 ```
-conda create -n mial python=3.7 -y
-conda activate mial
+conda create -n miaod python=3.7 -y
+conda activate miaod
 ```
 
 之后安装环境的过程请参见 [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) 和其中的 [install.md 文件](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md)。
@@ -32,26 +32,26 @@ conda activate mial
 然后，请像下面这样克隆这个代码库：
 
 ```
-git clone https://github.com/yuantn/MIAL.git
-cd MIAL
+git clone https://github.com/yuantn/MI-AOD.git
+cd MI-AOD
 ```
 
 如果那样太慢的话，你也可以尝试像这样直接下载这个代码库：
 
 ```
-wget https://github.com/yuantn/MIAL/archive/master.zip
-unzip MIAL.zip
-cd MIAL-master
+wget https://github.com/yuantn/MI-AOD/archive/master.zip
+unzip MI-AOD.zip
+cd MI-AOD-master
 ```
 
 ## 修改mmcv包
 
 为了能够同时训练两个 dataloader（即论文中提到的有标号的 dataloader 和无标号的 dataloader），需要修改 mmcv 包中的 ` epoch_based_runner.py ` 文件。
 
-考虑到这会影响到所有使用这个环境的代码，所以我们建议为MIAL创建一个单独的环境（即上文中创建的 ` mial ` 环境）。
+考虑到这会影响到所有使用这个环境的代码，所以我们建议为MI-AOD创建一个单独的环境（即上文中创建的 ` miaod ` 环境）。
 
 ```
-cp -v epoch_based_runner.py ~/anaconda3/envs/mial/lib/python3.7/site-packages/mmcv/runner/
+cp -v epoch_based_runner.py ~/anaconda3/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
 ```
 
 之后如果你修改了 mmcv 包中的任何文件（包括但不限于：更新/重新安装了 Python、PyTorch、mmdetection、mmcv、mmcv-full、conda 环境），都应该重新将这个代码库中的 ` epoch_base_runner.py ` 文件再次复制到上面的 mmcv 文件夹下。([Issue #3](../../issues/3))
@@ -171,7 +171,7 @@ chmod 777 ./script.sh
 ├── $你的 ANACONDA 安装地址
 │   ├── anaconda3
 │   │   ├── envs
-│   │   │   ├── mial
+│   │   │   ├── miaod
 │   │   │   │   ├── lib
 │   │   │   │   │   ├── python3.7
 │   │   │   │   │   │   ├── site-packages
@@ -211,13 +211,13 @@ chmod 777 ./script.sh
 ├── script.sh
 ```
 
-上面呈现出的代码文件和文件夹是 MIAL 的核心部分。为了避免潜在的问题，代码的其他文件和文件夹是跟随 MMDetection 的设定创建的。
+上面呈现出的代码文件和文件夹是 MI-AOD 的核心部分。为了避免潜在的问题，代码的其他文件和文件夹是跟随 MMDetection 的设定创建的。
 
 每一个核心部分的代码文件和文件夹解释如下：
 
 - **epoch_based_runner.py**: 每个迭代中训练和测试的代码，在 `./apis/train.py` 中调用。
 
-- **configs**: 配置文件，包括运行设置，模型设置，数据集设置和其他主动学习和 MIAL 自定义的设置。
+- **configs**: 配置文件，包括运行设置，模型设置，数据集设置和其他主动学习和 MI-AOD 自定义的设置。
 
   - **\_\_base\_\_**: MMDetection 提供的基本配置文件夹，只需稍作修改就可以在 `.configs/MIAL.py` 中调用。
 
@@ -227,13 +227,13 @@ chmod 777 ./script.sh
 
     - **voc0712.py**: PASCAL VOC 数据集设置和数据预处理的配置文件代码，在 `./configs/MIAL.py` 中调用。
 
-  - **MIAL.py**: MIAL 的常规配置代码，包括了主要的自定义设置，如主动学习数据集划分、模型训练和测试参数设置、自定义超参数设置、日志文件和模型存储设置，大多数都能在 `./tools/train.py` 中调用。在这个文件的注释中有每个参数更多的细节介绍。
+  - **MIAL.py**: MI-AOD 的常规配置代码，包括了主要的自定义设置，如主动学习数据集划分、模型训练和测试参数设置、自定义超参数设置、日志文件和模型存储设置，大多数都能在 `./tools/train.py` 中调用。在这个文件的注释中有每个参数更多的细节介绍。
 
 - **log_nohup**: 暂时存储每个 GPU 上输出日志的日志文件夹。
 
-- **mmdet**: MIAL 的核心代码文件夹，包括中间训练代码、目标检测器及其头部、以及主动学习数据集的划分。
+- **mmdet**: MI-AOD 的核心代码文件夹，包括中间训练代码、目标检测器及其头部、以及主动学习数据集的划分。
 
-  - **apis**: MIAL 的内层训练、测试、计算不确定度的代码文件夹。
+  - **apis**: MI-AOD 的内层训练、测试、计算不确定度的代码文件夹。
 
     - **\_\_init\_\_.py**: 当前文件夹下一些函数的初始化。
 
@@ -249,7 +249,7 @@ chmod 777 ./script.sh
 
       - **MIAL_head.py**: 锚（anchor）级别的模型前向传播、计算损失（loss）、生成伪标号、从现有模型输出中得到检测框的代码，在 `./mmdet/models/dense_heads/base_dense_head.py` 和 `./mmdet/models/detectors/single_stage.py` 中调用。
 
-      - **MIAL_retina_head.py**: 搭建 MIAL 网络结构（尤其是精心设计的头部结构）、定义前向输出的代码，在 `./mmdet/models/dense_heads/MIAL_head.py` 中调用。
+      - **MIAL_retina_head.py**: 搭建 MI-AOD 网络结构（尤其是精心设计的头部结构）、定义前向输出的代码，在 `./mmdet/models/dense_heads/MIAL_head.py` 中调用。
 
       - **base_dense_head.py**: 选择不同公式计算损失（loss）的代码，在 `./mmdet/models/detectors/single_stage.py` 中调用。
 
@@ -263,19 +263,19 @@ chmod 777 ./script.sh
 
     - **active_dataset.py**: 划分主动学习数据集的代码，包括创建初始的有标号集合、创建有标号和无标号的图像名称文件、在每次主动学习循环之后更新有标号和无标号的集合，在 `./tools/train.py` 中调用。
 
-- **tools**: MIAL 的外层训练和测试的代码文件夹。
+- **tools**: MI-AOD 的外层训练和测试的代码文件夹。
 
-  - **train.py**: MIAL 的训练和测试代码，主要包括生成用于主动学习的 PASCAL VOC 数据集、加载图像集合和模型、示例不确定度重加权、信息丰富的图像挑选，在 `./script.sh` 中调用。
+  - **train.py**: MI-AOD 的训练和测试代码，主要包括生成用于主动学习的 PASCAL VOC 数据集、加载图像集合和模型、示例不确定度重加权、信息丰富的图像挑选，在 `./script.sh` 中调用。
 
 - **work_dirs**: 存放每个循环中有标号和无标号图像的名称和索引、所有日志和 json 文件输出、最后3个循环的模型状态参数字典（model state dictionary）的文件夹，在上面的 **训练和测试** 部分已经介绍过。
 
-- **script.sh**: 在单 GPU 上运行 MIAL 的脚本。当你准备好 conda 环境和 PASCAL VOC 2007+2012 数据集后，你可以像上面 **训练和测试** 部分提到的那样简单直接地运行它来训练和测试 MIAL。
+- **script.sh**: 在单 GPU 上运行 MI-AOD 的脚本。当你准备好 conda 环境和 PASCAL VOC 2007+2012 数据集后，你可以像上面 **训练和测试** 部分提到的那样简单直接地运行它来训练和测试 MI-AOD。
 
 ## 引用
 
-如果你觉得这个代码库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MIAL/raw/master/paper.pdf)。
+如果你觉得这个代码库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf)。
 ```angular2html
-@inproceedings{MIAL2021,
+@inproceedings{MIAOD2021,
     author    = {Tianning Yuan and
                  Fang Wan and
                  Mengying Fu and
