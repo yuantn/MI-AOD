@@ -4,7 +4,8 @@
 
 ## 简介
 
-这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf), CVPR 2021 一文的代码。
+[comment:] <这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf), CVPR 2021 一文的代码。>
+这是 *Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）* (PDF链接暂时不可用), CVPR 2021 一文的代码。
 
 在本文中，我们提出了多示例主动目标检测（MI-AOD），通过观察示例级的不确定性来选择信息量最大的图像用于检测器的训练。多示例主动目标检测定义了示例不确定性学习模块，该模块利用在已标注集上训练的两个对抗性示例分类器的差异来预测未标注集的示例不确定性。多示例主动目标检测将未标注的图像视为示例包，并将图像中的特征锚视为示例，并通过以多示例学习（MIL）方式对示例重加权的方法来估计图像的不确定性。反复进行示例不确定性的学习和重加权有助于抑制噪声高的示例，来缩小示例不确定性和图像级不确定性之间的差距。
 
@@ -273,7 +274,8 @@ chmod 777 ./script.sh
 
 ## 引用
 
-如果你觉得这个代码库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf)。
+[comment:] <如果你觉得这个代码库对你的论文有用，请考虑引用我们的[论文](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf)。>
+如果你觉得这个代码库对你的论文有用，请考虑引用我们的论文 (PDF链接暂时不可用)。
 ```angular2html
 @inproceedings{MIAOD2021,
     author    = {Tianning Yuan and
