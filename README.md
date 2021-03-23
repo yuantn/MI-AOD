@@ -36,7 +36,7 @@ If it is too slow, you can also try downloading the repository like this:
 
 ```
 wget https://github.com/yuantn/MI-AOD/archive/master.zip
-unzip MI-AOD.zip
+unzip master.zip
 cd MI-AOD-master
 ```
 
