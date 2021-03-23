@@ -86,7 +86,7 @@ tar -xf VOCtrainval_11-May-2012.tar
 ```
 After that, please modify the corresponding dataset directory in this repository, they are located in:
 ```
-Line 1 of configs/MIAL.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
+Line 1 of configs/MIAOD.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 Line 1 of configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
 Please change the ` $YOUR_DATASET_PATH `s above to your actual dataset directory (i.e., the directory where you intend to put the downloaded VOC tar file).
@@ -110,13 +110,13 @@ Please ignore the error ` rm: cannot remove './log_nohup/nohup_$YOUR_GPU_ID.log'
 
 The ` script.sh ` file will use the GPU with the ID number ` $YOUR_GPU_ID ` and PORT `(30000+$YOUR_GPU_ID*100)` to train and test.
 
-The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/MIAL/$TIMESTAMP.log ` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `./configs/MIAL.py` .
+The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/MI-AOD/$TIMESTAMP.log ` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `./configs/MIAOD.py` .
 
-You can also use other files in the directory ` './work_dirs/MIAL/ ` if you like, they are as follows:
+You can also use other files in the directory ` './work_dirs/MI-AOD/ ` if you like, they are as follows:
 
 - **JSON file `$TIMESTAMP.log.json`**
 
-  You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/MIAL/$TIMESTAMP.log` file.
+  You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/MI-AOD/$TIMESTAMP.log` file.
 
 - **npy file `X_L_$CYCLE.npy` and `X_U_$CYCLE.npy`**
 
@@ -182,7 +182,7 @@ An example output folder is provided on Google Drive and Baidu Drive, including 
 │   │   ├── default_runtime.py
 │   │   ├── retinanet_r50_fpn.py
 │   │   ├── voc0712.py
-│   ├── MIAL.py
+│   ├── MIAOD.py
 │── log_nohup
 ├── mmdet
 │   ├── apis
@@ -192,8 +192,8 @@ An example output folder is provided on Google Drive and Baidu Drive, including 
 │   ├── models
 │   │   ├── dense_heads
 │   │   │   ├── __init__.py
-│   │   │   ├── MIAL_head.py
-│   │   │   ├── MIAL_retina_head.py
+│   │   │   ├── MIAOD_head.py
+│   │   │   ├── MIAOD_retina_head.py
 │   │   │   ├── base_dense_head.py 
 │   │   ├── detectors
 │   │   │   ├── base.py
@@ -203,7 +203,7 @@ An example output folder is provided on Google Drive and Baidu Drive, including 
 ├── tools
 │   ├── train.py
 ├── work_dirs
-│   ├── MIAL
+│   ├── MI-AOD
 ├── script.sh
 ```
 
@@ -215,15 +215,15 @@ The explanation of each code file or folder is as follows:
 
 - **configs**: Configuration folder, including running settings, model settings, dataset settings and other custom settings for active learning and MI-AOD.
 
-  - **\_\_base\_\_**: Base configuration folder provided by MMDetection, which only need a little modification and then can be recalled by `.configs/MIAL.py`.
+  - **\_\_base\_\_**: Base configuration folder provided by MMDetection, which only need a little modification and then can be recalled by `.configs/MIAOD.py`.
 
-    - **default_runtime.py**: Configuration code for running settings, which can be called by `./configs/MIAL.py`.
+    - **default_runtime.py**: Configuration code for running settings, which can be called by `./configs/MIAOD.py`.
   
-    - **retinanet_r50_fpn.py**: Configuration code for model training and test settings, which can be called by `./configs/MIAL.py`.
+    - **retinanet_r50_fpn.py**: Configuration code for model training and test settings, which can be called by `./configs/MIAOD.py`.
  
-    - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data preprocessing, which can be called by `./configs/MIAL.py`.
+    - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data preprocessing, which can be called by `./configs/MIAOD.py`.
   
-  - **MIAL.py**: Configuration code in general including most custom settings, containing active learning dataset settings, model training and test parameter settings, custom hyper-parameter settings, log file and model saving settings, which can be mainly called by `./tools/train.py`. The more detailed introduction of each parameter is in the comments of this file.
+  - **MIAOD.py**: Configuration code in general including most custom settings, containing active learning dataset settings, model training and test parameter settings, custom hyper-parameter settings, log file and model saving settings, which can be mainly called by `./tools/train.py`. The more detailed introduction of each parameter is in the comments of this file.
 
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
 
@@ -243,9 +243,9 @@ The explanation of each code file or folder is as follows:
     
       - **\_\_init\_\_.py**: Some function initialization in the current folder.
       
-      - **MIAL_head.py**: Code for forwarding anchor-level model output, calculating anchor-level loss, generating pseudo labels and getting bounding boxes from existing model output in more details, which can be called by `./mmdet/models/dense_heads/base_dense_head.py` and `./mmdet/models/detectors/single_stage.py`.
+      - **MIAOD_head.py**: Code for forwarding anchor-level model output, calculating anchor-level loss, generating pseudo labels and getting bounding boxes from existing model output in more details, which can be called by `./mmdet/models/dense_heads/base_dense_head.py` and `./mmdet/models/detectors/single_stage.py`.
       
-      - **MIAL_retina_head.py**: Code for building the MI-AOD model architecture, especially the well-designed head architecture, and define the forward output, which can be called by `./mmdet/models/dense_heads/MIAL_head.py`.
+      - **MIAOD_retina_head.py**: Code for building the MI-AOD model architecture, especially the well-designed head architecture, and define the forward output, which can be called by `./mmdet/models/dense_heads/MIAOD_head.py`.
       
       - **base_dense_head.py**: Code for choosing different equations to calculate loss, which can be called by `./mmdet/models/detectors/single_stage.py`.
       
