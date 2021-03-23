@@ -36,7 +36,7 @@ cd MI-AOD
 
 ```
 wget https://github.com/yuantn/MI-AOD/archive/master.zip
-unzip MI-AOD.zip
+unzip master.zip
 cd MI-AOD-master
 ```
 
