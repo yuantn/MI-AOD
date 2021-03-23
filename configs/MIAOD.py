@@ -45,5 +45,5 @@ X_L_0_size = 16551//20
 # The active learning cycles can be changed here.
 cycles = [0, 1, 2, 3, 4, 5, 6]
 # The work direction for saving logs and files can be changed here. Please refer to README.md for more information.
-work_directory = './work_dirs/MIAL'
+work_directory = './work_dirs/MI-AOD'
 
