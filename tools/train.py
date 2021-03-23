@@ -94,7 +94,7 @@ def main():
     logger.info(f'Distributed training: {distributed}')
     logger.info(f'Config:\n{cfg.pretty_text}')
 
-    # ---------- MIAL Training and Test Start Here ---------- #
+    # ---------- MI-AOD Training and Test Start Here ---------- #
 
     # set random seeds
     if args.seed is not None:
