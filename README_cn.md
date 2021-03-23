@@ -86,7 +86,7 @@ tar -xf VOCtrainval_11-May-2012.tar
 ```
 之后，请修改这个代码库中对应的数据集地址部分，它们位于：
 ```
-configs/MIAL.py 的第 1 行：data_root='$你想要存放数据集的地址/VOCdevkit/'
+configs/MIAOD.py 的第 1 行：data_root='$你想要存放数据集的地址/VOCdevkit/'
 configs/_base_/voc0712.py 的第 1 行：data_root='$你想要存放数据集的地址/VOCdevkit/'
 ```
 请把上面的 ` $你想要存放数据集的地址 ` 改为你实际的数据集地址（即你下载的 VOC 数据集的 tar 文件的地址）。
@@ -110,13 +110,13 @@ chmod 777 ./script.sh
 
  ` script.sh ` 文件会用 ID 号为 ` $你的 GPU ID 号 ` 的GPU，在 `(30000+$你的 GPU ID 号*100)` 端口号下训练与测试。
 
-日志文件不会直接在终端中输出，但是会在 `./log_nohup/nohup_$你的 GPU ID 号.log` 和 ` ./work_dirs/MIAL/$时间戳.log ` 中保存与更新。这两个文件是相同的，你可以在 `./configs/MIAL.py` 的第 48 行修改后者的地址和名称。
+日志文件不会直接在终端中输出，但是会在 `./log_nohup/nohup_$你的 GPU ID 号.log` 和 ` ./work_dirs/MI-AOD/$时间戳.log ` 中保存与更新。这两个文件是相同的，你可以在 `./configs/MIAOD.py` 的第 48 行修改后者的地址和名称。
 
-如果你愿意的话，你也可以使用 ` './work_dirs/MIAL/ ` 目录下的其他文件，它们分别是：
+如果你愿意的话，你也可以使用 ` './work_dirs/MI-AOD/ ` 目录下的其他文件，它们分别是：
 
 - **JSON 文件 `$时间戳.log.json`**
 
-  相比于使用 `./work_dirs/MIAL/$时间戳.log` 文件，你可以从 JSON 文件中更方便地加载训练时的损失（loss）和测试时的平均精确率（mAP）。
+  相比于使用 `./work_dirs/MI-AOD/$时间戳.log` 文件，你可以从 JSON 文件中更方便地加载训练时的损失（loss）和测试时的平均精确率（mAP）。
   
 - **npy 文件 `X_L_$循环次数.npy` 和 `X_U_$循环次数.npy`**
 
@@ -182,7 +182,7 @@ chmod 777 ./script.sh
 │   │   ├── default_runtime.py
 │   │   ├── retinanet_r50_fpn.py
 │   │   ├── voc0712.py
-│   ├── MIAL.py
+│   ├── MIAOD.py
 │── log_nohup
 ├── mmdet
 │   ├── apis
@@ -192,8 +192,8 @@ chmod 777 ./script.sh
 │   ├── models
 │   │   ├── dense_heads
 │   │   │   ├── __init__.py
-│   │   │   ├── MIAL_head.py
-│   │   │   ├── MIAL_retina_head.py
+│   │   │   ├── MIAOD_head.py
+│   │   │   ├── MIAOD_retina_head.py
 │   │   │   ├── base_dense_head.py 
 │   │   ├── detectors
 │   │   │   ├── base.py
@@ -203,7 +203,7 @@ chmod 777 ./script.sh
 ├── tools
 │   ├── train.py
 ├── work_dirs
-│   ├── MIAL
+│   ├── MI-AOD
 ├── script.sh
 ```
 
@@ -215,15 +215,15 @@ chmod 777 ./script.sh
 
 - **configs**: 配置文件，包括运行设置，模型设置，数据集设置和其他主动学习和 MI-AOD 自定义的设置。
 
-  - **\_\_base\_\_**: MMDetection 提供的基本配置文件夹，只需稍作修改就可以在 `.configs/MIAL.py` 中调用。
+  - **\_\_base\_\_**: MMDetection 提供的基本配置文件夹，只需稍作修改就可以在 `.configs/MIAOD.py` 中调用。
 
-    - **default_runtime.py**: 运行设置的配置文件代码，在 `./configs/MIAL.py` 中调用。
+    - **default_runtime.py**: 运行设置的配置文件代码，在 `./configs/MIAOD.py` 中调用。
 
-    - **retinanet_r50_fpn.py**: 模型训练和测试的配置文件代码，在 `./configs/MIAL.py` 中调用。
+    - **retinanet_r50_fpn.py**: 模型训练和测试的配置文件代码，在 `./configs/MIAOD.py` 中调用。
 
-    - **voc0712.py**: PASCAL VOC 数据集设置和数据预处理的配置文件代码，在 `./configs/MIAL.py` 中调用。
+    - **voc0712.py**: PASCAL VOC 数据集设置和数据预处理的配置文件代码，在 `./configs/MIAOD.py` 中调用。
 
-  - **MIAL.py**: MI-AOD 的常规配置代码，包括了主要的自定义设置，如主动学习数据集划分、模型训练和测试参数设置、自定义超参数设置、日志文件和模型存储设置，大多数都能在 `./tools/train.py` 中调用。在这个文件的注释中有每个参数更多的细节介绍。
+  - **MIAOD.py**: MI-AOD 的常规配置代码，包括了主要的自定义设置，如主动学习数据集划分、模型训练和测试参数设置、自定义超参数设置、日志文件和模型存储设置，大多数都能在 `./tools/train.py` 中调用。在这个文件的注释中有每个参数更多的细节介绍。
 
 - **log_nohup**: 暂时存储每个 GPU 上输出日志的日志文件夹。
 
@@ -243,9 +243,9 @@ chmod 777 ./script.sh
 
       - **\_\_init\_\_.py**: 当前文件夹下一些函数的初始化。
 
-      - **MIAL_head.py**: 锚（anchor）级别的模型前向传播、计算损失（loss）、生成伪标号、从现有模型输出中得到检测框的代码，在 `./mmdet/models/dense_heads/base_dense_head.py` 和 `./mmdet/models/detectors/single_stage.py` 中调用。
+      - **MIAOD_head.py**: 锚（anchor）级别的模型前向传播、计算损失（loss）、生成伪标号、从现有模型输出中得到检测框的代码，在 `./mmdet/models/dense_heads/base_dense_head.py` 和 `./mmdet/models/detectors/single_stage.py` 中调用。
 
-      - **MIAL_retina_head.py**: 搭建 MI-AOD 网络结构（尤其是精心设计的头部结构）、定义前向输出的代码，在 `./mmdet/models/dense_heads/MIAL_head.py` 中调用。
+      - **MIAOD_retina_head.py**: 搭建 MI-AOD 网络结构（尤其是精心设计的头部结构）、定义前向输出的代码，在 `./mmdet/models/dense_heads/MIAOD_head.py` 中调用。
 
       - **base_dense_head.py**: 选择不同公式计算损失（loss）的代码，在 `./mmdet/models/detectors/single_stage.py` 中调用。
 
