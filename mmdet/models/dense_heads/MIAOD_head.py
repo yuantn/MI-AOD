@@ -25,7 +25,7 @@ class MyEntLoss(nn.Module):
 
 
 @HEADS.register_module()
-class MIALHead(BaseDenseHead):
+class MIAODHead(BaseDenseHead):
     """Anchor-based head (RPN, RetinaNet, SSD, etc.).
 
     Args:
@@ -57,7 +57,7 @@ class MIALHead(BaseDenseHead):
                  SmoothL1=dict(type='SmoothL1Loss', beta=1.0 / 9.0, loss_weight=1.0),
                  train_cfg=None,
                  test_cfg=None):
-        super(MIALHead, self).__init__()
+        super(MIAODHead, self).__init__()
         self.param_lambda = train_cfg.param_lambda
         self.in_channels = in_channels
         self.C = C
@@ -599,7 +599,7 @@ class MIALHead(BaseDenseHead):
 
         Example:
             >>> import mmcv
-            >>> self = MIALHead(
+            >>> self = MIAODHead(
             >>>     C=9,
             >>>     in_channels=1,
             >>>     anchor_generator=dict(
