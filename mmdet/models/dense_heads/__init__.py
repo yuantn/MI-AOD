@@ -1,6 +1,6 @@
-from .MIAL_head import MIALHead
-from .MIAL_retina_head import MIALRetinaHead
+from .MIAOD_head import MIAODHead
+from .MIAOD_retina_head import MIAODRetinaHead
 
 __all__ = [
-    'MIALHead', 'MIALRetinaHead'
+    'MIAODHead', 'MIAODRetinaHead'
 ]
