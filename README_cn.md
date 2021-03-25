@@ -148,11 +148,11 @@ chmod 777 ./script.sh
 
 - **Google 云端硬盘:**
 
-  [日志文件](https://drive.google.com/file/d/1dC2k3SCC_C9yvp2oIlStiVHbsyyh2QuC/view?usp=sharing)
+  [日志文件](https://drive.google.com/file/d/1AabLGMoVyUjB7GiqLlLuvRgkGmzuNzqk/view?usp=sharing)
   
-  [最后一次训练得到的模型 (latest.pth)](https://drive.google.com/file/d/1gOaN3_R_QmeJ2bz0hczDmOXERTvMeSut/view?usp=sharing)
+  [最后一次训练得到的模型 (latest.pth)](https://drive.google.com/file/d/1IU29AckAhMaLLjZNSHSCsE3m9SMCKVMq/view?usp=sharing)
   
-  [整个示例输出文件夹](https://drive.google.com/file/d/1oRiT-BBx8wlTWaXEO1_3xSGls9YeiCDA/view?usp=sharing)
+  [整个示例输出文件夹](https://drive.google.com/file/d/1tJnGLwvfYm9wpObpUpH5qO8jC9JscO8q/view?usp=sharing)
 
 - **百度网盘:**
 
