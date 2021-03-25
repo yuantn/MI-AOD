@@ -156,11 +156,11 @@ chmod 777 ./script.sh
 
 - **百度网盘:**
 
-  [日志文件 (提取码: kqsj)](https://pan.baidu.com/s/1FL7si7fxX86vwqqaYC3B_g)
+  [日志文件 (提取码: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g)
   
-  [最后一次训练得到的模型 (latest.pth) (提取码: 80v5)](https://pan.baidu.com/s/1EV4V-N1TeLc8IAF5rC0y2A)
+  [最后一次训练得到的模型 (latest.pth) (提取码: 1y9x)](https://pan.baidu.com/s/1uSYIpvgN7A95YhtZjujvqg)
   
-  [整个示例输出文件夹 (提取码: 6kn2)](https://pan.baidu.com/s/1v_4frByp1_dNiPA_cuMqwQ)
+  [整个示例输出文件夹 (提取码: ztd6)](https://pan.baidu.com/s/19VmBzGWlLbqY9luFC9EwCg)
 
 ## 代码结构
 ```
