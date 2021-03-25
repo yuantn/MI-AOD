@@ -156,11 +156,11 @@ An example output folder is provided on Google Drive and Baidu Drive, including 
 
 - **Baidu Drive:**
 
-  [Log file (Extraction code: kqsj)](https://pan.baidu.com/s/1FL7si7fxX86vwqqaYC3B_g)
+  [Log file (Extraction code: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g)
   
-  [Last trained model (latest.pth) (Extraction code: 80v5)](https://pan.baidu.com/s/1EV4V-N1TeLc8IAF5rC0y2A)
+  [Last trained model (latest.pth) (Extraction code: 1y9x)](https://pan.baidu.com/s/1uSYIpvgN7A95YhtZjujvqg)
   
-  [The whole example output folder (Extraction code: 6kn2)](https://pan.baidu.com/s/1v_4frByp1_dNiPA_cuMqwQ)
+  [The whole example output folder (Extraction code: ztd6)](https://pan.baidu.com/s/19VmBzGWlLbqY9luFC9EwCg)
 
 ## Code Structure
 ```
