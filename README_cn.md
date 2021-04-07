@@ -18,6 +18,8 @@
 
 ![Results](./Results.png)
 
+更多中文版的论文解读请点击[这里](https://zhuanlan.zhihu.com/p/362764637)。
+
 ## 安装
 
 推荐使用 Linux 开发平台 (我们用的是 Ubuntu 18.04 LTS) 与 [anaconda3](https://www.anaconda.com/)，因为他们可以方便高效地安装与管理环境和 python 包。
