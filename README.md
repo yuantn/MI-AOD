@@ -4,7 +4,7 @@ Language: [简体中文](./README_cn.md) | English
 
 ## Introduction
 
-This is the code for [*Multiple Instance Active Learning for Object Detection*](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf), CVPR 2021.
+This is the code for [*Multiple Instance Active Learning for Object Detection*](https://arxiv.org/pdf/2104.02324.pdf), CVPR 2021.
 
 In this paper, we propose Multiple Instance Active Object Detection (MI-AOD), to select the most informative images for detector training by observing instance-level uncertainty. MI-AOD defines an instance uncertainty learning module, which leverages the discrepancy of two adversarial instance classifiers trained on the labeled set to predict instance uncertainty of the unlabeled set. MI-AOD treats unlabeled images as instance bags and feature anchors in images as instances, and estimates the image uncertainty by re-weighting instances in a multiple instance learning (MIL) fashion. Iterative instance uncertainty learning and re-weighting facilitate suppressing noisy instances, toward bridging the gap between instance uncertainty and image-level uncertainty.
 
@@ -273,7 +273,7 @@ The explanation of each code file or folder is as follows:
 
 ## Citation
 
-If you find this repository useful for your publications, please consider citing our [paper](https://github.com/yuantn/MI-AOD/raw/master/paper.pdf).
+If you find this repository useful for your publications, please consider citing our [paper](https://arxiv.org/pdf/2104.02324.pdf).
 
 ```angular2html
 @inproceedings{MIAOD2021,
