@@ -18,6 +18,8 @@ Experiments validate that MI-AOD sets a solid baseline for instance-level active
 
 ![Results](./Results.png)
 
+[Here](https://zhuanlan.zhihu.com/p/362764637) are more paper interpretation in Chinese.
+
 ## Installation
 
 A Linux platform (Ours are Ubuntu 18.04 LTS) and [anaconda3](https://www.anaconda.com/) is recommended, since they can install and manage environments and packages conveniently and efficiently.
