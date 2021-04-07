@@ -2,6 +2,10 @@
 
 Language: [简体中文](./README_cn.md) | English
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-pascal-voc-07-12)](https://paperswithcode.com/sota/active-object-detection-on-pascal-voc-07-12?p=multiple-instance-active-learning-for-object)
+
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-coco)](https://paperswithcode.com/sota/active-object-detection-on-coco?p=multiple-instance-active-learning-for-object)
+
 ## Introduction
 
 This is the code for [*Multiple Instance Active Learning for Object Detection*](https://arxiv.org/pdf/2104.02324.pdf), CVPR 2021.
