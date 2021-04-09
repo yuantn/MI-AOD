@@ -138,6 +138,8 @@ chmod 777 ./script.sh
 
 日志文件不会直接在终端中输出，但是会在 `./log_nohup/nohup_$你的 GPU ID 号.log` 和 ` ./work_dirs/MI-AOD/$时间戳.log ` 中保存与更新。这两个文件是相同的，你可以在 `./configs/MIAOD.py` 的第 48 行修改后者的地址和名称。
 
+如果你有任何问题，请随时在 [问题](https://github.com/yuantn/mi-aod/issues) 中留言。
+
 如果你愿意的话，你也可以使用 ` './work_dirs/MI-AOD/ ` 目录下的其他文件，它们分别是：
 
 - **JSON 文件 `$时间戳.log.json`**
