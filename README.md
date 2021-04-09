@@ -317,3 +317,7 @@ If you find this repository useful for your publications, please consider citing
 ## Acknowledgement
 
 In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection](https://github.com/open-mmlab/mmdetection).
+
+## TODO
+
+Add FAQ.md, license, a from-scratch setup script. Separate the installation with others.
