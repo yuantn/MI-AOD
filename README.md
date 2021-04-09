@@ -6,6 +6,25 @@ Language: [简体中文](./README_cn.md) | English
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-coco)](https://paperswithcode.com/sota/active-object-detection-on-coco?p=multiple-instance-active-learning-for-object)
 
+[![LICENSE](https://img.shields.io/github/license/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/blob/master/LICENSE)
+
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
+
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
+
+<!-- TOC -->
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Modification in the mmcv Package](#modification-in-the-mmcv-package)
+- [Datasets Preparation](#datasets-preparation)
+- [Training and Test](#training-and-test)
+- [Code Structure](#code-structure)
+- [Citation](#citation)
+- [Acknowledgement](#acknowledgement)
+
+<!-- TOC -->
+
 ## Introduction
 
 This is the code for [*Multiple Instance Active Learning for Object Detection*](https://arxiv.org/pdf/2104.02324.pdf), CVPR 2021.
