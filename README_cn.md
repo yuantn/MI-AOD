@@ -3,8 +3,24 @@
 语言: 简体中文 | [English](./README.md)
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-pascal-voc-07-12)](https://paperswithcode.com/sota/active-object-detection-on-pascal-voc-07-12?p=multiple-instance-active-learning-for-object)
-
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-coco)](https://paperswithcode.com/sota/active-object-detection-on-coco?p=multiple-instance-active-learning-for-object)
+
+[![LICENSE](https://img.shields.io/github/license/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/blob/master/LICENSE)
+[![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
+[![Percentage of issues still open](https://isitmaintained.com/badge/open/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
+
+<!-- TOC -->
+
+- [简介](#简介)
+- [安装](#安装)
+- [修改mmcv包](#修改mmcv包)
+- [数据集准备](#数据集准备)
+- [训练和测试](#训练和测试)
+- [代码结构](#代码结构)
+- [引用](#引用)
+- [致谢](#致谢)
+
+<!-- TOC -->
 
 ## 简介
 
