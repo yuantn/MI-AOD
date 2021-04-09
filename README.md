@@ -17,6 +17,8 @@ Language: [简体中文](./README_cn.md) | English
 - [Datasets Preparation](#datasets-preparation)
 - [Training and Test](#training-and-test)
 - [Code Structure](#code-structure)
+- [FAQ](#faq)
+- [License](#license)
 - [Citation](#citation)
 - [Acknowledgement](#acknowledgement)
 
@@ -295,6 +297,12 @@ The explanation of each code file or folder is as follows:
 
 - **script.sh**: The script to run MI-AOD on a single GPU. You can run it to train and test MI-AOD simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
 
+## FAQ
+Please refer to [FAQ](FAQ.md) for frequently asked questions.
+
+## License
+This project is released under the [Apache 2.0 license](https://github.com/yuantn/mi-aod/blob/master/LICENSE).
+
 ## Citation
 
 If you find this repository useful for your publications, please consider citing our [paper](https://arxiv.org/pdf/2104.02324.pdf).
@@ -320,4 +328,4 @@ In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection]
 
 ## TODO
 
-Add FAQ.md, license, a from-scratch setup script. Separate the installation with others.
+Add a from-scratch setup script. Separate the installation with others.
