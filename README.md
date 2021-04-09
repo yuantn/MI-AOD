@@ -3,13 +3,10 @@
 Language: [简体中文](./README_cn.md) | English
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-pascal-voc-07-12)](https://paperswithcode.com/sota/active-object-detection-on-pascal-voc-07-12?p=multiple-instance-active-learning-for-object)
-
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-coco)](https://paperswithcode.com/sota/active-object-detection-on-coco?p=multiple-instance-active-learning-for-object)
 
 [![LICENSE](https://img.shields.io/github/license/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/blob/master/LICENSE)
-
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
-
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
 
 <!-- TOC -->
