@@ -138,6 +138,8 @@ The ` script.sh ` file will use the GPU with the ID number ` $YOUR_GPU_ID ` and 
 
 The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/MI-AOD/$TIMESTAMP.log ` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `./configs/MIAOD.py` .
 
+If you have any questions, please feel free to leave a comment in [Issues](https://github.com/yuantn/mi-aod/issues).
+
 You can also use other files in the directory ` './work_dirs/MI-AOD/ ` if you like, they are as follows:
 
 - **JSON file `$TIMESTAMP.log.json`**
