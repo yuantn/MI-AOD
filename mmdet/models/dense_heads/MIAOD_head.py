@@ -58,7 +58,8 @@ class MIAODHead(BaseDenseHead):
                  train_cfg=None,
                  test_cfg=None):
         super(MIAODHead, self).__init__()
-        self.param_lambda = train_cfg.param_lambda
+        if train_cfg is not None:
+            self.param_lambda = train_cfg.param_lambda
         self.in_channels = in_channels
         self.C = C
         self.feat_channels = feat_channels
