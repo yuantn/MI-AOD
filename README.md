@@ -328,4 +328,4 @@ In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection]
 
 ## TODO
 
-Add a from-scratch setup script. Separate the installation with others.
+Add a from-scratch setup script. Separate the installation with others. Create FAQ.
