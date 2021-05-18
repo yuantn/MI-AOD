@@ -2,10 +2,15 @@
 
 语言: 简体中文 | [English](./README.md)
 
+![Python 3.7](https://img.shields.io/badge/Python-3.7-green.svg?style=plastic)
+![PyTorch 1.6](https://img.shields.io/badge/PyTorch-1.6-EE4C2C.svg?style=plastic)
+![CUDA 10.2](https://img.shields.io/badge/CUDA-10.2-green.svg?style=plastic)
+![cuDNN 7.6.5](https://img.shields.io/badge/cudnn-7.6.5-green.svg?style=plastic)
+[![LICENSE](https://img.shields.io/github/license/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/blob/master/LICENSE)
+
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-pascal-voc-07-12)](https://paperswithcode.com/sota/active-object-detection-on-pascal-voc-07-12?p=multiple-instance-active-learning-for-object)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/multiple-instance-active-learning-for-object/active-object-detection-on-coco)](https://paperswithcode.com/sota/active-object-detection-on-coco?p=multiple-instance-active-learning-for-object)
 
-[![LICENSE](https://img.shields.io/github/license/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/blob/master/LICENSE)
 [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
 
