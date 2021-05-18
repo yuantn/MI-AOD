@@ -329,3 +329,5 @@ In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection]
 ## TODO
 
 Add a from-scratch setup script. Separate the installation with others. Create FAQ.
+
+[![Stargazers repo roster for @yuantn/MI-AOD](https://reporoster.com/stars/yuantn/MI-AOD)](https://github.com/yuantn/MI-AOD/stargazers)
