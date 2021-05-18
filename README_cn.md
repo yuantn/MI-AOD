@@ -325,3 +325,5 @@ chmod 777 ./script.sh
 ## 致谢
 
 在这个代码库中，我们在 [mmdetection](https://github.com/open-mmlab/mmdetection) 的基础上在 PyTorch 上成功复现了 RetinaNet 检测网络。
+
+[![Stargazers repo roster for @yuantn/MI-AOD](https://reporoster.com/stars/yuantn/MI-AOD)](https://github.com/yuantn/MI-AOD/stargazers)
