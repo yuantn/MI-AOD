@@ -64,6 +64,8 @@ MI-AOD defines an instance uncertainty learning module, which leverages the disc
 
 ![Illustration](./Illustration.png)
 
+![Architecture](./Architecture.png)
+
 ### Innovation
 
 - Creatively design a ***tailor-made*** method for the ***active learning + object detection*** task ***for the first time***.
