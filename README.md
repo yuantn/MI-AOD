@@ -99,6 +99,12 @@ and so on. These combination of active learning and other learning method can pr
 ## Getting Started
 
 ### Installation
+<!-- 
+Please refer to [Installation.md](./installation.md) for installation.
+
+### Data Preparation
+
+### Train and Test -->
 
 A Linux platform (Ours are Ubuntu 18.04 LTS) and [anaconda3](https://www.anaconda.com/) is recommended, since they can install and manage environments and packages conveniently and efficiently.
 
