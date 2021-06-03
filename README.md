@@ -15,7 +15,7 @@ Language: [简体中文](./README_cn.md) | English
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
 
 <!-- TOC -->
-
+<!-- 
 - [Introduction](#introduction)
 - [Installation](#installation)
 - [Modification in the mmcv Package](#modification-in-the-mmcv-package)
@@ -25,45 +25,78 @@ Language: [简体中文](./README_cn.md) | English
 - [FAQ](#faq)
 - [License](#license)
 - [Citation](#citation)
-- [Acknowledgement](#acknowledgement)
+- [Acknowledgement](#acknowledgement) -->
 
-Introduction
-任务说明
-插图
-创新点
-Boarder Impact
-Getting started
-Install
-环境配置
-Data preparation
-数据集要求
-Train and Test
-训练、测试命令
-Model zoo
-models
-results
-Repository Contributor
-License
-Citation
-
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+- [Model Zoo](#model-zoo)
+- [Repository Contributor](#repository-contributor)
+- [License](#license)
+- [Citation](#citation)
 
 <!-- TOC -->
 
 ## Introduction
 
-This is the code for [*Multiple Instance Active Learning for Object Detection*](https://arxiv.org/pdf/2104.02324.pdf), CVPR 2021.
+This is the code for [***Multiple Instance Active Learning for Object Detection***](https://arxiv.org/pdf/2104.02324.pdf), CVPR 2021.
 
-In this paper, we propose Multiple Instance Active Object Detection (MI-AOD), to select the most informative images for detector training by observing instance-level uncertainty. MI-AOD defines an instance uncertainty learning module, which leverages the discrepancy of two adversarial instance classifiers trained on the labeled set to predict instance uncertainty of the unlabeled set. MI-AOD treats unlabeled images as instance bags and feature anchors in images as instances, and estimates the image uncertainty by re-weighting instances in a multiple instance learning (MIL) fashion. Iterative instance uncertainty learning and re-weighting facilitate suppressing noisy instances, toward bridging the gap between instance uncertainty and image-level uncertainty.
+### Task Description
 
-![Illustration](./CVPR-MI-AOD.png)
+In this paper, we propose ___Multiple Instance Active Object Detection (MI-AOD)___, to select the most informative images for detector training by observing instance-level uncertainty.
 
-Experiments validate that MI-AOD sets a solid baseline for instance-level active learning. On commonly used object detection datasets, MI-AOD outperforms state-of-the-art methods with significant margins, particularly when the labeled sets are small.
+The process of active object detection (active learning for object detection) is shown in the figure below.
+
+![Task](./Task.png)
+
+First, a small set of images ![X_L](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0}) (the labeled set) with instance labels ![Y_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{Y}_\mathit{L}^\mathrm{0}) and a large set of images ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) (the unlabeled set) without labels are given. For each image, the label consists of bounding boxes ![y_x^loc](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{loc}) and categories ![y_x^cls](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{cls}) for objects of interest.
+
+A detection model ![M_0](http://latex.codecogs.com/gif.latex?\bg_white\mathit{M}_0) is firstly initialized by using the labeled set {![{X_L^0, Y_L^0}](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0},\cal{Y}_\mathit{L}^\mathrm{0})}. With the initialized model ![M_0](http://latex.codecogs.com/gif.latex?\bg_white\mathit{M}_0), active learning targets at selecting a set of images ![X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{S}^\mathrm{0}) from ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) to be manually labeled and merging them with ![X_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0}) for a new labeled set ![X_L^1](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{1}), _i.e._, ![X_L^1 = X_L^0 \union X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{1}=\cal{X}_\mathit{L}^\mathrm{0}\cup\cal{X}_\mathit{S}^\mathrm{0}). The selected image set ![X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{S}^\mathrm{0}) should be the most informative, _i.e._, can improve the detection performance as much as possible.
+
+> The informativeness in the figure above is embodied as the uncertainty. That is to say, with the sample in ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) input into the current model, if the output score of the model for each class is more uniform, the uncertainty of this sample is higher.
+
+Based on the updated labeled set ![X_L^1](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{1}), the task model is retrained and updated to ![M_1](http://latex.codecogs.com/gif.latex?\bg_white\mathit{M}_1). The model training and sample selection repeat some cycles until the size of labeled set reaches the annotation budget.
+
+### Illustration
+
+MI-AOD defines an instance uncertainty learning module, which leverages the discrepancy of two adversarial instance classifiers trained on the labeled set to predict instance uncertainty of the unlabeled set. MI-AOD treats unlabeled images as instance bags and feature anchors in images as instances, and estimates the image uncertainty by re-weighting instances in a multiple instance learning (MIL) fashion. Iterative instance uncertainty learning and re-weighting facilitate suppressing noisy instances, toward bridging the gap between instance uncertainty and image-level uncertainty.
+
+[Here](https://zhuanlan.zhihu.com/p/362764637) and [here](https://blog.csdn.net/yuantn1996/article/details/115490388) are more paper interpretation in Chinese.
+
+![Illustration](./Illustration.png)
+
+### Innovation
+
+- Creatively design a ***tailor-made*** method for the ***active learning + object detection*** task ***for the first time***.
+
+- Achieve ***93.5%*** of the performance of 100% labeled data by using only ***20%*** of the labeled data on the PASCAL VOC dataset.
+
+- Active learning was applied to the ***MS COCO*** dataset ***for the first time*** with the best performance.
+
+- The idea is clear and simple, and can be generalized to ***any types of*** detection models.
 
 ![Results](./Results.png)
 
-[Here](https://zhuanlan.zhihu.com/p/362764637) are more paper interpretation in Chinese.
+### Boarder Impact
 
-## Installation
+MI-AOD focuses on object detection (OD), but it can be also generalized to:
+  - any other **visual object detection tasks** (tiny object detection, pedestrian detection, medical image detection),
+  - any other **computer vision tasks** (human pose detection, semantic/instance segmentation, temporal action detection),
+  - and any other **machine learning tasks** like natural language processing,
+
+by combining active learning with these tasks. This bottom-up and top-down idea can be generalized and applied to any of these tasks.
+
+Notice that active learning works a lot for visual object detection in MI-AOD, other learning methods with less supervision can be combined with it, such as:
+  - active **few-shot** learning,
+  - active **semi-/weak/self supervised** learning,
+  - active **transfer** learning,
+  - active **reinforcement** learning,
+  - active **incremental** learning,
+
+and so on. These combination of active learning and other learning method can promote each other to a greater extent.
+
+## Getting Started
+
+### Installation
 
 A Linux platform (Ours are Ubuntu 18.04 LTS) and [anaconda3](https://www.anaconda.com/) is recommended, since they can install and manage environments and packages conveniently and efficiently.
 
@@ -167,6 +200,10 @@ The log file will not flush in the terminal, but will be saved and updated in th
 
 If you have any questions, please feel free to leave a comment in [Issues](https://github.com/yuantn/mi-aod/issues).
 
+Please refer to [FAQ](FAQ.md) for frequently asked questions.
+
+## Model Zoo
+
 You can also use other files in the directory ` './work_dirs/MI-AOD/ ` if you like, they are as follows:
 
 - **JSON file `$TIMESTAMP.log.json`**
@@ -216,6 +253,8 @@ An example output folder is provided on Google Drive and Baidu Drive, including 
   [Last trained model (latest.pth) (Extraction code: 1y9x)](https://pan.baidu.com/s/1uSYIpvgN7A95YhtZjujvqg)
   
   [The whole example output folder (Extraction code: ztd6)](https://pan.baidu.com/s/19VmBzGWlLbqY9luFC9EwCg)
+  
+
 
 ## Code Structure
 ```
@@ -322,8 +361,9 @@ The explanation of each code file or folder is as follows:
 
 - **script.sh**: The script to run MI-AOD on a single GPU. You can run it to train and test MI-AOD simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
 
-## FAQ
-Please refer to [FAQ](FAQ.md) for frequently asked questions.
+## Repository Contributor
+
+In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection](https://github.com/open-mmlab/mmdetection).
 
 ## License
 This project is released under the [Apache 2.0 license](https://github.com/yuantn/mi-aod/blob/master/LICENSE).
@@ -347,12 +387,8 @@ If you find this repository useful for your publications, please consider citing
 }
 ```
 
-## Acknowledgement
-
-In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection](https://github.com/open-mmlab/mmdetection).
+[![Stargazers repo roster for @yuantn/MI-AOD](https://reporoster.com/stars/yuantn/MI-AOD)](https://github.com/yuantn/MI-AOD/stargazers)
 
 ## TODO
 
 Add a from-scratch setup script. Separate the installation with others. Create FAQ.
-
-[![Stargazers repo roster for @yuantn/MI-AOD](https://reporoster.com/stars/yuantn/MI-AOD)](https://github.com/yuantn/MI-AOD/stargazers)
