@@ -46,7 +46,7 @@ In this paper, we propose ___Multiple Instance Active Object Detection (MI-AOD)_
 
 The process of active object detection (active learning for object detection) is shown in the figure below.
 
-![Task](./Task.png)
+![Task](./figures/Task.png)
 
 First, a small set of images ![X_L](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0}) (the labeled set) with instance labels ![Y_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{Y}_\mathit{L}^\mathrm{0}) and a large set of images ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) (the unlabeled set) without labels are given. For each image, the label consists of bounding boxes ![y_x^loc](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{loc}) and categories ![y_x^cls](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{cls}) for objects of interest.
 
@@ -62,9 +62,9 @@ MI-AOD defines an instance uncertainty learning module, which leverages the disc
 
 [Here](https://zhuanlan.zhihu.com/p/362764637) and [here](https://blog.csdn.net/yuantn1996/article/details/115490388) are more paper interpretation in Chinese.
 
-![Illustration](./Illustration.png)
+![Illustration](./figures/Illustration.png)
 
-![Architecture](./Architecture.png)
+![Architecture](./figures/Architecture.png)
 
 ### Innovation
 
@@ -76,7 +76,7 @@ MI-AOD defines an instance uncertainty learning module, which leverages the disc
 
 - The idea is clear and simple, and can be generalized to ***any types of*** detection models.
 
-![Results](./Results.png)
+![Results](./figures/Results.png)
 
 ### Boarder Impact
 
@@ -99,54 +99,10 @@ and so on. These combination of active learning and other learning method can pr
 ## Getting Started
 
 ### Installation
-<!-- 
+
 Please refer to [Installation.md](./installation.md) for installation.
 
 ### Data Preparation
-
-### Train and Test -->
-
-A Linux platform (Ours are Ubuntu 18.04 LTS) and [anaconda3](https://www.anaconda.com/) is recommended, since they can install and manage environments and packages conveniently and efficiently.
-
-A TITAN V GPU and [CUDA 10.2](https://developer.nvidia.com/cuda-toolkit-archive) with [CuDNN 7.6.5](https://developer.nvidia.com/cudnn) is recommended, since they can speed up model training.
-
-After anaconda3 installation, you can create a conda environment as below:
-
-```
-conda create -n miaod python=3.7 -y
-conda activate miaod
-```
-
-Please refer to [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) and the [install.md](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md) of it for environment installation.
-
-And then please clone this repository as below:
-
-```
-git clone https://github.com/yuantn/MI-AOD.git
-cd MI-AOD
-```
-
-If it is too slow, you can also try downloading the repository like this:
-
-```
-wget https://github.com/yuantn/MI-AOD/archive/master.zip
-unzip master.zip
-cd MI-AOD-master
-```
-
-## Modification in the mmcv Package
-
-To train with two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time, you will need to modify the ` epoch_based_runner.py ` in the mmcv package.
-
-Considering that this will affect all code that uses this environment, so we suggest you set up a separate environment for MI-AOD (i.e., the ` miaod ` environment created above).
-
-```
-cp -v epoch_based_runner.py ~/anaconda3/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
-```
-
-After that, if you have modified anything in the mmcv package (including but not limited to: updating/re-installing Python, PyTorch, mmdetection, mmcv, mmcv-full, conda environment), you are supposed to copy the “epoch_base_runner.py” provided in this repository to the mmcv directory again. ([Issue #3](../../issues/3))
-
-## Datasets Preparation
 
 Please download VOC2007 datasets ( *trainval* + *test* ) and VOC2012 datasets ( *trainval* ) from:
 
@@ -187,11 +143,13 @@ Please change the ` $YOUR_DATASET_PATH `s above to your actual dataset directory
 
 And please use the absolute path (i.e., start with ` / `) but not a relative path (i.e., start with ` ./ ` or ` ../ `）.
 
-## Training and Test
+### Train and Test
 
 We recommend you to use a GPU but not a CPU to train and test, because it will greatly shorten the time.
 
 And we also recommend you to use a single GPU, because the usage of multi-GPU may result in errors caused by the multi-processing of the dataloader.
+
+However, [Kevin Chow](https://github.com/kevinchow1993) has proposed a feasible solution to train on multiple GPUs [here](../../issues/11).
 
 If you use only a single GPU, you can use the ` script.sh ` file directly as below:
 ```
@@ -206,65 +164,11 @@ The ` script.sh ` file will use the GPU with the ID number ` $YOUR_GPU_ID ` and 
 
 The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/MI-AOD/$TIMESTAMP.log ` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `./configs/MIAOD.py` .
 
-If you have any questions, please feel free to leave a comment in [Issues](https://github.com/yuantn/mi-aod/issues).
+If you have any question, please feel free to leave a issue [here](../../issues).
 
-Please refer to [FAQ](FAQ.md) for frequently asked questions.
+And please refer to [FAQ](FAQ.md) for frequently asked questions.
 
-## Model Zoo
-
-You can also use other files in the directory ` './work_dirs/MI-AOD/ ` if you like, they are as follows:
-
-- **JSON file `$TIMESTAMP.log.json`**
-
-  You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/MI-AOD/$TIMESTAMP.log` file.
-
-- **npy file `X_L_$CYCLE.npy` and `X_U_$CYCLE.npy`**
-
-  The `$CYCLE` is an integer from 0 to 6, which are the active learning cycles.
-
-  You can load the indexes of the labeled set and unlabeled set for each cycle from them.
-
-  The indexes are the integers from 0 to 16550 for PASCAL VOC datasets, where 0 to 5010 is for PASCAL VOC 2007 *trainval* set and 5011 to 16550 for PASCAL VOC 2012 *trainval* set.
-
-  An example code for loading these files is the Line 108-114 in the `./tools/train.py` file (which are in comments now).
-
-- **pth file `epoch_$EPOCH.pth` and `latest.pth`**
-
-  The `$EPOCH` is an integer from 0 to 2, which are the epochs of the last label set training.
-
-  You can load the model state dictionary from them.
-
-  An example code for loading these files is the Line 109, 143-145 in the `./tools/train.py` file (which are in comments now).
-
-- **txt file `trainval_L_07.txt`, `trainval_U_07.txt`, `trainval_L_12.txt` and `trainval_U_12.txt` in each `cycle$CYCLE` directory**
-
-  The `$CYCLE` is the same as above.
-
-  You can load the names of JPEG images of the labeled set and unlabeled set for each cycle from them.
-
-  "L" is for the labeled set and "U" is for the unlabeled set. "07" is for the PASCAL VOC 2007 *trainval* set and "12" is for the PASCAL VOC 2012 *trainval* set.
-  
-An example output folder is provided on Google Drive and Baidu Drive, including the log file, the last trained model, and all other files above.
-
-- **Google Drive:**
-
-  [Log file](https://drive.google.com/file/d/1AabLGMoVyUjB7GiqLlLuvRgkGmzuNzqk/view?usp=sharing)
-  
-  [Last trained model (latest.pth)](https://drive.google.com/file/d/1IU29AckAhMaLLjZNSHSCsE3m9SMCKVMq/view?usp=sharing)
-  
-  [The whole example output folder](https://drive.google.com/file/d/1tJnGLwvfYm9wpObpUpH5qO8jC9JscO8q/view?usp=sharing)
-
-- **Baidu Drive:**
-
-  [Log file (Extraction code: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g)
-  
-  [Last trained model (latest.pth) (Extraction code: 1y9x)](https://pan.baidu.com/s/1uSYIpvgN7A95YhtZjujvqg)
-  
-  [The whole example output folder (Extraction code: ztd6)](https://pan.baidu.com/s/19VmBzGWlLbqY9luFC9EwCg)
-  
-
-
-## Code Structure
+#### Code Structure
 ```
 ├── $YOUR_ANACONDA_DIRECTORY
 │   ├── anaconda3
@@ -309,7 +213,7 @@ An example output folder is provided on Google Drive and Baidu Drive, including 
 ├── script.sh
 ```
 
-The code files and folders shown above are the main part of MI-AOD, while other code files and folders are created following MMDetection to avoid potential problems.
+The code files and folders shown above are the main part of MI-AOD, while other code files and folders are created following MMDetection V2.3.0 to avoid potential problems.
 
 The explanation of each code file or folder is as follows:
 
@@ -369,6 +273,52 @@ The explanation of each code file or folder is as follows:
 
 - **script.sh**: The script to run MI-AOD on a single GPU. You can run it to train and test MI-AOD simply and directly mentioned in the **Training and Test** part above as long as you have prepared the conda environment and PASCAL VOC 2007+2012 datasets.
 
+## Model Zoo
+
+### Models
+
+The trained model for the last cycle in active learning (_i.e._, using 20% labeled samples) are available on [Google Drive](https://drive.google.com/file/d/1IU29AckAhMaLLjZNSHSCsE3m9SMCKVMq/view?usp=sharing) and [Baidu Drive (Extraction code: 1y9x)](https://pan.baidu.com/s/1uSYIpvgN7A95YhtZjujvqg).
+  
+### Results
+
+![Results_RetinaNet_VOC](./figures/Results_RetinaNet_VOC.png)
+
+The training and test logs are available on [Google Drive](https://drive.google.com/file/d/1AabLGMoVyUjB7GiqLlLuvRgkGmzuNzqk/view?usp=sharing) and [Baidu Drive (Extraction code: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g).
+
+You can also use other files in the directory ` './work_dirs/MI-AOD/ ` if you like, they are as follows:
+
+- **JSON file `$TIMESTAMP.log.json`**
+
+  You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/MI-AOD/$TIMESTAMP.log` file.
+
+- **npy file `X_L_$CYCLE.npy` and `X_U_$CYCLE.npy`**
+
+  The `$CYCLE` is an integer from 0 to 6, which are the active learning cycles.
+
+  You can load the indexes of the labeled set and unlabeled set for each cycle from them.
+
+  The indexes are the integers from 0 to 16550 for PASCAL VOC datasets, where 0 to 5010 is for PASCAL VOC 2007 *trainval* set and 5011 to 16550 for PASCAL VOC 2012 *trainval* set.
+
+  An example code for loading these files is the Line 108-114 in the `./tools/train.py` file (which are in comments now).
+
+- **pth file `epoch_$EPOCH.pth` and `latest.pth`**
+
+  The `$EPOCH` is an integer from 0 to 2, which are the epochs of the last label set training.
+
+  You can load the model state dictionary from them.
+
+  An example code for loading these files is the Line 109, 143-145 in the `./tools/train.py` file (which are in comments now).
+
+- **txt file `trainval_L_07.txt`, `trainval_U_07.txt`, `trainval_L_12.txt` and `trainval_U_12.txt` in each `cycle$CYCLE` directory**
+
+  The `$CYCLE` is the same as above.
+
+  You can load the names of JPEG images of the labeled set and unlabeled set for each cycle from them.
+
+  "L" is for the labeled set and "U" is for the unlabeled set. "07" is for the PASCAL VOC 2007 *trainval* set and "12" is for the PASCAL VOC 2012 *trainval* set.
+  
+An example output folder is provided on [Google Drive](https://drive.google.com/file/d/1tJnGLwvfYm9wpObpUpH5qO8jC9JscO8q/view?usp=sharing) and [Baidu Drive (Extraction code: ztd6)](https://pan.baidu.com/s/19VmBzGWlLbqY9luFC9EwCg), including the log file, the last trained model, and all other files above.
+
 ## Repository Contributor
 
 In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection](https://github.com/open-mmlab/mmdetection).
@@ -396,7 +346,3 @@ If you find this repository useful for your publications, please consider citing
 ```
 
 [![Stargazers repo roster for @yuantn/MI-AOD](https://reporoster.com/stars/yuantn/MI-AOD)](https://github.com/yuantn/MI-AOD/stargazers)
-
-## TODO
-
-Add a from-scratch setup script. Separate the installation with others. Create FAQ.
