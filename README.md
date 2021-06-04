@@ -15,17 +15,6 @@ Language: [简体中文](./README_cn.md) | English
 [![Percentage of issues still open](https://isitmaintained.com/badge/open/yuantn/mi-aod.svg)](https://github.com/yuantn/mi-aod/issues)
 
 <!-- TOC -->
-<!-- 
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Modification in the mmcv Package](#modification-in-the-mmcv-package)
-- [Datasets Preparation](#datasets-preparation)
-- [Training and Test](#training-and-test)
-- [Code Structure](#code-structure)
-- [FAQ](#faq)
-- [License](#license)
-- [Citation](#citation)
-- [Acknowledgement](#acknowledgement) -->
 
 - [Introduction](#introduction)
 - [Getting Started](#getting-started)
