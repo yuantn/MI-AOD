@@ -100,7 +100,7 @@ and so on. These combination of active learning and other learning method can pr
 
 ### Installation
 
-Please refer to [Installation.md](./installation.md) for installation.
+Please refer to [Installation.md](./docs/installation.md) for installation.
 
 ### Data Preparation
 
@@ -166,7 +166,7 @@ The log file will not flush in the terminal, but will be saved and updated in th
 
 If you have any question, please feel free to leave a issue [here](../../issues).
 
-And please refer to [FAQ](FAQ.md) for frequently asked questions.
+And please refer to [FAQ](./docs/FAQ.md) for frequently asked questions.
 
 #### Code Structure
 ```
