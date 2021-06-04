@@ -154,4 +154,4 @@ pip install -v -e .
 cp -v epoch_based_runner.py $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
 ```
 
-If you have more question, please feel free to leave an issue [here](../../issues), or refer to [install.md in MMDetection V2.3.0](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md).
+If you have any question, please feel free to leave an issue [here](../../issues), or refer to [install.md in MMDetection V2.3.0](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md).
