@@ -148,7 +148,7 @@ pip install mmcv-full==1.0.5+torch1.6.0+cu102 -f https://download.openmmlab.com/
 git clone https://github.com/yuantn/MI-AOD.git
 cd MI-AOD
 pip install -r requirements/build.txt
-pip install -v -e .
+pip install -v -e .  # or "python setup.py develop"
 
 # modify epoch_based_runner.py
 cp -v epoch_based_runner.py $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
