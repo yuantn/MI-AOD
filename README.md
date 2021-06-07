@@ -37,7 +37,7 @@ The process of active object detection (active learning for object detection) is
 
 ![Task](./figures/Task.png)
 
-First, a small set of images ![X_L](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0}) (the labeled set) with instance labels ![Y_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{Y}_\mathit{L}^\mathrm{0}) and a large set of images ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) (the unlabeled set) without labels are given. For each image, the label consists of bounding boxes ![y_x^loc](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{loc}) and categories ![y_x^cls](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{cls}) for objects of interest.
+First, a small set of images ![X_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0}) (the labeled set) with instance labels ![Y_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{Y}_\mathit{L}^\mathrm{0}) and a large set of images ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) (the unlabeled set) without labels are given. For each image, the label consists of bounding boxes ![y_x^loc](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{loc}) and categories ![y_x^cls](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{cls}) for objects of interest.
 
 A detection model ![M_0](http://latex.codecogs.com/gif.latex?\bg_white\mathit{M}_0) is firstly initialized by using the labeled set {![{X_L^0, Y_L^0}](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0},\cal{Y}_\mathit{L}^\mathrm{0})}. With the initialized model ![M_0](http://latex.codecogs.com/gif.latex?\bg_white\mathit{M}_0), active learning targets at selecting a set of images ![X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{S}^\mathrm{0}) from ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) to be manually labeled and merging them with ![X_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0}) for a new labeled set ![X_L^1](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{1}), _i.e._, ![X_L^1 = X_L^0 \union X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{1}=\cal{X}_\mathit{L}^\mathrm{0}\cup\cal{X}_\mathit{S}^\mathrm{0}). The selected image set ![X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{S}^\mathrm{0}) should be the most informative, _i.e._, can improve the detection performance as much as possible.
 
@@ -114,7 +114,7 @@ And after that, please ensure the file directory tree is as below:
 │   │   ├── JPEGImages
 ```
 You may also use the following commands directly:
-```bash
+```shell
 cd $YOUR_DATASET_PATH
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
@@ -138,7 +138,7 @@ We recommend you to use a GPU but not a CPU to train and test, because it will g
 
 And we also recommend you to use a single GPU, because the usage of multi-GPU may result in errors caused by the multi-processing of the dataloader.
 
-However, [Kevin Chow](https://github.com/kevinchow1993) has proposed a feasible solution to train on multiple GPUs [here](../../issues/11).
+However, thanks to [@Kevin Chow](https://github.com/kevinchow1993), [here](../../issues/11) is a feasible solution to train on multiple GPUs.
 
 If you use only a single GPU, you can use the ` script.sh ` file directly as below:
 ```bash
@@ -313,7 +313,7 @@ An example output folder is provided on [Google Drive](https://drive.google.com/
 In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection](https://github.com/open-mmlab/mmdetection). Thanks for their contribution.
 
 ## License
-This project is released under the [Apache 2.0 license](https://github.com/yuantn/mi-aod/blob/master/LICENSE).
+This project is released under the [Apache 2.0 license](./LICENSE).
 
 ## Citation
 
