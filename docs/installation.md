@@ -4,7 +4,7 @@
 
 - [Prerequisites](#prerequisites)
 - [Environment Installation](#environment-installation)
-- [Modification in the MMCV Package](#modification-in-the-mmcv-ackage)
+- [Modification in the MMCV Package](#modification-in-the-mmcv-package)
 - [A From-scratch Setup Script](#a-from-scratch-setup-script)
 
 <!-- TOC -->
