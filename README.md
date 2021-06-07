@@ -114,7 +114,7 @@ And after that, please ensure the file directory tree is as below:
 │   │   ├── JPEGImages
 ```
 You may also use the following commands directly:
-```
+```bash
 cd $YOUR_DATASET_PATH
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
@@ -141,7 +141,7 @@ And we also recommend you to use a single GPU, because the usage of multi-GPU ma
 However, [Kevin Chow](https://github.com/kevinchow1993) has proposed a feasible solution to train on multiple GPUs [here](../../issues/11).
 
 If you use only a single GPU, you can use the ` script.sh ` file directly as below:
-```
+```bash
 chmod 700 ./script.sh
 ./script.sh $YOUR_GPU_ID
 ```
@@ -319,7 +319,7 @@ This project is released under the [Apache 2.0 license](https://github.com/yuant
 
 If you find this repository useful for your publications, please consider citing our [paper](https://arxiv.org/pdf/2104.02324.pdf).
 
-```angular2html
+```bibtex
 @inproceedings{MIAOD2021,
     author    = {Tianning Yuan and
                  Fang Wan and
