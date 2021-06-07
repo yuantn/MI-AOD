@@ -83,14 +83,14 @@ Before everything starts, please ensure that you already have **Anaconda3** and 
 
 4. Please clone the MI-AOD repository.
 
-    ```
+    ```shell
     git clone https://github.com/yuantn/MI-AOD.git
     cd MI-AOD
     ```
 
     If it is too slow, you can also try downloading the repository like this:
 
-    ```
+    ```shell
     wget https://github.com/yuantn/MI-AOD/archive/master.zip
     unzip master.zip
     cd MI-AOD-master
@@ -121,7 +121,7 @@ you will need to modify the ` epoch_based_runner.py ` in the mmcv package.
 Considering that this will affect all code that uses this environment,
 so we suggest you set up a separate environment for MI-AOD (i.e., the ` miaod ` environment created above).
 
-```
+```shell
 cp -v epoch_based_runner.py $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
 ```
 
