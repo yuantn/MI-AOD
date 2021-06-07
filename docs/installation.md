@@ -1,72 +1,72 @@
-# Installation
+# 安装
 
 <!-- TOC -->
 
-- [Prerequisites](#prerequisites)
-- [Environment Installation](#environment-installation)
-- [Modification in the MMCV Package](#modification-in-the-mmcv-package)
-- [A From-scratch Setup Script](#a-from-scratch-setup-script)
+- [安装前准备](#安装前准备)
+- [环境安装](#环境安装)
+- [修改 MMCV 包](#修改-mmcv-包)
+- [从头开始的安装脚本](#从头开始的安装脚本)
 
 <!-- TOC -->
 
-## Prerequisites
+## 安装前准备
 
 - GPU
-- Linux platform (Ubuntu and CentOS are recommended, **Ubuntu 16.04, Ubuntu 18.04** and **CentOS 7.6** have been tested.)
+- Linux 开发平台 （推荐使用 Ubuntu 和 CentOS，我们在 **Ubuntu 16.04**、**Ubuntu 18.04**、**CentOS 7.6** 上测试过。）
 - [Anaconda3](https://www.anaconda.com/)
-- Python 3.6+ (**Python 3.7** is recommended and has been tested.)
-- [PyTorch 1.3+](https://pytorch.org/) (**PyTorch 1.6** is recommended and has been tested.)
-- [CUDA 9.2+](https://developer.nvidia.com/cuda-toolkit-archive) (**CUDA 10.2** is recommended and has been tested. If you build PyTorch from source, CUDA 9.0 is also compatible.)
-- [CuDNN](https://developer.nvidia.com/cudnn) (Optional. **CuDNN 7.6.5** has been tested.)
-- GCC 5+ (**GCC 4.8.5, 5.5.0 and 7.5.0** are recommended and have been tested.)
-- [MMCV](https://mmcv.readthedocs.io/en/latest/#installation) (**MMCV 1.0.5** is highly recommended and have been tested. It is the only MMCV version compatible with [MMDetection 2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0), which is the base of this MI-AOD repository.)
+- Python 3.6+ （推荐使用 **Python 3.7**，我们用它测试过。）
+- [PyTorch 1.3+](https://pytorch.org/) （推荐使用 **PyTorch 1.6**，我们用它测试过。）
+- [CUDA 9.2+](https://developer.nvidia.com/cuda-toolkit-archive) （推荐使用 **CUDA 10.2**，我们用它测试过。如果你从源代码来搭建 PyTorch，那么 CUDA 9.0 也可以兼容。）
+- [CuDNN](https://developer.nvidia.com/cudnn) （可选项，我们用 **CuDNN 7.6.5** 测试过。）
+- GCC 5+ （推荐使用 **GCC 4.8.5, 5.5.0 and 7.5.0**，我们用它们测试过。）
+- [MMCV](https://mmcv.readthedocs.io/en/latest/#installation) （非常推荐使用 **MMCV 1.0.5**，我们用它测试过。它是唯一一个和 [MMDetection 2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) 兼容的 MMCV 版本，这套 MI-AOD 代码是在该版本的 MMDetection 基础上编写的。
 
-[Here](https://github.com/open-mmlab/mmdetection/blob/master/docs/get_started.md#prerequisites) are the compatible MMDetection and MMCV versions.
-Please install the correct version of MMCV to avoid installation issues.
+[这里](https://github.com/open-mmlab/mmdetection/blob/master/docs/get_started.md#prerequisites) 是可兼容的 MMDetection 和 MMCV 版本。
+为避免安装上的问题，请安装正确的 MMCV 版本。
 
-Note: You need to run `pip uninstall mmcv` first if you have mmcv installed.
-If mmcv and mmcv-full are both installed, there will be `ModuleNotFoundError`.
+注意：如果你安装了 mmcv，你需要先运行 `pip uninstall mmcv`。
+如果安装了 mmcv 和 mmcv-full，那将会报错 `ModuleNotFoundError`。
 
-## Environment Installation
+## 环境安装
 
-Before everything starts, please ensure that you already have **Anaconda3** and **CUDA 10.2** installed.
+在一切开始前，请确保你已经安装了 **Anaconda3** 和 **CUDA 10.2**。
 
-<!-- 0. You can simply install mmdetection with the following commands:
+<!-- 0. 你可以直接用如下命令简单安装 mmdetection：
     `pip install mmdet` -->
 
-1. Please create a conda virtual environment with **Python 3.7** and activate it.
+1. 请用 **Python 3.7** 创建一个 conda 虚拟环境，并激活它。
 
     ```shell
     conda create -n miaod python=3.7 -y
     conda activate miaod
     ```
 
-2. Please install **PyTorch 1.6.0** and **torchvision 0.7.0** for **CUDA 10.2** following the [official instructions](https://pytorch.org/get-started/previous-versions/#v160), e.g.,
+2. 请根据 [官方说明](https://pytorch.org/get-started/previous-versions/#v160) 安装与 **CUDA 10.2** 匹配的 **PyTorch 1.6.0** 和 **torchvision 0.7.0**，例如：
 
     ```shell
     conda install pytorch==1.6.0 torchvision==0.7.0 cudatoolkit=10.2 -c pytorch
     ```
 
-    Please note: make sure that your compilation CUDA version and runtime CUDA version match.
-    You can check the supported CUDA version for precompiled packages on the [PyTorch website](https://pytorch.org/get-started/previous-versions/#v160).
+    请注意：确保你编译的 CUDA 版本和运行的 CUDA 版本相匹配。
+    你可以在 [Pytorch 网站](https://pytorch.org/get-started/previous-versions/#v160) 上检查支持的 CUDA 版本的预编译包。
+    
+    如果你从源代码搭建 PyTorch，而不是安装预编译包的话，你可以用更多版本的 CUDA （如 9.0）。
 
-    If you build PyTorch from source instead of installing the prebuilt package, you can use more CUDA versions such as 9.0.
-
-3. Please install mmcv-full, we recommend you to install the pre-build package as below.
+3. 请安装 mmcv-full，我们推荐你用如下的命令安装搭建好的包。
 
     ```shell
-    pip install mmcv-full=={mmcv_version} -f https://download.openmmlab.com/mmcv/dist/{cu_version}/{torch_version}/index.html
+    pip install mmcv-full=={mmcv_版本} -f https://download.openmmlab.com/mmcv/dist/{cuda_版本}/{torch_版本}/index.html
     ```
 
-    Please replace `{mmcv_version}`, `{cu_version}` and `{torch_version}` in the url to your desired one. **Our recommended is, to install the `mmcv-full 1.0.5` with `CUDA 10.2` and `PyTorch 1.6.0`**, use the following command:
+    请将网址中的 `{mmcv_版本}`、`{cuda_版本}`、`{torch_版本}` 替换为你想要的版本。**我们推荐，安装 `CUDA 10.2` 和 `PyTorch 1.6.0` 下的 `mmcv-full 1.0.5`**，命令行如下：
 
     ```shell
     pip install mmcv-full==1.0.5 -f https://download.openmmlab.com/mmcv/dist/cu102/torch1.6.0/index.html
     ```
 
-    Please see [here](https://github.com/open-mmlab/mmcv#installation) for different versions of MMCV compatible to different PyTorch and CUDA versions.
-    Optionally you can choose to compile mmcv from source by the following command
-
+    关于与不同 PyTorch 和 CUDA 版本兼容的 MMCV 版本，请参见 [这里](https://github.com/open-mmlab/mmcv#installation)。
+    或者你也可以选择用如下命令行从源代码编译 mmcv：
+    
     ```shell
     wget https://github.com/open-mmlab/mmcv/archive/refs/tags/v1.0.5.zip
     unzip mmcv-1.0.5
@@ -75,20 +75,20 @@ Before everything starts, please ensure that you already have **Anaconda3** and 
     cd ..
     ```
 
-    Or directly run
-
+    或者直接运行
+  
     ```shell
     pip install mmcv-full==1.0.5
     ```
-
-4. Please clone the MI-AOD repository.
+  
+4. 请克隆 MI-AOD 代码库。
 
     ```shell
     git clone https://github.com/yuantn/MI-AOD.git
     cd MI-AOD
     ```
-
-    If it is too slow, you can also try downloading the repository like this:
+    
+    如果那样太慢的话，你也可以尝试像这样直接下载这个代码库：
 
     ```shell
     wget https://github.com/yuantn/MI-AOD/archive/master.zip
@@ -96,44 +96,44 @@ Before everything starts, please ensure that you already have **Anaconda3** and 
     cd MI-AOD-master
     ```
 
-5. Please install build requirements and then install and compile MMDetection in MI-AOD.
+5. 请安装搭建代码需要的包，然后在 MI-AOD 中安装与编译 MMDetection。
 
     ```shell
     pip install -r requirements/build.txt
     pip install -v -e .  # or "python setup.py develop"
     ```
+    
+请注意：
 
-Please note:
+a. 按照上面的说明，MMDetection 是以 `dev` 模式安装的，任何本地对代码的修改都会生效，而不用重新安装它。
 
-a. Following the above instructions, MMDetection is installed on `dev` mode, any local modifications made to the code will take effect without the need to reinstall it.
+b. 如果你愿意使用 `opencv-python-headless` 而不是 `opencv-python`，你可以在安装 MMCV 之前安装它。
 
-b. If you would like to use `opencv-python-headless` instead of `opencv-python`, you can install it before installing MMCV.
+c. 一些依赖项是可选的。若仅以最小运行需求安装，直接运行 `pip install -v -e .` 即可。
+若要使用像 `albumentations` 和 `imagecorruptions` 之类的可选依赖项，则可手动使用 `pip install -r requirements/optional.txt` 安装它们，
+也可以在调用 `pip` 命令时明确额外的需求 （例如，`pip install -v -e .[optional]`）。
+对于额外的域而言，有效键为：`all`、`tests`、`build`、`optional`。
 
-c. Some dependencies are optional. Simply running `pip install -v -e .` will only install the minimum runtime requirements.
-To use optional dependencies like `albumentations` and `imagecorruptions`, either install them manually with `pip install -r requirements/optional.txt`,
-or specify desired extras when calling `pip` (e.g. `pip install -v -e .[optional]`). Valid keys for the extras field are: `all`, `tests`, `build`, and `optional`.
+## 修改 MMCV 包
 
-## Modification in the MMCV Package
+为了能够同时训练两个 dataloader（即论文中提到的有标号的 dataloader 和无标号的 dataloader），需要修改 mmcv 包中的 ` epoch_based_runner.py ` 文件。
 
-To train with two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time,
-you will need to modify the ` epoch_based_runner.py ` in the mmcv package.
-
-Considering that this will affect all code that uses this environment,
-so we suggest you set up a separate environment for MI-AOD (i.e., the ` miaod ` environment created above).
+考虑到这会影响到所有使用这个环境的代码，
+所以我们建议为MI-AOD创建一个单独的环境（即上文中创建的 ` miaod ` 环境）。
 
 ```shell
-cp -v epoch_based_runner.py $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
+cp -v epoch_based_runner.py $你的_ANACONDA_安装地址/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
 ```
 
-Please change the `$YOUR_ANACONDA_PATH` to your actual Anaconda3 installation directory. Usually it would be `~/anaconda3`.
+请将 `$你的_ANACONDA_安装地址` 改为你实际的 Anaconda3 安装目录。通常它是 `~/anaconda3`。
 
-After that, if you have modified anything in the mmcv package
-(including but not limited to: updating/re-installing Python, PyTorch, mmdetection, mmcv, mmcv-full, conda environment),
-you are supposed to copy the “epoch_base_runner.py” provided in this repository to the mmcv directory again. ([Issue #3](../../issues/3))
+之后如果你修改了 mmcv 包中的任何文件
+（包括但不限于：更新/重新安装了 Python、PyTorch、mmdetection、mmcv、mmcv-full、conda 环境），
+都应该重新将这个代码库中的 ` epoch_base_runner.py ` 文件再次复制到上面的 mmcv 文件夹下。([Issue #3](../../issues/3))
 
-## A From-scratch Setup Script
+## 从头开始的安装脚本
 
-Assuming that you have **Anaconda3** and **CUDA 10.2** installed already, here is a full script for setting up MI-AOD with conda.
+假设你已经安装好了 **Anaconda3** 和 **CUDA 10.2**，如下为一个用 conda 设置 MI-AOD 的完整脚本。
 
 ```shell
 conda create -n miaod python=3.7 -y
@@ -154,6 +154,6 @@ pip install -v -e .  # or "python setup.py develop"
 cp -v epoch_based_runner.py $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
 ```
 
-If you have any question, please feel free to leave an issue [here](../../issues), or refer to [install.md in MMDetection V2.3.0](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md).
+如果你有任何问题，请随时在 [问题](../../issues) 中留言，或者参考 [MMDetection 2.3.0 版本的安装说明](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md)。
 
-And please refer to [FAQ](FAQ.md) for frequently asked questions.
+请参考 [问题集锦](FAQ_cn.md) 来查看大家的常见问题。
