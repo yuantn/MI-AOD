@@ -50,7 +50,7 @@ Before everything starts, please ensure that you already have **Anaconda3** and 
     Please note: make sure that your compilation CUDA version and runtime CUDA version match.
     You can check the supported CUDA version for precompiled packages on the [PyTorch website](https://pytorch.org/get-started/previous-versions/#v160).
 
-    If you build PyTorch from source instead of installing the prebuilt pacakge, you can use more CUDA versions such as 9.0.
+    If you build PyTorch from source instead of installing the prebuilt package, you can use more CUDA versions such as 9.0.
 
 3. Please install mmcv-full, we recommend you to install the pre-build package as below.
 
@@ -125,7 +125,7 @@ so we suggest you set up a separate environment for MI-AOD (i.e., the ` miaod ` 
 cp -v epoch_based_runner.py $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
 ```
 
-Please change the ` $YOUR_ANACONDA_PATH ` to your actual Anaconda3 installation directory. Usually it would be `~/anaconda3`.
+Please change the `$YOUR_ANACONDA_PATH` to your actual Anaconda3 installation directory. Usually it would be `~/anaconda3`.
 
 After that, if you have modified anything in the mmcv package
 (including but not limited to: updating/re-installing Python, PyTorch, mmdetection, mmcv, mmcv-full, conda environment),
