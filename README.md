@@ -142,7 +142,7 @@ However, [Kevin Chow](https://github.com/kevinchow1993) has proposed a feasible 
 
 If you use only a single GPU, you can use the ` script.sh ` file directly as below:
 ```
-chmod 777 ./script.sh
+chmod 700 ./script.sh
 ./script.sh $YOUR_GPU_ID
 ```
 Please change the ` $YOUR_GPU_ID ` above to your actual GPU ID number (usually a non-negative number).
