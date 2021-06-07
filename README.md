@@ -310,7 +310,7 @@ An example output folder is provided on [Google Drive](https://drive.google.com/
 
 ## Repository Contributor
 
-In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection](https://github.com/open-mmlab/mmdetection).
+In this repository, we reimplemented RetinaNet on PyTorch based on [mmdetection](https://github.com/open-mmlab/mmdetection). Thanks for their contribution.
 
 ## License
 This project is released under the [Apache 2.0 license](https://github.com/yuantn/mi-aod/blob/master/LICENSE).
