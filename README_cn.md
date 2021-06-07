@@ -17,75 +17,81 @@
 <!-- TOC -->
 
 - [简介](#简介)
-- [安装](#安装)
-- [修改mmcv包](#修改mmcv包)
-- [数据集准备](#数据集准备)
-- [训练和测试](#训练和测试)
-- [代码结构](#代码结构)
-- [常见问题](#常见问题)
-- [许可](#许可)
+- [快速入门](#快速入门)
+- [模型库](#模型库)
+- [贡献者](#贡献者)
+- [开源许可证](#开源许可证)
 - [引用](#引用)
-- [致谢](#致谢)
 
 <!-- TOC -->
 
 ## 简介
 
-这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://arxiv.org/pdf/2104.02324.pdf), CVPR 2021 一文的代码。
+这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://arxiv.org/pdf/2104.02324.pdf) , CVPR 2021 一文的代码。
 
-在本文中，我们提出了多示例主动目标检测（MI-AOD），通过观察示例级的不确定性来选择信息量最大的图像用于检测器的训练。多示例主动目标检测定义了示例不确定性学习模块，该模块利用在已标注集上训练的两个对抗性示例分类器的差异来预测未标注集的示例不确定性。多示例主动目标检测将未标注的图像视为示例包，并将图像中的特征锚视为示例，并通过以多示例学习（MIL）方式对示例重加权的方法来估计图像的不确定性。反复进行示例不确定性的学习和重加权有助于抑制噪声高的示例，来缩小示例不确定性和图像级不确定性之间的差距。
+### 任务描述
 
-![Illustration](./CVPR-MI-AOD.png)
+在本文中，我们提出了 ***多示例主动目标检测（MI-AOD）*** ，通过观察示例级的不确定性来选择信息量最大的图像用于检测器的训练。
 
-实验证明，多示例主动目标检测为示例级的主动学习设置了坚实的基线。在常用的目标检测数据集上，多示例主动目标检测和最新方法相比具有明显的优势，尤其是在已标注集很小的情况下。
+主动目标检测（用于目标检测的主动学习）的流程如下图所示。
 
-![Results](./Results.png)
+![任务](./figures/Task_cn.png)
 
-更多中文版的论文解读请点击[这里](https://zhuanlan.zhihu.com/p/362764637)。
+在该任务中，一个较小的图像集合 ![X_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0}) （已标注集），带有示例标注 ![Y_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{Y}_\mathit{L}^\mathrm{0}) 。此外还存在一个较大的图像集合 ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) （未标注集），其中没有任何标注。对于每张图像，标签均由边界框（ ![y_x^loc](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{loc}) ）和感兴趣物体的类别（ ![y_x^cls](http://latex.codecogs.com/gif.latex?\bg_white\mathit{y}_x^{cls}) ）组成。
 
-## 安装
+首先，通过使用已标注集{ ![{X_L^0, Y_L^0}](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0},\cal{Y}_\mathit{L}^\mathrm{0}) }初始化检测模型 ![M_0](http://latex.codecogs.com/gif.latex?\bg_white\mathit{M}_0) 。基于初始化过的模型 ![M_0](http://latex.codecogs.com/gif.latex?\bg_white\mathit{M}_0) ，主动学习的目的是从 ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) 中选择要手动标注的一组图像 ![X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{S}^\mathrm{0}) ，并将其与 ![X_L^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{0}) 合并形成新的已标注集 ![X_L^1](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{1}) ，即 ![X_L^1 = X_L^0 \union X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{1}=\cal{X}_\mathit{L}^\mathrm{0}\cup\cal{X}_\mathit{S}^\mathrm{0}) 。所选图像集 ![X_S^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{S}^\mathrm{0}) 应该是信息量最大的，即可以尽可能提高检测性能。
 
-推荐使用 Linux 开发平台 (我们用的是 Ubuntu 18.04 LTS) 与 [anaconda3](https://www.anaconda.com/)，因为他们可以方便高效地安装与管理环境和 python 包。
+> 上图中的信息量最大由不确定性（Uncertainty）表示，即将 ![X_U^0](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{U}^\mathrm{0}) 中的样本输入到现有模型中，如果模型对于各个类别的输出分数更均匀，则该样本不确定性更高。
 
-推荐使用 TITAN V GPU，并且使用 [CUDA 10.2](https://developer.nvidia.com/cuda-toolkit-archive) 和 [CuDNN 7.6.5](https://developer.nvidia.com/cudnn)，因为他们可以加速模型训练。
+在更新后的已标注集 ![X_L^1](http://latex.codecogs.com/gif.latex?\bg_white\cal{X}_\mathit{L}^\mathrm{1}) 的基础上，任务模型被重新训练并更新为 ![M_1](http://latex.codecogs.com/gif.latex?\bg_white\mathit{M}_1) 。模型训练和样本选择过程重复几个周期，直到已标注图像的数量达到标注预算。
 
-在安装完anaconda3之后，你可以像这样创建一个 conda 环境：
+### 插图
 
-```
-conda create -n miaod python=3.7 -y
-conda activate miaod
-```
+多示例主动目标检测定义了示例不确定性学习模块，该模块利用在已标注集上训练的两个对抗性示例分类器的差异来预测未标注集的示例不确定性。多示例主动目标检测将未标注的图像视为示例包，并将图像中的特征锚视为示例，并通过以多示例学习（MIL）方式对示例重加权的方法来估计图像的不确定性。反复进行示例不确定性的学习和重加权有助于抑制噪声高的示例，来缩小示例不确定性和图像级不确定性之间的差距。
 
-之后安装环境的过程请参见 [MMDetection v2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0) 和其中的 [install.md 文件](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md)。
+更多中文版的论文解读请点击 [这里](https://zhuanlan.zhihu.com/p/362764637) 和 [这里](https://blog.csdn.net/yuantn1996/article/details/115490388) 。
 
-然后，请像下面这样克隆这个代码库：
+![插图](./figures/Illustration_cn.png)
 
-```
-git clone https://github.com/yuantn/MI-AOD.git
-cd MI-AOD
-```
+![网络](./figures/Architecture_cn.png)
 
-如果那样太慢的话，你也可以尝试像这样直接下载这个代码库：
+### 创新点
 
-```
-wget https://github.com/yuantn/MI-AOD/archive/master.zip
-unzip master.zip
-cd MI-AOD-master
-```
+- 首次创造性地为 ***主动学习 + 目标检测*** 任务 ***量身定制*** 设计了一种方法。
 
-## 修改mmcv包
+- 在 PASCAL VOC 数据集上仅使用 ***20%*** 的数据就达到了 100% 数据性能的 ***93.5%*** 。
 
-为了能够同时训练两个 dataloader（即论文中提到的有标号的 dataloader 和无标号的 dataloader），需要修改 mmcv 包中的 ` epoch_based_runner.py ` 文件。
+- ***首次*** 在 ***MS COCO*** 数据集上应用了主动学习，并取得了最优性能。
 
-考虑到这会影响到所有使用这个环境的代码，所以我们建议为MI-AOD创建一个单独的环境（即上文中创建的 ` miaod ` 环境）。
+- 思路清晰简单，可推广至 ***任何类型*** 的检测模型。
 
-```
-cp -v epoch_based_runner.py ~/anaconda3/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
-```
+![结果](./figures/Results_cn.png)
 
-之后如果你修改了 mmcv 包中的任何文件（包括但不限于：更新/重新安装了 Python、PyTorch、mmdetection、mmcv、mmcv-full、conda 环境），都应该重新将这个代码库中的 ` epoch_base_runner.py ` 文件再次复制到上面的 mmcv 文件夹下。([Issue #3](../../issues/3))
+### 更广泛的影响
 
-## 数据集准备
+MI-AOD 主要解决目标检测的问题，但是通过与以下任务结合，它也能推广到：
+  - 任何其他的 **视觉目标检测任务** （如小目标检测，行人检测，医学图像检测）
+  - 任何其他的 **计算机视觉任务** （如人体姿态检测，语义/实例分割，时序动作检测）
+  - 任何其他的 **机器学习任务** （如自然语言处理）
+
+这种自底向上和自顶向下的思想可以被推广应用到上面所有的任务。
+
+注意到在 MI-AOD 中，主动学习在视觉目标检测中起到了很大作用，而其他带有少量监督信息的机器学习方法也能与之结合，例如：
+  - 主动的 **小样本** 学习
+  - 主动的 **半/弱/自监督** 学习
+  - 主动的 **迁移** 学习
+  - 主动的 **强化** 学习
+  - 主动的 **增量** 学习
+ 
+等等。这些主动学习和其他机器学习方法的结合可以更大程度上地发挥各自的作用。
+
+## 快速入门
+
+### 安装
+
+请参考 [快速入门文档](./docs/installation_cn.md) 进行安装。
+
+### 数据集准备
 
 请从下面的链接处下载 VOC2007 数据集（*trainval* 部分 + *test* 部分）和 VOC2012 数据集（*trainval* 部分）：
 
@@ -108,7 +114,7 @@ VOC2012（*trainval* 部分）：http://host.robots.ox.ac.uk/pascal/VOC/voc2012/
 │   │   ├── JPEGImages
 ```
 你也可以直接使用下面的命令行：
-```
+```shell
 cd $你想要存放数据集的地址
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
@@ -132,9 +138,11 @@ configs/_base_/voc0712.py 的第 1 行：data_root='$你想要存放数据集的
 
 推荐使用单个 GPU 进行训练与测试，因为多 GPU可能会导致 dataloader 多进程引发的错误。
 
+不过，感谢 [@Kevin Chow](https://github.com/kevinchow1993)， [这里](../../issues/11) 有一个在多个 GPU 上训练的可行方法。
+
 如果只使用单个 GPU 训练，则可以直接像下面这样使用 ` script.sh ` 文件：
-```
-chmod 777 ./script.sh
+```bash
+chmod 700 ./script.sh
 ./script.sh $你的 GPU ID 号
 ```
 请将上面的 ` $你的 GPU ID 号 ` 修改为实际的 GPU ID 号（通常为一个自然数）.
@@ -147,57 +155,9 @@ chmod 777 ./script.sh
 
 如果你有任何问题，请随时在 [问题](https://github.com/yuantn/mi-aod/issues) 中留言。
 
-如果你愿意的话，你也可以使用 ` './work_dirs/MI-AOD/ ` 目录下的其他文件，它们分别是：
+请参考 [问题集锦](./docs/FAQ_cn.md) 来查看大家的常见问题。
 
-- **JSON 文件 `$时间戳.log.json`**
-
-  相比于使用 `./work_dirs/MI-AOD/$时间戳.log` 文件，你可以从 JSON 文件中更方便地加载训练时的损失（loss）和测试时的平均精确率（mAP）。
-  
-- **npy 文件 `X_L_$循环次数.npy` 和 `X_U_$循环次数.npy`**
-
-   `$循环次数` 是主动学习的循环次数，是一个从 0 到 6 的整数。
-   
-  你可以从这些文件中加载每个循环中有标号和无标号的样本索引。
-  
-  对于 PASCAL VOC 数据集，索引为 0 到 16550 的整数，其中 0 到 5010 属于 PASCAL VOC 2007 数据集的 *trainval* 部分， 5011 到 16550 属于 PASCAL VOC 2012 数据集的 *trainval* 部分。
-
-  加载这些文件的一段示例代码可以参考 `./tools/train.py` 文件的第 108-114 行（它们现在被注释掉了）。
-  
-- **pth 文件 `epoch_$迭代次数.pth` 和 `latest.pth`**
-
-   `$迭代次数` 是最后一次有标号集合训练的迭代次数（epoch），是一个从 0 到 2 的整数。
-   
-  你可以直接从这些文件中加载训练的模型状态参数字典（model state dictionary）
-  
-  加载这些文件的一段示例代码可以参考 `./tools/train.py` 文件的第 109 行，第 143-145 行（它们现在被注释掉了）。
-  
-- **在每个 `cycle$循环次数` 目录 下的 txt 文件 `trainval_L_07.txt`、 `trainval_U_07.txt`、 `trainval_L_12.txt` 和 `trainval_U_12.txt`**
-
-   `$循环次数` 的意义同上。
-
-  你可以从这些文件中加载每个循环中有标号 JPEG 图像和无标号 JPEG 图像的名称。
-  
-  "L" 代表有标号， "U" 代表无标号。 "07" 代表 PASCAL VOC 2007 数据集的 *trainval* 部分， "12" 代表 PASCAL VOC 2012 数据集的 *trainval* 部分。
-
-我们在 Google 云端硬盘和百度网盘中上传了一个示例输出文件夹，包括日志文件，最后一次训练得到的模型，以及上面所述的其他所有文件。
-
-- **Google 云端硬盘:**
-
-  [日志文件](https://drive.google.com/file/d/1AabLGMoVyUjB7GiqLlLuvRgkGmzuNzqk/view?usp=sharing)
-  
-  [最后一次训练得到的模型 (latest.pth)](https://drive.google.com/file/d/1IU29AckAhMaLLjZNSHSCsE3m9SMCKVMq/view?usp=sharing)
-  
-  [整个示例输出文件夹](https://drive.google.com/file/d/1tJnGLwvfYm9wpObpUpH5qO8jC9JscO8q/view?usp=sharing)
-
-- **百度网盘:**
-
-  [日志文件 (提取码: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g)
-  
-  [最后一次训练得到的模型 (latest.pth) (提取码: 1y9x)](https://pan.baidu.com/s/1uSYIpvgN7A95YhtZjujvqg)
-  
-  [整个示例输出文件夹 (提取码: ztd6)](https://pan.baidu.com/s/19VmBzGWlLbqY9luFC9EwCg)
-
-## 代码结构
+### 代码结构
 ```
 ├── $你的 ANACONDA 安装地址
 │   ├── anaconda3
@@ -302,17 +262,66 @@ chmod 777 ./script.sh
 
 - **script.sh**: 在单 GPU 上运行 MI-AOD 的脚本。当你准备好 conda 环境和 PASCAL VOC 2007+2012 数据集后，你可以像上面 **训练和测试** 部分提到的那样简单直接地运行它来训练和测试 MI-AOD。
 
-## 常见问题
-请参考 [FAQ](FAQ_cn.md) 了解其他用户的常见问题。
+## 模型库
 
-## 许可
-该项目开源自 [Apache 2.0 license](https://github.com/yuantn/mi-aod/blob/master/LICENSE)。
+### 模型
+
+主动学习中最后一个周期（即使用 20% 的已标注数据时）训练好的模型可以从 [Google 云端硬盘](https://drive.google.com/file/d/1IU29AckAhMaLLjZNSHSCsE3m9SMCKVMq/view?usp=sharing) 和 [百度网盘 (提取码: 1y9x)](https://pan.baidu.com/s/1uSYIpvgN7A95YhtZjujvqg) 上下载得到。
+
+### 结果
+
+![RetinaNet在VOC上的结果](./figures/Results_RetinaNet_VOC_cn.png)
+
+训练和测试的日志文件可以从 [Google 云端硬盘](https://drive.google.com/file/d/1AabLGMoVyUjB7GiqLlLuvRgkGmzuNzqk/view?usp=sharing) 和 [百度网盘 (提取码: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g) 上下载得到。
+
+我们在 Google 云端硬盘和百度网盘中上传了一个示例输出文件夹，包括日志文件，最后一次训练得到的模型，以及上面所述的其他所有文件。
+
+如果你愿意的话，你也可以使用 ` './work_dirs/MI-AOD/ ` 目录下的其他文件，它们分别是：
+
+- **JSON 文件 `$时间戳.log.json`**
+
+  相比于使用 `./work_dirs/MI-AOD/$时间戳.log` 文件，你可以从 JSON 文件中更方便地加载训练时的损失（loss）和测试时的平均精确率（mAP）。
+  
+- **npy 文件 `X_L_$循环次数.npy` 和 `X_U_$循环次数.npy`**
+
+   `$循环次数` 是主动学习的循环次数，是一个从 0 到 6 的整数。
+   
+  你可以从这些文件中加载每个循环中有标号和无标号的样本索引。
+  
+  对于 PASCAL VOC 数据集，索引为 0 到 16550 的整数，其中 0 到 5010 属于 PASCAL VOC 2007 数据集的 *trainval* 部分， 5011 到 16550 属于 PASCAL VOC 2012 数据集的 *trainval* 部分。
+
+  加载这些文件的一段示例代码可以参考 `./tools/train.py` 文件的第 108-114 行（它们现在被注释掉了）。
+  
+- **pth 文件 `epoch_$迭代次数.pth` 和 `latest.pth`**
+
+   `$迭代次数` 是最后一次有标号集合训练的迭代次数（epoch），是一个从 0 到 2 的整数。
+   
+  你可以直接从这些文件中加载训练的模型状态参数字典（model state dictionary）
+  
+  加载这些文件的一段示例代码可以参考 `./tools/train.py` 文件的第 109 行，第 143-145 行（它们现在被注释掉了）。
+  
+- **在每个 `cycle$循环次数` 目录 下的 txt 文件 `trainval_L_07.txt`、 `trainval_U_07.txt`、 `trainval_L_12.txt` 和 `trainval_U_12.txt`**
+
+   `$循环次数` 的意义同上。
+
+  你可以从这些文件中加载每个循环中有标号 JPEG 图像和无标号 JPEG 图像的名称。
+  
+  "L" 代表有标号， "U" 代表无标号。 "07" 代表 PASCAL VOC 2007 数据集的 *trainval* 部分， "12" 代表 PASCAL VOC 2012 数据集的 *trainval* 部分。
+
+在 [Google 云端硬盘](https://drive.google.com/file/d/1tJnGLwvfYm9wpObpUpH5qO8jC9JscO8q/view?usp=sharing) 和 [百度网盘 (提取码: ztd6)](https://pan.baidu.com/s/19VmBzGWlLbqY9luFC9EwCg) 上提供了一个样例输出文件夹，其中包括日志文件、最后一次训练的模型、和以上其他所有文件。
+
+## 贡献者
+
+在这个代码库中，我们在 [mmdetection](https://github.com/open-mmlab/mmdetection) 的基础上在 PyTorch 上成功复现了 RetinaNet 检测网络。感谢他们的贡献。
+
+## 开源许可证
+该项目开源自 [Apache 2.0 license](./LICENSE)。
 
 ## 引用
 
 如果你觉得这个代码库对你的论文有用，请考虑引用我们的[论文](https://arxiv.org/pdf/2104.02324.pdf)。
 
-```angular2html
+```bibtex
 @inproceedings{MIAOD2021,
     author    = {Tianning Yuan and
                  Fang Wan and
@@ -326,9 +335,5 @@ chmod 777 ./script.sh
     year      = {2021}
 }
 ```
-
-## 致谢
-
-在这个代码库中，我们在 [mmdetection](https://github.com/open-mmlab/mmdetection) 的基础上在 PyTorch 上成功复现了 RetinaNet 检测网络。
 
 [![Stargazers repo roster for @yuantn/MI-AOD](https://reporoster.com/stars/yuantn/MI-AOD)](https://github.com/yuantn/MI-AOD/stargazers)
