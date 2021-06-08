@@ -118,10 +118,10 @@ c. 一些依赖项是可选的。若仅以最小运行需求安装，直接运�
 
 ## 修改 MMCV 包
 
-为了能够同时训练两个 dataloader（即论文中提到的有标号的 dataloader 和无标号的 dataloader），需要修改 mmcv 包中的 ` epoch_based_runner.py ` 文件。
+为了能够同时训练两个 dataloader（即论文中提到的有标号的 dataloader 和无标号的 dataloader），需要修改 mmcv 包中的 `epoch_based_runner.py` 文件。
 
 考虑到这会影响到所有使用这个环境的代码，
-所以我们建议为MI-AOD创建一个单独的环境（即上文中创建的 ` miaod ` 环境）。
+所以我们建议为 MI-AOD 创建一个单独的环境（即上文中创建的 `miaod` 环境）。
 
 ```shell
 cp -v epoch_based_runner.py $你的_ANACONDA_安装地址/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
@@ -131,7 +131,7 @@ cp -v epoch_based_runner.py $你的_ANACONDA_安装地址/envs/miaod/lib/python3
 
 之后如果你修改了 mmcv 包中的任何文件
 （包括但不限于：更新/重新安装了 Python、PyTorch、mmdetection、mmcv、mmcv-full、conda 环境），
-都应该重新将这个代码库中的 ` epoch_base_runner.py ` 文件再次复制到上面的 mmcv 文件夹下。([Issue #3](../../issues/3))
+都应该重新将这个代码库中的 `epoch_base_runner.py` 文件再次复制到上面的 mmcv 文件夹下。([Issue #3](../../issues/3))
 
 ## 从头开始的安装脚本
 
