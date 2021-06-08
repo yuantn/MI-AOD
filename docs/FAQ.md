@@ -1,9 +1,9 @@
+# Frequently Asked Questions (FAQ)
+
 We have list some common troubles faced by many users and their corresponding solutions here.
 Feel free to enrich the list if you find any frequent issues and have ways to help others to solve them.
 If the contents here do not cover your issue, please just create an issue [here](../../../issues).
 The open issues are not included here for now, just in case someone will ask further questions.
-
-# Questions
 
 <!-- TOC -->
 
