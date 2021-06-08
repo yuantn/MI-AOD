@@ -1,6 +1,6 @@
 # 安装
 
-语言: 简体中文 | [English](installation.md)
+语言： 简体中文 | [English](installation.md)
 
 <!-- TOC -->
 
