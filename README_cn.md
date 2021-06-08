@@ -89,7 +89,7 @@ MI-AOD 主要解决目标检测的问题，但是通过与以下任务结合，�
 
 ### 安装
 
-请参考 [快速入门文档](./docs/installation_cn.md) 进行安装。
+请参考 [安装文档](./docs/installation_cn.md) 进行安装。
 
 ### 数据集准备
 
