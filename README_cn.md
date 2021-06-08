@@ -102,6 +102,7 @@ VOC2007（*test* 部分）：http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCt
 VOC2012（*trainval* 部分）：http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
 
 之后请确认文件夹的结构树像下面这样：
+
 ```
 ├── VOCdevkit
 │   ├── VOC2007
@@ -113,9 +114,11 @@ VOC2012（*trainval* 部分）：http://host.robots.ox.ac.uk/pascal/VOC/voc2012/
 │   │   ├── ImageSets
 │   │   ├── JPEGImages
 ```
+
 你也可以直接使用下面的命令行：
+
 ```shell
-cd $你想要存放数据集的地址
+cd $你的数据集地址
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
@@ -123,14 +126,19 @@ tar -xf VOCtrainval_06-Nov-2007.tar
 tar -xf VOCtest_06-Nov-2007.tar
 tar -xf VOCtrainval_11-May-2012.tar
 ```
-之后，请修改这个代码库中对应的数据集地址部分，它们位于：
-```
-configs/MIAOD.py 的第 1 行：data_root='$你想要存放数据集的地址/VOCdevkit/'
-configs/_base_/voc0712.py 的第 1 行：data_root='$你想要存放数据集的地址/VOCdevkit/'
-```
-请把上面的 ` $你想要存放数据集的地址 ` 改为你实际的数据集地址（即你下载的 VOC 数据集的 tar 文件的地址）。
 
-地址请使用绝对路径（如以 ` / ` 开始的路径），不要使用相对路径（如以 ` ./ ` 或 ` ../ ` 开始的路径）。
+之后，请修改这个代码库中对应的数据集地址部分，它们位于：
+
+```
+configs/MIAOD.py 的第 1 行：data_root='$你的数据集地址/VOCdevkit/'
+configs/_base_/voc0712.py 的第 1 行：data_root='$你的数据集地址/VOCdevkit/'
+```
+
+请把上面的 `$你的数据集地址` 改为你实际的数据集地址（即你下载的 VOC 数据集的 tar 文件的地址）。
+
+地址请使用绝对路径（如以 `/` 开始的路径），不要使用相对路径（如以 `./` 或 `../` 开始的路径）。
+
+有关其他变量和参数的信息，请参考 [这里](configs/README_cn.md)
 
 ## 训练和测试
 
@@ -140,24 +148,56 @@ configs/_base_/voc0712.py 的第 1 行：data_root='$你想要存放数据集的
 
 不过，感谢 [@Kevin Chow](https://github.com/kevinchow1993)， [这里](../../issues/11) 有一个在多个 GPU 上训练的可行方法。
 
-如果只使用单个 GPU 训练，则可以直接像下面这样使用 ` script.sh ` 文件：
+如果只使用单个 GPU 训练，则可以直接像下面这样使用 `script.sh` 文件：
+
 ```bash
 chmod 700 ./script.sh
-./script.sh $你的 GPU ID 号
+./script.sh $你的_GPU_ID_号
 ```
-请将上面的 ` $你的 GPU ID 号 ` 修改为实际的 GPU ID 号（通常为一个自然数）.
 
-如果是第一次运行 ` script.sh ` 文件的话，请忽略这个报错： ` rm: cannot remove './log_nohup/nohup_$你的 GPU ID 号.log': No such file or directory ` 。
+请将上面的 `$你的_GPU_ID_号` 修改为实际的 GPU ID 号（通常为一个自然数）.
 
- ` script.sh ` 文件会用 ID 号为 ` $你的 GPU ID 号 ` 的GPU，在 `(30000+$你的 GPU ID 号*100)` 端口号下训练与测试。
+如果是第一次运行 `script.sh` 文件的话，请忽略这个报错：
 
-日志文件不会直接在终端中输出，但是会在 `./log_nohup/nohup_$你的 GPU ID 号.log` 和 ` ./work_dirs/MI-AOD/$时间戳.log ` 中保存与更新。这两个文件是相同的，你可以在 `./configs/MIAOD.py` 的第 48 行修改后者的地址和名称。
+```bash
+rm: cannot remove './log_nohup/nohup_$你的_GPU_ID_号.log': No such file or directory
+```
+
+`script.sh` 文件会用 ID 号为 `$你的_GPU_ID_号` 的GPU，在 `(30000+$你的_GPU_ID_号*100)` 端口号下训练与测试。
+
+日志文件不会直接在终端中输出，但是会在 `log_nohup/nohup_$你的_GPU_ID_号.log` 和 `work_dirs/MI-AOD/$时间戳.log` 中保存与更新。这两个文件是相同的，你可以在 `configs/MIAOD.py` 的第 48 行修改后者的地址和名称。
+
+如果你想直接在终端输出，你可以不使用 `script.sh`，而是运行下面这些命令：
+
+```bash
+# 单 GPU 训练
+python tools/train.py $配置文件地址
+
+# 多 GPU 训练
+tools/dist_train.sh $配置文件地址 $GPU_数量
+```
+
+其中 `$配置文件地址` 应改为 `configs` 文件夹中的配置文件地址（通常应为 `configs/MIAOD.py`），
+`$GPU_数量` 应改为所使用的所有 GPU 数量（不是 GPU 编号）。
+
+类似地，这些是用于测试的代码：
+
+```bash
+# 单 GPU 测试
+python tools/test.py $配置文件地址 $模型文件地址
+
+# 多 GPU 测试
+tools/dist_test.sh $配置文件地址 $模型文件地址 $GPU_数量
+```
+
+其中 `$模型文件地址` 应改为训练后 `work_dirs` 文件夹中的模型文件（\*.pth）的地址。
 
 如果你有任何问题，请随时在 [问题](https://github.com/yuantn/mi-aod/issues) 中留言。
 
 请参考 [常见问题解答](./docs/FAQ_cn.md) 来查看大家的常见问题。
 
 ### 代码结构
+
 ```
 ├── $你的 ANACONDA 安装地址
 │   ├── anaconda3
@@ -206,19 +246,19 @@ chmod 700 ./script.sh
 
 每一个核心部分的代码文件和文件夹解释如下：
 
-- **epoch_based_runner.py**: 每个迭代中训练和测试的代码，在 `./apis/train.py` 中调用。
+- **epoch_based_runner.py**: 每个迭代中训练和测试的代码，在 `apis/train.py` 中调用。
 
 - **configs**: 配置文件，包括运行设置，模型设置，数据集设置和其他主动学习和 MI-AOD 自定义的设置。
 
-  - **\_\_base\_\_**: MMDetection 提供的基本配置文件夹，只需稍作修改就可以在 `.configs/MIAOD.py` 中调用。
+  - **\_\_base\_\_**: MMDetection 提供的基本配置文件夹，只需稍作修改就可以在 `configs/MIAOD.py` 中调用。
 
-    - **default_runtime.py**: 运行设置的配置文件代码，在 `./configs/MIAOD.py` 中调用。
+    - **default_runtime.py**: 运行设置的配置文件代码，在 `configs/MIAOD.py` 中调用。
 
-    - **retinanet_r50_fpn.py**: 模型训练和测试的配置文件代码，在 `./configs/MIAOD.py` 中调用。
+    - **retinanet_r50_fpn.py**: 模型训练和测试的配置文件代码，在 `configs/MIAOD.py` 中调用。
 
-    - **voc0712.py**: PASCAL VOC 数据集设置和数据预处理的配置文件代码，在 `./configs/MIAOD.py` 中调用。
+    - **voc0712.py**: PASCAL VOC 数据集设置和数据预处理的配置文件代码，在 `configs/MIAOD.py` 中调用。
 
-  - **MIAOD.py**: MI-AOD 的常规配置代码，包括了主要的自定义设置，如主动学习数据集划分、模型训练和测试参数设置、自定义超参数设置、日志文件和模型存储设置，大多数都能在 `./tools/train.py` 中调用。在这个文件的注释中有每个参数更多的细节介绍。
+  - **MIAOD.py**: MI-AOD 的常规配置代码，包括了主要的自定义设置，如主动学习数据集划分、模型训练和测试参数设置、自定义超参数设置、日志文件和模型存储设置，大多数都能在 `tools/train.py` 中调用。在这个文件的注释中有每个参数更多的细节介绍。
 
 - **log_nohup**: 暂时存储每个 GPU 上输出日志的日志文件夹。
 
@@ -228,9 +268,9 @@ chmod 700 ./script.sh
 
     - **\_\_init\_\_.py**: 当前文件夹下一些函数的初始化。
 
-    - **test.py**: 模型测试和计算不确定度的代码，在 `epoch_based_runner.py` 和 `./tools/train.py` 中调用。
+    - **test.py**: 模型测试和计算不确定度的代码，在 `epoch_based_runner.py` 和 `tools/train.py` 中调用。
 
-    - **train.py**: 设置随机种子、创建训练用的 dataloader （为接下 epoch 级别的训练做好准备） 的代码，在 `./tools/train.py` 中调用。
+    - **train.py**: 设置随机种子、创建训练用的 dataloader （为接下 epoch 级别的训练做好准备） 的代码，在 `tools/train.py` 中调用。
 
   - **models**: 有关网络模型结构、训练损失（loss），测试过程中的前向传播、计算不确定度等细节的代码文件夹。
 
@@ -238,25 +278,25 @@ chmod 700 ./script.sh
 
       - **\_\_init\_\_.py**: 当前文件夹下一些函数的初始化。
 
-      - **MIAOD_head.py**: 锚（anchor）级别的模型前向传播、计算损失（loss）、生成伪标号、从现有模型输出中得到检测框的代码，在 `./mmdet/models/dense_heads/base_dense_head.py` 和 `./mmdet/models/detectors/single_stage.py` 中调用。
+      - **MIAOD_head.py**: 锚（anchor）级别的模型前向传播、计算损失（loss）、生成伪标号、从现有模型输出中得到检测框的代码，在 `mmdet/models/dense_heads/base_dense_head.py` 和 `mmdet/models/detectors/single_stage.py` 中调用。
 
-      - **MIAOD_retina_head.py**: 搭建 MI-AOD 网络结构（尤其是精心设计的头部结构）、定义前向输出的代码，在 `./mmdet/models/dense_heads/MIAOD_head.py` 中调用。
+      - **MIAOD_retina_head.py**: 搭建 MI-AOD 网络结构（尤其是精心设计的头部结构）、定义前向输出的代码，在 `mmdet/models/dense_heads/MIAOD_head.py` 中调用。
 
-      - **base_dense_head.py**: 选择不同公式计算损失（loss）的代码，在 `./mmdet/models/detectors/single_stage.py` 中调用。
+      - **base_dense_head.py**: 选择不同公式计算损失（loss）的代码，在 `mmdet/models/detectors/single_stage.py` 中调用。
 
     - **detectors**: 整体训练过程、测试过程、计算不确定度过程中前向传播和反向传播的代码文件夹。
 
       - **base.py**: 整理训练损失（loss）并输出、返回损失（loss）和图像信息的代码，在 `epoch_based_runner.py` 中调用。
 
-      - **single_stage.py**: 提取图像特征、从模型输出中得到检测框、返回损失（loss）的代码，在 `./mmdet/models/detectors/base.py` 中调用。
+      - **single_stage.py**: 提取图像特征、从模型输出中得到检测框、返回损失（loss）的代码，在 `mmdet/models/detectors/base.py` 中调用。
 
   - **utils**: 划分主动学习数据集的代码文件夹。
 
-    - **active_dataset.py**: 划分主动学习数据集的代码，包括创建初始的有标号集合、创建有标号和无标号的图像名称文件、在每次主动学习循环之后更新有标号和无标号的集合，在 `./tools/train.py` 中调用。
+    - **active_dataset.py**: 划分主动学习数据集的代码，包括创建初始的有标号集合、创建有标号和无标号的图像名称文件、在每次主动学习循环之后更新有标号和无标号的集合，在 `tools/train.py` 中调用。
 
 - **tools**: MI-AOD 的外层训练和测试的代码文件夹。
 
-  - **train.py**: MI-AOD 的训练和测试代码，主要包括生成用于主动学习的 PASCAL VOC 数据集、加载图像集合和模型、示例不确定度重加权、信息丰富的图像挑选，在 `./script.sh` 中调用。
+  - **train.py**: MI-AOD 的训练和测试代码，主要包括生成用于主动学习的 PASCAL VOC 数据集、加载图像集合和模型、示例不确定度重加权、信息丰富的图像挑选，在 `script.sh` 中调用。
 
 - **work_dirs**: 存放每个循环中有标号和无标号图像的名称和索引、所有日志和 json 文件输出、最后3个循环的模型状态参数字典（model state dictionary）的文件夹，在上面的 **训练和测试** 部分已经介绍过。
 
@@ -272,15 +312,19 @@ chmod 700 ./script.sh
 
 ![RetinaNet在VOC上的结果](./figures/Results_RetinaNet_VOC_cn.png)
 
+|已标注图像的比例（%）|5.0|7.5|10.0|12.5|15.0|17.5|20.0|100.0（全监督）|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
+|MI-AOD 的 mAP（%）| 47.18 | 58.41 | 64.02 | 67.72 | 69.79 | 71.07 | 72.27 | 77.28 |
+
 训练和测试的日志文件可以从 [Google 云端硬盘](https://drive.google.com/file/d/1AabLGMoVyUjB7GiqLlLuvRgkGmzuNzqk/view?usp=sharing) 和 [百度网盘 (提取码: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g) 上下载得到。
 
 我们在 Google 云端硬盘和百度网盘中上传了一个示例输出文件夹，包括日志文件，最后一次训练得到的模型，以及上面所述的其他所有文件。
 
-如果你愿意的话，你也可以使用 ` './work_dirs/MI-AOD/ ` 目录下的其他文件，它们分别是：
+如果你愿意的话，你也可以使用 `work_dirs/MI-AOD/` 目录下的其他文件，它们分别是：
 
 - **JSON 文件 `$时间戳.log.json`**
 
-  相比于使用 `./work_dirs/MI-AOD/$时间戳.log` 文件，你可以从 JSON 文件中更方便地加载训练时的损失（loss）和测试时的平均精确率（mAP）。
+  相比于使用 `work_dirs/MI-AOD/$时间戳.log` 文件，你可以从 JSON 文件中更方便地加载训练时的损失（loss）和测试时的平均精确率（mAP）。
   
 - **npy 文件 `X_L_$循环次数.npy` 和 `X_U_$循环次数.npy`**
 
@@ -290,7 +334,7 @@ chmod 700 ./script.sh
   
   对于 PASCAL VOC 数据集，索引为 0 到 16550 的整数，其中 0 到 5010 属于 PASCAL VOC 2007 数据集的 *trainval* 部分， 5011 到 16550 属于 PASCAL VOC 2012 数据集的 *trainval* 部分。
 
-  加载这些文件的一段示例代码可以参考 `./tools/train.py` 文件的第 108-114 行（它们现在被注释掉了）。
+  加载这些文件的一段示例代码可以参考 `tools/train.py` 文件的第 108-114 行（它们现在被注释掉了）。
   
 - **pth 文件 `epoch_$迭代次数.pth` 和 `latest.pth`**
 
@@ -298,7 +342,7 @@ chmod 700 ./script.sh
    
   你可以直接从这些文件中加载训练的模型状态参数字典（model state dictionary）
   
-  加载这些文件的一段示例代码可以参考 `./tools/train.py` 文件的第 109 行，第 143-145 行（它们现在被注释掉了）。
+  加载这些文件的一段示例代码可以参考 `tools/train.py` 文件的第 109 行，第 143-145 行（它们现在被注释掉了）。
   
 - **在每个 `cycle$循环次数` 目录 下的 txt 文件 `trainval_L_07.txt`、 `trainval_U_07.txt`、 `trainval_L_12.txt` 和 `trainval_U_12.txt`**
 
