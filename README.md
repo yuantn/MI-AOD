@@ -102,6 +102,7 @@ VOC2007 ( *test* ): http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-No
 VOC2012 ( *trainval* ): http://host.robots.ox.ac.uk/pascal/VOC/voc2012/VOCtrainval_11-May-2012.tar
 
 And after that, please ensure the file directory tree is as below:
+
 ```
 ├── VOCdevkit
 │   ├── VOC2007
@@ -113,8 +114,10 @@ And after that, please ensure the file directory tree is as below:
 │   │   ├── ImageSets
 │   │   ├── JPEGImages
 ```
+
 You may also use the following commands directly:
-```shell
+
+```bash
 cd $YOUR_DATASET_PATH
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
@@ -123,14 +126,19 @@ tar -xf VOCtrainval_06-Nov-2007.tar
 tar -xf VOCtest_06-Nov-2007.tar
 tar -xf VOCtrainval_11-May-2012.tar
 ```
+
 After that, please modify the corresponding dataset directory in this repository, they are located in:
+
 ```
 Line 1 of configs/MIAOD.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 Line 1 of configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
-Please change the ` $YOUR_DATASET_PATH `s above to your actual dataset directory (i.e., the directory where you intend to put the downloaded VOC tar file).
 
-And please use the absolute path (i.e., start with ` / `) but not a relative path (i.e., start with ` ./ ` or ` ../ `）.
+Please change the `$YOUR_DATASET_PATH`s above to your actual dataset directory (i.e., the directory where you intend to put the downloaded VOC tar file).
+
+And please use the absolute path (i.e., start with `/`) but not a relative path (i.e., start with `./` or `../`）.
+
+Please refer to [here](configs/README.md) for the information of other variables and parameters.
 
 ### Train and Test
 
@@ -140,24 +148,56 @@ And we also recommend you to use a single GPU, because the usage of multi-GPU ma
 
 However, thanks to [@Kevin Chow](https://github.com/kevinchow1993), [here](../../issues/11) is a feasible solution to train on multiple GPUs.
 
-If you use only a single GPU, you can use the ` script.sh ` file directly as below:
+If you use only a single GPU, you can use the `script.sh` file directly as below:
+
 ```bash
 chmod 700 ./script.sh
 ./script.sh $YOUR_GPU_ID
 ```
-Please change the ` $YOUR_GPU_ID ` above to your actual GPU ID number (usually a non-negative number).
 
-Please ignore the error ` rm: cannot remove './log_nohup/nohup_$YOUR_GPU_ID.log': No such file or directory ` if you run the ` script.sh ` file for the first time.
+Please change the `$YOUR_GPU_ID` above to your actual GPU ID number (usually a non-negative number).
 
-The ` script.sh ` file will use the GPU with the ID number ` $YOUR_GPU_ID ` and PORT `(30000+$YOUR_GPU_ID*100)` to train and test.
+Please ignore the error if you run the `script.sh` file for the first time:
 
-The log file will not flush in the terminal, but will be saved and updated in the file `./log_nohup/nohup_$YOUR_GPU_ID.log` and ` ./work_dirs/MI-AOD/$TIMESTAMP.log ` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `./configs/MIAOD.py` .
+```bash
+rm: cannot remove './log_nohup/nohup_$YOUR_GPU_ID.log': No such file or directory
+```
+
+The `script.sh` file will use the GPU with the ID number `$YOUR_GPU_ID` and PORT `(30000+$YOUR_GPU_ID*100)` to train and test.
+
+The log file will not flush in the terminal, but will be saved and updated in the file `log_nohup/nohup_$YOUR_GPU_ID.log` and `work_dirs/MI-AOD/$TIMESTAMP.log` . These two logs are the same. You can change the directories and names of the latter log files in Line 48 of `configs/MIAOD.py` .
+
+If you want to flush the log in the terminal, you can run these commands instead of using `script.sh`:
+
+```bash
+# for single GPU
+python tools/train.py $CONFIG_PATH
+
+# for multiple GPUs
+tools/dist_train.sh $CONFIG_PATH $GPU_NUMBERS
+```
+
+where `$CONFIG_PATH` should be replaced by the path of the config file in the `configs` folder (usually it would be `configs/MIAOD.py`) and
+`$GPU_NUMBERS` should be replaced by the total numbers of used GPUs (it is not GPU ID number).
+
+Similarly, theses commands are for test:
+
+```bash
+# for single GPU
+python tools/test.py $CONFIG_PATH $CKPT_PATH
+
+# for multiple GPUs
+tools/dist_test.sh $CONFIG_PATH $CKPT_PATH $GPU_NUMBERS
+```
+
+where `$CKPT_PATH` should be replaced by the path of the checkpoint file (\*.pth) in the `work_dirs` folder after training.
 
 If you have any question, please feel free to leave a issue [here](../../issues).
 
 And please refer to [FAQ](./docs/FAQ.md) for frequently asked questions.
 
 #### Code Structure
+
 ```
 ├── $YOUR_ANACONDA_DIRECTORY
 │   ├── anaconda3
@@ -206,19 +246,19 @@ The code files and folders shown above are the main part of MI-AOD, while other 
 
 The explanation of each code file or folder is as follows:
 
-- **epoch_based_runner.py**: Code for training and test in each epoch, which can be called by `./apis/train.py`.
+- **epoch_based_runner.py**: Code for training and test in each epoch, which can be called by `apis/train.py`.
 
 - **configs**: Configuration folder, including running settings, model settings, dataset settings and other custom settings for active learning and MI-AOD.
 
-  - **\_\_base\_\_**: Base configuration folder provided by MMDetection, which only need a little modification and then can be recalled by `.configs/MIAOD.py`.
+  - **\_\_base\_\_**: Base configuration folder provided by MMDetection, which only need a little modification and then can be recalled by `configs/MIAOD.py`.
 
-    - **default_runtime.py**: Configuration code for running settings, which can be called by `./configs/MIAOD.py`.
+    - **default_runtime.py**: Configuration code for running settings, which can be called by `configs/MIAOD.py`.
   
-    - **retinanet_r50_fpn.py**: Configuration code for model training and test settings, which can be called by `./configs/MIAOD.py`.
+    - **retinanet_r50_fpn.py**: Configuration code for model training and test settings, which can be called by `configs/MIAOD.py`.
  
-    - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data preprocessing, which can be called by `./configs/MIAOD.py`.
+    - **voc0712.py**: Configuration code for PASCAL VOC dataset settings and data preprocessing, which can be called by `configs/MIAOD.py`.
   
-  - **MIAOD.py**: Configuration code in general including most custom settings, containing active learning dataset settings, model training and test parameter settings, custom hyper-parameter settings, log file and model saving settings, which can be mainly called by `./tools/train.py`. The more detailed introduction of each parameter is in the comments of this file.
+  - **MIAOD.py**: Configuration code in general including most custom settings, containing active learning dataset settings, model training and test parameter settings, custom hyper-parameter settings, log file and model saving settings, which can be mainly called by `tools/train.py`. The more detailed introduction of each parameter is in the comments of this file.
 
 - **log_nohup**: Log folder for storing log output on each GPU temporarily.
 
@@ -228,9 +268,9 @@ The explanation of each code file or folder is as follows:
   
     - **\_\_init\_\_.py**: Some function initialization in the current folder.
     
-    - **test.py**: Code for testing the model and calculating uncertainty, which can be called by `epoch_based_runner.py` and `./tools/train.py`.
+    - **test.py**: Code for testing the model and calculating uncertainty, which can be called by `epoch_based_runner.py` and `tools/train.py`.
     
-    - **train.py**: Code for setting random seed and creating training dataloaders to prepare for the following epoch-level training, which can be called by `./tools/train.py`.
+    - **train.py**: Code for setting random seed and creating training dataloaders to prepare for the following epoch-level training, which can be called by `tools/train.py`.
     
   - **models**: The code folder with the details of network model architecture, training loss, forward propagation in test and calculating uncertainty.
   
@@ -238,25 +278,25 @@ The explanation of each code file or folder is as follows:
     
       - **\_\_init\_\_.py**: Some function initialization in the current folder.
       
-      - **MIAOD_head.py**: Code for forwarding anchor-level model output, calculating anchor-level loss, generating pseudo labels and getting bounding boxes from existing model output in more details, which can be called by `./mmdet/models/dense_heads/base_dense_head.py` and `./mmdet/models/detectors/single_stage.py`.
+      - **MIAOD_head.py**: Code for forwarding anchor-level model output, calculating anchor-level loss, generating pseudo labels and getting bounding boxes from existing model output in more details, which can be called by `mmdet/models/dense_heads/base_dense_head.py` and `mmdet/models/detectors/single_stage.py`.
       
-      - **MIAOD_retina_head.py**: Code for building the MI-AOD model architecture, especially the well-designed head architecture, and define the forward output, which can be called by `./mmdet/models/dense_heads/MIAOD_head.py`.
+      - **MIAOD_retina_head.py**: Code for building the MI-AOD model architecture, especially the well-designed head architecture, and define the forward output, which can be called by `mmdet/models/dense_heads/MIAOD_head.py`.
       
-      - **base_dense_head.py**: Code for choosing different equations to calculate loss, which can be called by `./mmdet/models/detectors/single_stage.py`.
+      - **base_dense_head.py**: Code for choosing different equations to calculate loss, which can be called by `mmdet/models/detectors/single_stage.py`.
       
     - **detectors**: The code folder of the forward propogation and backward propogation in the overall training, test and calculating uncertainty process.
     
       - **base.py**: Code for arranging training loss to print and returning the loss and image information, which can be called by `epoch_based_runner.py`.
 
-      - **single_stage.py**: Code for extracting image features, getting bounding boxes from the model output and returning the loss, which can be called by `./mmdet/models/detectors/base.py`.
+      - **single_stage.py**: Code for extracting image features, getting bounding boxes from the model output and returning the loss, which can be called by `mmdet/models/detectors/base.py`.
       
   - **utils**: The code folder for creating active learning datasets.
 
-    - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle, which can be called by `./tools/train.py`.
+    - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle, which can be called by `tools/train.py`.
 
 - **tools**: The outer training and test code folder of MI-AOD.
 
-  - **train.py**: Outer code for training and test for MI-AOD, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called by `./script.sh`.
+  - **train.py**: Outer code for training and test for MI-AOD, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called by `script.sh`.
 
 - **work_dirs**: Work directory of the index and image name of the labeled set and unlabeled set for each cycle, all log and json outputs and the model state dictionary for the last 3 cycle, which are introduced in the **Training and Test** part above.
 
@@ -272,13 +312,17 @@ The trained model for the last cycle in active learning (_i.e._, using 20% label
 
 ![Results_RetinaNet_VOC](./figures/Results_RetinaNet_VOC.png)
 
+|Proportion (%) of Labeled Images|5.0|7.5|10.0|12.5|15.0|17.5|20.0|100.0 (Full-supervision)|
+|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
+|mAP (%) of MI-AOD| 47.18 | 58.41 | 64.02 | 67.72 | 69.79 | 71.07 | 72.27 | 77.28 |
+
 The training and test logs are available on [Google Drive](https://drive.google.com/file/d/1AabLGMoVyUjB7GiqLlLuvRgkGmzuNzqk/view?usp=sharing) and [Baidu Drive (Extraction code: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g).
 
-You can also use other files in the directory ` './work_dirs/MI-AOD/ ` if you like, they are as follows:
+You can also use other files in the directory `work_dirs/MI-AOD/` if you like, they are as follows:
 
 - **JSON file `$TIMESTAMP.log.json`**
 
-  You can load the losses and mAPs during training and test from it more conveniently than from the `./work_dirs/MI-AOD/$TIMESTAMP.log` file.
+  You can load the losses and mAPs during training and test from it more conveniently than from the `work_dirs/MI-AOD/$TIMESTAMP.log` file.
 
 - **npy file `X_L_$CYCLE.npy` and `X_U_$CYCLE.npy`**
 
@@ -288,7 +332,7 @@ You can also use other files in the directory ` './work_dirs/MI-AOD/ ` if you li
 
   The indexes are the integers from 0 to 16550 for PASCAL VOC datasets, where 0 to 5010 is for PASCAL VOC 2007 *trainval* set and 5011 to 16550 for PASCAL VOC 2012 *trainval* set.
 
-  An example code for loading these files is the Line 108-114 in the `./tools/train.py` file (which are in comments now).
+  An example code for loading these files is the Line 108-114 in the `tools/train.py` file (which are in comments now).
 
 - **pth file `epoch_$EPOCH.pth` and `latest.pth`**
 
@@ -296,7 +340,7 @@ You can also use other files in the directory ` './work_dirs/MI-AOD/ ` if you li
 
   You can load the model state dictionary from them.
 
-  An example code for loading these files is the Line 109, 143-145 in the `./tools/train.py` file (which are in comments now).
+  An example code for loading these files is the Line 109, 143-145 in the `tools/train.py` file (which are in comments now).
 
 - **txt file `trainval_L_07.txt`, `trainval_U_07.txt`, `trainval_L_12.txt` and `trainval_U_12.txt` in each `cycle$CYCLE` directory**
 
