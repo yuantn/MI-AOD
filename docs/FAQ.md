@@ -1,5 +1,7 @@
 # Frequently Asked Questions (FAQ)
 
+Language: [简体中文](FAQ_cn.md) | English
+
 We have list some common troubles faced by many users and their corresponding solutions here.
 Feel free to enrich the list if you find any frequent issues and have ways to help others to solve them.
 If the contents here do not cover your issue, please just create an issue [here](../../../issues).
@@ -18,7 +20,7 @@ The open issues are not included here for now, just in case someone will ask fur
 1.  Q: TypeError: forward() missing 1 required positional argument: 'x' (Issues [#3](../../../issues/3), [#5](../../../issues/5) and [#15](../../../issues/15#issuecomment-854458413))
     
     A: Please refer to [Modification in the mmcv Package](installation.md#modification-in-the-mmcv-package).
-    That is, you are supposed to copy the “epoch_base_runner.py” provided in this repository to the mmcv directory again (as described in the installation.md)
+    That is, you are supposed to copy the `epoch_based_runner.py` provided in this repository to the mmcv directory again (as described in the installation.md)
     if you have modified anything in the mmcv package (including but not limited to: updating/re-installing Python, PyTorch, mmdetection, mmcv, mmcv-full, conda environment).
 
 2.  Q: AssertionError: MMCV==1.3.1 is used but incompatible. Please install mmcv>=1.0.5, <=1.0.5. (Issue [#10](../../../issues/10))
@@ -32,13 +34,13 @@ The open issues are not included here for now, just in case someone will ask fur
 
     A: Option 1. Re-install the **Pytorch==1.6.0** and **TorchVision==0.7.0** with the [PyTorch official instructions](https://pytorch.org/get-started/previous-versions/#v160).
     
-    Option 2. Check the lines of AttributeError, and replace the " if value.isnan() " with " if value != value " ( considering that only nan != nan).
+    Option 2. Check the lines of `AttributeError`, and replace the `if value.isnan()` with `if value != value` ( considering that only nan != nan).
     
-    The error must be in the Line 483 and 569 of the " ./mmdet/models/dense_heads/MIAOD_head.py ".
+    The error must be in the Line 483 and 569 of the `./mmdet/models/dense_heads/MIAOD_head.py`.
     
 2.  Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6))
 
-    A: When running "script.sh", the code is executed in the background.
+    A: When running `script.sh`, the code is executed in the background.
     You can view the output log by running this command in the root directory: `vim log_nohup/nohup_0.log`
 
     Or, if you want to directly output the running log in the foreground,
@@ -70,7 +72,7 @@ The open issues are not included here for now, just in case someone will ask fur
                   torch.distributed.barrier()
     ```
 
-5.  Q: How to guarantee the distribution bias between the labeled data and the unlabeled data is minimized based on my derivation? ([Issue #8](../../../issues/8))
+5.  Q: How to guarantee the distribution bias between the labeled data and the unlabeled data is minimized based on my derivation? (Issue [#8](../../../issues/8))
 
     A: There is something wrong in the process and result of your derivation.
     And minimizing the distribution bias is achieved by two steps (maximizing and minimizing uncertainty, as shown in Fig. 2(a) ) but not only minimizing uncertainty.
@@ -96,7 +98,7 @@ The open issues are not included here for now, just in case someone will ask fur
     - -> Naturally formed unsupervised learning procedure
     - -> Performance improvement
 
-4.  Q: What is the main difference between the active learning and semi-supervision, and can I directly use active learning for semi-supervision?
+4.  Q: What is the main difference between the active learning and semi-supervision, and can I directly use active learning for semi-supervision? (Issue [#12](../../../issues/12))
 
     A: The core of active learning is that we first train a model with small amount of data,
     and then calculate the uncertainty (or other designed metrics) to select the informative samples for the next active learning cycle.
