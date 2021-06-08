@@ -155,7 +155,7 @@ chmod 700 ./script.sh
 
 如果你有任何问题，请随时在 [问题](https://github.com/yuantn/mi-aod/issues) 中留言。
 
-请参考 [问题集锦](./docs/FAQ_cn.md) 来查看大家的常见问题。
+请参考 [常见问题解答](./docs/FAQ_cn.md) 来查看大家的常见问题。
 
 ### 代码结构
 ```
