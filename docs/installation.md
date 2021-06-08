@@ -1,5 +1,7 @@
 # Installation
 
+Language: [简体中文](installation_cn.md) | English
+
 <!-- TOC -->
 
 - [Prerequisites](#prerequisites)
