@@ -1,6 +1,6 @@
 # MI-AOD
 
-语言: 简体中文 | [English](./README.md)
+语言： 简体中文 | [English](./README.md)
 
 ![Python 3.7](https://img.shields.io/badge/Python-3.7-green.svg?style=plastic)
 ![PyTorch 1.6](https://img.shields.io/badge/PyTorch-1.6-EE4C2C.svg?style=plastic)
