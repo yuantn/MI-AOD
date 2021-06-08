@@ -118,10 +118,10 @@ or specify desired extras when calling `pip` (e.g. `pip install -v -e .[optional
 ## Modification in the MMCV Package
 
 To train with two dataloaders (i.e., the labeled set dataloader and the unlabeled set dataloader mentioned in the paper) at the same time,
-you will need to modify the ` epoch_based_runner.py ` in the mmcv package.
+you will need to modify the `epoch_based_runner.py` in the mmcv package.
 
 Considering that this will affect all code that uses this environment,
-so we suggest you set up a separate environment for MI-AOD (i.e., the ` miaod ` environment created above).
+so we suggest you set up a separate environment for MI-AOD (i.e., the `miaod` environment created above).
 
 ```shell
 cp -v epoch_based_runner.py $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-packages/mmcv/runner/
