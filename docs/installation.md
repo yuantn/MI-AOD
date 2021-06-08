@@ -131,7 +131,7 @@ Please change the `$YOUR_ANACONDA_PATH` to your actual Anaconda3 installation di
 
 After that, if you have modified anything in the mmcv package
 (including but not limited to: updating/re-installing Python, PyTorch, mmdetection, mmcv, mmcv-full, conda environment),
-you are supposed to copy the “epoch_base_runner.py” provided in this repository to the mmcv directory again. ([Issue #3](../../../issues/3))
+you are supposed to copy the `epoch_base_runner.py` provided in this repository to the mmcv directory again. ([Issue #3](../../../issues/3))
 
 ## A From-scratch Setup Script
 
