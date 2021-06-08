@@ -1,5 +1,7 @@
 # 安装
 
+语言: 简体中文 | [English](installation.md)
+
 <!-- TOC -->
 
 - [安装前准备](#安装前准备)
