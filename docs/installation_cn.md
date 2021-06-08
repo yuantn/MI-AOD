@@ -156,4 +156,4 @@ cp -v epoch_based_runner.py $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-pa
 
 如果你有任何问题，请随时在 [问题](../../issues) 中留言，或者参考 [MMDetection 2.3.0 版本的安装说明](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/install.md)。
 
-请参考 [问题集锦](FAQ_cn.md) 来查看大家的常见问题。
+请参考 [常见问题解答](FAQ_cn.md) 来查看大家的常见问题。
