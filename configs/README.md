@@ -1,5 +1,15 @@
 # Variables and Parameters in the Configuration File (in MIAOD.py)
 
+<!-- TOC -->
+
+- [Base](#base)
+- [Datasets](#datasets)
+- [Model Training](#model-training)
+- [Results](#results)
+- [Unique MI-AOD Settings](#unique-mi-aod-settings)
+
+<!-- TOC -->
+
 ## Base
 
 - **\_base\_** (Lines 4-7): The basic configuration files, including RetinaNet, PASCAL VOC and runtime settings.
@@ -66,6 +76,6 @@
 
 - **X_S_size** (Line 43): The size of ![X_S](http://latex.codecogs.com/gif.latex?\bg_white\mathit{X}_S), the newly selected sets.
 
-- **X_L_0_size** (Line 43): The size of ![X_L^0](http://latex.codecogs.com/gif.latex?\bg_white\mathit{X}_L^0), the initial labeled set.
+- **X_L_0_size** (Line 44): The size of ![X_L^0](http://latex.codecogs.com/gif.latex?\bg_white\mathit{X}_L^0), the initial labeled set.
 
 - **cycles** (Line 46): The number of active learning cycles.
