@@ -1,6 +1,6 @@
 # 配置文件 MIAOD.py 中的变量与参数
 
-Language: 简体中文 | [English](README.md)
+语言：简体中文 | [English](README.md)
 
 <!-- TOC -->
 
