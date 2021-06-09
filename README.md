@@ -312,9 +312,10 @@ The trained model for the last cycle in active learning (_i.e._, using 20% label
 
 ![Results_RetinaNet_VOC](./figures/Results_RetinaNet_VOC.png)
 
-|Proportion (%) of Labeled Images|5.0|7.5|10.0|12.5|15.0|17.5|20.0|100.0 (Full-supervision)|
+|Proportion (%) of Labeled Images|5.0|7.5|10.0|12.5|15.0|17.5|20.0|100.0 (Full supervision)|
 |:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
 |mAP (%) of MI-AOD| 47.18 | 58.41 | 64.02 | 67.72 | 69.79 | 71.07 | 72.27 | 77.28 |
+|Ratio (%) of the performance to full supervision|61.05|75.58|82.84|87.63|90.31|91.96|93.52|100.00|
 
 The training and test logs are available on [Google Drive](https://drive.google.com/file/d/1AabLGMoVyUjB7GiqLlLuvRgkGmzuNzqk/view?usp=sharing) and [Baidu Drive (Extraction code: 7a6m)](https://pan.baidu.com/s/1DKRtv6U0lNkAvzLmfYVu8g).
 
