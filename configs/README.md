@@ -1,5 +1,7 @@
 # Variables and Parameters in the Configuration File (in MIAOD.py)
 
+Language: [简体中文](README_cn.md) | English
+
 <!-- TOC -->
 
 - [Base](#base)
