@@ -184,10 +184,10 @@ Similarly, theses commands are for test:
 
 ```bash
 # for single GPU
-python tools/test.py $CONFIG_PATH $CKPT_PATH
+python tools/test.py $CONFIG_PATH $CKPT_PATH --eval mAP
 
 # for multiple GPUs
-tools/dist_test.sh $CONFIG_PATH $CKPT_PATH $GPU_NUMBERS
+tools/dist_test.sh $CONFIG_PATH $CKPT_PATH $GPU_NUMBERS --eval mAP
 ```
 
 where `$CKPT_PATH` should be replaced by the path of the checkpoint file (\*.pth) in the `work_dirs` folder after training.
