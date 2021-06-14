@@ -184,10 +184,10 @@ tools/dist_train.sh $配置文件地址 $GPU_数量
 
 ```bash
 # 单 GPU 测试
-python tools/test.py $配置文件地址 $模型文件地址
+python tools/test.py $配置文件地址 $模型文件地址 --eval mAP
 
 # 多 GPU 测试
-tools/dist_test.sh $配置文件地址 $模型文件地址 $GPU_数量
+tools/dist_test.sh $配置文件地址 $模型文件地址 $GPU_数量 --eval mAP
 ```
 
 其中 `$模型文件地址` 应改为训练后 `work_dirs` 文件夹中的模型文件（\*.pth）的地址。
