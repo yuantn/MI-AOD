@@ -27,7 +27,7 @@
 
 ## 简介
 
-这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://arxiv.org/pdf/2104.02324.pdf) , CVPR 2021 一文的代码。
+这是 [*Multiple Instance Active Learning for Object Detection（用于目标检测的多示例主动学习方法）*](https://openaccess.thecvf.com/content/CVPR2021/papers/Yuan_Multiple_Instance_Active_Learning_for_Object_Detection_CVPR_2021_paper.pdf) , CVPR 2021 一文的代码。
 
 ### 任务描述
 
@@ -364,7 +364,7 @@ tools/dist_test.sh $配置文件地址 $模型文件地址 $GPU_数量 --eval mA
 
 ## 引用
 
-如果你觉得这个代码库对你的论文有用，请考虑引用我们的[论文](https://arxiv.org/pdf/2104.02324.pdf)。
+如果你觉得这个代码库对你的论文有用，请考虑引用我们的[论文](https://openaccess.thecvf.com/content/CVPR2021/papers/Yuan_Multiple_Instance_Active_Learning_for_Object_Detection_CVPR_2021_paper.pdf)。
 
 ```bibtex
 @inproceedings{MIAOD2021,
