@@ -27,7 +27,7 @@ Language: [简体中文](./README_cn.md) | English
 
 ## Introduction
 
-This is the code for [***Multiple Instance Active Learning for Object Detection***](https://arxiv.org/pdf/2104.02324.pdf), CVPR 2021.
+This is the code for [***Multiple Instance Active Learning for Object Detection***](https://openaccess.thecvf.com/content/CVPR2021/papers/Yuan_Multiple_Instance_Active_Learning_for_Object_Detection_CVPR_2021_paper.pdf), CVPR 2021.
 
 ### Task Description
 
@@ -362,7 +362,7 @@ This project is released under the [Apache 2.0 license](./LICENSE).
 
 ## Citation
 
-If you find this repository useful for your publications, please consider citing our [paper](https://arxiv.org/pdf/2104.02324.pdf).
+If you find this repository useful for your publications, please consider citing our [paper](https://openaccess.thecvf.com/content/CVPR2021/papers/Yuan_Multiple_Instance_Active_Learning_for_Object_Detection_CVPR_2021_paper.pdf).
 
 ```bibtex
 @inproceedings{MIAOD2021,
