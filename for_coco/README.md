@@ -56,7 +56,7 @@ The following instructions are for data preparation of MS COCO. Please ensure yo
     
     ```
     Line 1: data_root_coco='$YOUR_DATASET_PATH/coco/'
-    Line 2 data_root_voc='$YOUR_DATASET_PATH/coco2voc/'
+    Line 2: data_root_voc='$YOUR_DATASET_PATH/coco2voc/'
     ```
     
     Please change the `$YOUR_DATASET_PATH`s above to your actual dataset directory (i.e., the directory where you create the `coco` folder).
