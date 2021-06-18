@@ -1,6 +1,6 @@
 # MI-AOD
 
-语言： 简体中文 | [English](./README.md)
+语言： 简体中文 | [English](README.md)
 
 ![Python 3.7](https://img.shields.io/badge/Python-3.7-green.svg?style=plastic)
 ![PyTorch 1.6](https://img.shields.io/badge/PyTorch-1.6-EE4C2C.svg?style=plastic)
@@ -138,7 +138,9 @@ configs/_base_/voc0712.py 的第 1 行：data_root='$YOUR_DATASET_PATH/VOCdevkit
 
 地址请使用绝对路径（如以 `/` 开始的路径），不要使用相对路径（如以 `./` 或 `../` 开始的路径）。
 
-有关其他变量和参数的信息，请参考 [这里](configs/README_cn.md)
+有关其他变量和参数的信息，请参考 [这里](configs/README_cn.md)。
+
+有关 MS COCO 上的数据集准备，请参考 [这里](for_coco/README_cn.md)。
 
 ## 训练和测试
 
