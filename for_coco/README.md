@@ -2,7 +2,7 @@
 
 Language: [简体中文](./README_cn.md) | English
 
-There are 5 python files in this folder, which are used for converting MS COCO JSON annotation format to PASCAL VOC XML annotation format (refer to [KapilM26/coco2VOC](https://github.com/KapilM26/coco2VOC)) on MS COCO.
+There are 5 python files in this folder, which are used for converting MS COCO JSON annotation format to PASCAL VOC XML annotation format (refer to [KapilM26/coco2VOC](https://github.com/KapilM26/coco2VOC)).
 
 The following instructions are for data preparation of MS COCO. Please ensure you have finished the installation in [installation.md](../docs/installation.md).
 
