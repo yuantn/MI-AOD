@@ -95,4 +95,4 @@
     
    请把上面的 `$你的数据集地址` 改为你实际的数据集地址（即你新建 `coco` 文件夹的地址）。
 
-现在你已经完成了 MS COCO 的数据集准备。请按照 [这里](../README_cn.md#train-and-test) 来完成剩余的训练与测试步骤，并且在 MS COCO 数据集的测试步骤中把 `--eval mAP` 替换为 `--eval bbox`。
+现在你已经完成了 MS COCO 的数据集准备。请按照 [这里](../README_cn.md#训练和测试) 来完成剩余的训练与测试步骤，并且在 MS COCO 数据集的测试步骤中把 `--eval mAP` 替换为 `--eval bbox`。
