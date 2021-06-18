@@ -79,7 +79,7 @@ The following instructions are for data preparation of MS COCO. Please ensure yo
    cp voc.py ../mmdet/datasets/voc.py
    ```
 
-4. Please install `pascal_voc_writer` package to write the annotation in PASCAL VOC XML annotation as below.
+4. Please install `pascal_voc_writer` package to write PASCAL VOC XML annotation as below.
 
     ```bash
     pip install pascal_voc_writer
