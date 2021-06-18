@@ -1,6 +1,6 @@
 # MI-AOD
 
-Language: [简体中文](./README_cn.md) | English
+Language: [简体中文](README_cn.md) | English
 
 ![Python 3.7](https://img.shields.io/badge/Python-3.7-green.svg?style=plastic)
 ![PyTorch 1.6](https://img.shields.io/badge/PyTorch-1.6-EE4C2C.svg?style=plastic)
@@ -139,6 +139,8 @@ Please change the `$YOUR_DATASET_PATH`s above to your actual dataset directory (
 And please use the absolute path (i.e., start with `/`) but not a relative path (i.e., start with `./` or `../`）.
 
 Please refer to [here](configs/README.md) for the information of other variables and parameters.
+
+Please refer to [here](for_coco/README.md) for the data preparation on MS COCO.
 
 ### Train and Test
 
