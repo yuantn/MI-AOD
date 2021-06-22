@@ -194,6 +194,21 @@ tools/dist_test.sh $CONFIG_PATH $CKPT_PATH $GPU_NUMBERS --eval mAP
 
 where `$CKPT_PATH` should be replaced by the path of the checkpoint file (\*.pth) in the `work_dirs` folder after training.
 
+If you want to inference on single image, the commands are as follows:
+
+```bash
+python tools/test_single.py \
+	$CONFIG_PATH \
+	$CKPT_PATH \
+	$IMG_PATH \
+	$OUT_NAME
+```
+
+where `$IMG_PATH` should be replaced by the image on which you want to inference on,
+and `$OUT_NAME` should be replaced by the output result file name, which should usually end with `.jpg`, `.png`, and so on.
+
+With output of an image with bounding boxes and scores, the uncertainty of this image will also be flushed in the terminal.
+
 If you have any question, please feel free to leave a issue [here](../../issues).
 
 And please refer to [FAQ](./docs/FAQ.md) for frequently asked questions.
