@@ -112,8 +112,19 @@ def inference_detector(model, img):
 
     # forward the model
     with torch.no_grad():
+        data['img'][0] = data['img'][0].cuda()
+        data.update({'x': data.pop('img')})
         result = model(return_loss=False, rescale=True, **data)
-    return result
+        y_head_f_1, y_head_f_2, y_head_cls = model(return_loss=False, rescale=True, return_box=False, **data)
+        y_head_f_1 = torch.cat(y_head_f_1, 0)
+        y_head_f_2 = torch.cat(y_head_f_2, 0)
+        y_head_f_1 = torch.nn.Sigmoid()(y_head_f_1)
+        y_head_f_2 = torch.nn.Sigmoid()(y_head_f_2)
+        loss_l2_p = (y_head_f_1 - y_head_f_2).pow(2)
+        uncertainty_all_N = loss_l2_p.mean(dim=1)
+        arg = uncertainty_all_N.argsort()
+        uncertainty_single = uncertainty_all_N[arg[-cfg.k:]].mean()
+    return result, uncertainty_single
 
 
 async def async_inference_detector(model, img):
