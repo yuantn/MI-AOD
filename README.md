@@ -239,6 +239,7 @@ And please refer to [FAQ](./docs/FAQ.md) for frequently asked questions.
 ├── mmdet
 │   ├── apis
 │   │   ├── __init__.py
+│   │   ├── inference.py
 │   │   ├── test.py
 │   │   ├── train.py
 │   ├── models
@@ -253,6 +254,8 @@ And please refer to [FAQ](./docs/FAQ.md) for frequently asked questions.
 │   ├── utils
 │   │   ├── active_datasets.py
 ├── tools
+│   ├── test.py
+│   ├── test_single.py
 │   ├── train.py
 ├── work_dirs
 │   ├── MI-AOD
@@ -285,7 +288,9 @@ The explanation of each code file or folder is as follows:
   
     - **\_\_init\_\_.py**: Some function initialization in the current folder.
     
-    - **test.py**: Code for testing the model and calculating uncertainty, which can be called by `epoch_based_runner.py` and `tools/train.py`.
+    - **inference.py**: Code for inferring the model and calculating uncertainty, which can be called by `tools/test_single.py`.
+    
+    - **test.py**: Code for testing the model and calculating uncertainty, which can be called by `epoch_based_runner.py`, `tools/test.py` and `tools/train.py`.
     
     - **train.py**: Code for setting random seed and creating training dataloaders to prepare for the following epoch-level training, which can be called by `tools/train.py`.
     
@@ -312,6 +317,10 @@ The explanation of each code file or folder is as follows:
     - **active_dataset.py**: Code for creating active learning datasets, including creating initial labeled set, creating the image name file for the labeled set and unlabeled set and updating the labeled set after each active learning cycle, which can be called by `tools/train.py`.
 
 - **tools**: The outer training and test code folder of MI-AOD.
+
+  - **test.py**: Code for test on trained model and the whole test set for MI-AOD.
+  
+  - **test_single.py**: Code for test on trained model and single image in test set for MI-AOD.
 
   - **train.py**: Outer code for training and test for MI-AOD, including generating PASCAL VOC datasets for active learning, loading image sets and models, Instance Uncertainty Re-weighting and Informative Image Selection in general, which can be called by `script.sh`.
 
