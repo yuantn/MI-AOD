@@ -238,6 +238,7 @@ python tools/test_single.py \
 ├── mmdet
 │   ├── apis
 │   │   ├── __init__.py
+│   │   ├── inference.py
 │   │   ├── test.py
 │   │   ├── train.py
 │   ├── models
@@ -252,6 +253,8 @@ python tools/test_single.py \
 │   ├── utils
 │   │   ├── active_datasets.py
 ├── tools
+│   ├── test.py
+│   ├── test_single.py
 │   ├── train.py
 ├── work_dirs
 │   ├── MI-AOD
@@ -283,8 +286,10 @@ python tools/test_single.py \
   - **apis**: MI-AOD 的内层训练、测试、计算不确定度的代码文件夹。
 
     - **\_\_init\_\_.py**: 当前文件夹下一些函数的初始化。
+    
+    - **inference.py**: 推断模型和计算不确定度的代码，在 `tools/test_single.py` 中调用。
 
-    - **test.py**: 模型测试和计算不确定度的代码，在 `epoch_based_runner.py` 和 `tools/train.py` 中调用。
+    - **test.py**: 模型测试和计算不确定度的代码，在 `epoch_based_runner.py`、`tools/test.py` 和 `tools/train.py` 中调用。
 
     - **train.py**: 设置随机种子、创建训练用的 dataloader （为接下 epoch 级别的训练做好准备） 的代码，在 `tools/train.py` 中调用。
 
@@ -312,6 +317,10 @@ python tools/test_single.py \
 
 - **tools**: MI-AOD 的外层训练和测试的代码文件夹。
 
+  - **test.py**: MI-AOD 在整个测试集上用训练好的模型测试的代码。
+  
+  - **test_single.py**: MI-AOD 在测试集的单张图像上用训练好的模型测试的代码。
+  
   - **train.py**: MI-AOD 的训练和测试代码，主要包括生成用于主动学习的 PASCAL VOC 数据集、加载图像集合和模型、示例不确定度重加权、信息丰富的图像挑选，在 `script.sh` 中调用。
 
 - **work_dirs**: 存放每个循环中有标号和无标号图像的名称和索引、所有日志和 json 文件输出、最后3个循环的模型状态参数字典（model state dictionary）的文件夹，在上面的 **训练和测试** 部分已经介绍过。
