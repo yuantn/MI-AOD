@@ -12,6 +12,7 @@ The open issues are not included here for now, just in case someone will ask fur
 - [Environment Installation](#environment-installation)
 - [Training and Test](#training-and-test)
 - [Paper Details](#paper-details)
+- [Fixed Bugs and New Features](#fixed-bugs-and-new-features)
 
 <!-- TOC -->
 
@@ -50,17 +51,11 @@ The open issues are not included here for now, just in case someone will ask fur
 2.  Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))
 
     A: When running `script.sh`, the code is executed in the background.
-    You can view the output log by running this command in the root directory: `vim log_nohup/nohup_0.log`
-
-    Or, if you want to directly output the running log in the foreground,
-    you can run the following command referenced from [here](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/getting_started.md#train-with-a-single-gpu)
-    in the code root directory: `python tools/train.py configs/MIAOD.py`
+    You can view the output log by running this command in the root directory: `vim log_nohup/nohup_0.log`.
     
-3.  Q: `AttributeError: 'NoneType' object has no attribute 'param_lambda'`. (Issue [#7](../../../issues/7))
-
-    A: The bug has been fixed, please update to the latest version.
+    There is another solution to flush the logs in the terminal [in another section](#fixed-bugs-and-new-features).
     
-4.  Q: `StopIteration`. (Issue [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))
+3.  Q: `StopIteration`. (Issue [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))
 
     A: Thanks for the solution from [@KevinChow](https://github.com/kevinchow1993).
     
@@ -81,9 +76,17 @@ The open issues are not included here for now, just in case someone will ask fur
                   torch.distributed.barrier()
     ```
 
-5.  Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13))
+4.  Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13))
 
     A: You should only modify `configs/MIAOD.py` if you can convert your other training and test data into PASCAL VOC format. It contains all parameters and settings.
+    
+5.  Q: Validation error: `TypeError: 'DataContainer' object is not subscriptable`. (Issue [#14](../../../issues/14))
+
+    A: In `get_bboxes` function of `mmdet/models/dense_heads/MIAOD_head.py`, please change `img_shape = img_metas[img_id]['img_shape']` to:
+    
+    `img_shape = img_metas.data[0]`.
+    
+    Note: You only need to make changes when you encounter this problem, usually it won't occur on a GPU environment.
     
 
 ## Paper Details
@@ -121,5 +124,16 @@ The open issues are not included here for now, just in case someone will ask fur
     That is, we use semi-supervised learning (or its key idea) to learn with limited labeled data and enough unlabeled data, 
     and use active learning to select informative unlabeled data and annotate them.
     This is the trend of the recent research in active learning, and use active learning for semi-supervised learning is also a good idea.
+    
+    
+## Fixed Bugs and New Features
+
+1.  Q: `AttributeError: 'NoneType' object has no attribute 'param_lambda'`. (Issue [#7](../../../issues/7))
+
+    A: The bug has been fixed, please update to the latest version.
+    
+2.  Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))
+
+    A: Please refer to [here](../../../#train-and-test) if you want to directly flush the running log in the terminal.
     
     
