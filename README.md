@@ -129,7 +129,7 @@ tar -xf VOCtrainval_11-May-2012.tar
 
 After that, please modify the corresponding dataset directory in this repository, they are located in:
 
-```
+```python
 Line 1 of configs/MIAOD.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 Line 1 of configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
