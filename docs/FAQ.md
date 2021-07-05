@@ -35,6 +35,8 @@ The open issues are not included here for now, just in case someone will ask fur
     ModuleNotFoundError: No module named 'mmcv.utils'
     ```
     
+    **(Issue [#13](../../../issues/13#issuecomment-841080219))**
+    
     **A:** Please refer to the step 5 [here](../../../blob/master/docs/installation.md#environment-installation) to install build requirements and install and compile MMDetection.
     
 
@@ -76,7 +78,7 @@ The open issues are not included here for now, just in case someone will ask fur
                   torch.distributed.barrier()
     ```
 
-4.  **Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13))**
+4.  **Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13#issuecomment-845709365))**
 
     **A:** You should only modify `configs/MIAOD.py` if you can convert your other training and test data into PASCAL VOC format. It contains all parameters and settings.
     
@@ -108,7 +110,7 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** Our experiments have shown that, if the order of max step and min step is reversed (including the fixed layers), the performance will change little.
         
-3.  **Q: The initial labeled experiment in Figure 5 of this paper should be similar in theory. Why not in experiments? (Issue [#4](../../../issues/4))**
+3.  **Q: The initial labeled experiment in Figure 5 of this paper should be similar in theory. Why not in experiments? (Issue [#4](../../../issues/4#issuecomment-800871469))**
 
     **A:** The reason can be summarized as:
     - Intentional use of unlabeled data
