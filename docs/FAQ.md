@@ -56,11 +56,11 @@ The open issues are not included here for now, just in case someone will ask fur
     you can run the following command referenced from [here](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/getting_started.md#train-with-a-single-gpu)
     in the code root directory: `python tools/train.py configs/MIAOD.py`
     
-3.  Q: AttributeError: 'NoneType' object has no attribute 'param_lambda'. (Issue [#7](../../../issues/7))
+3.  Q: `AttributeError: 'NoneType' object has no attribute 'param_lambda'`. (Issue [#7](../../../issues/7))
 
     A: The bug has been fixed, please update to the latest version.
     
-4.  Q: StopIteration. (Issue [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))
+4.  Q: `StopIteration`. (Issue [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))
 
     A: Thanks for the solution from [@KevinChow](https://github.com/kevinchow1993).
     
