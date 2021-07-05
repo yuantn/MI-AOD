@@ -81,12 +81,7 @@ The open issues are not included here for now, just in case someone will ask fur
                   torch.distributed.barrier()
     ```
 
-5.  Q: How to guarantee the distribution bias between the labeled data and the unlabeled data is minimized based on my derivation? (Issue [#8](../../../issues/8))
-
-    A: There is something wrong in the process and result of your derivation.
-    And minimizing the distribution bias is achieved by two steps (maximizing and minimizing uncertainty, as shown in Fig. 2(a) ) but not only minimizing uncertainty.
-
-6.  Q: I want to run MI-AOD with other data, what files and how many should I modify? (Issue [#13](../../../issues/13))
+5.  Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13))
 
     A: You should only modify `configs/MIAOD.py` if you can convert your other training and test data into PASCAL VOC format. It contains all parameters and settings.
     
@@ -111,7 +106,12 @@ The open issues are not included here for now, just in case someone will ask fur
     - -> Naturally formed unsupervised learning procedure
     - -> Performance improvement
 
-4.  Q: What is the main difference between the active learning and semi-supervision, and can I directly use active learning for semi-supervision? (Issue [#12](../../../issues/12))
+4.  Q: How to guarantee the distribution bias between the labeled data and the unlabeled data is minimized based on my derivation? (Issue [#8](../../../issues/8))
+
+    A: There is something wrong in the process and result of your derivation.
+    And minimizing the distribution bias is achieved by two steps (maximizing and minimizing uncertainty, as shown in Fig. 2(a) ) but not only minimizing uncertainty.
+
+5.  Q: What is the main difference between the active learning and semi-supervision, and can I directly use active learning for semi-supervision? (Issue [#12](../../../issues/12))
 
     A: The core of active learning is that we first train a model with small amount of data,
     and then calculate the uncertainty (or other designed metrics) to select the informative samples for the next active learning cycle.
@@ -121,3 +121,5 @@ The open issues are not included here for now, just in case someone will ask fur
     That is, we use semi-supervised learning (or its key idea) to learn with limited labeled data and enough unlabeled data, 
     and use active learning to select informative unlabeled data and annotate them.
     This is the trend of the recent research in active learning, and use active learning for semi-supervised learning is also a good idea.
+    
+    
