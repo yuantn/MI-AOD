@@ -30,7 +30,7 @@
     
 3.  **问： 在安装 `mmcv==1.0.5` 后，仍然会报错：**
 
-    ```
+    ```bash
     ImportError: cannot import name 'Config' from 'mmcv' (unknown location)
     ModuleNotFoundError: No module named 'mmcv.utils'
     ```
@@ -77,6 +77,7 @@
               if dist.is_initialized():
                   torch.distributed.barrier()
     ```
+    
 4.  **问： 我想在其他数据上运行 MI-AOD，我应该修改哪些文件？（问题 [#13](../../../issues/13#issuecomment-845709365)）**
 
     **答：** 如果你可以将你其他的训练和测试数据转换为 PASCAL VOC 格式的话，你只需要修改 `configs/MIAOD.py`。它包含了所有的参数和设置。
