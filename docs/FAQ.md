@@ -146,4 +146,7 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** The bug has been fixed, please update to the latest version.
     
-    
+3.  **Q: If only a single machine and a single GPU are used for training, is distributed training still needed (like `script.sh` and `tools/dist_train.py`)? (Issue [#15](../../../issues/15))**
+
+    **A:** Please refer to [here](../../../#train-and-test) if only using a single machine and a single GPU to train.
+
