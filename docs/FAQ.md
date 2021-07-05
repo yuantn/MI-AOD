@@ -18,46 +18,46 @@ The open issues are not included here for now, just in case someone will ask fur
 
 ## Environment Installation
 
-1.  Q: `TypeError: forward() missing 1 required positional argument: 'x'`. (Issues [#3](../../../issues/3), [#5](../../../issues/5) and [#15](../../../issues/15#issuecomment-854458413))
+1.  **Q: `TypeError: forward() missing 1 required positional argument: 'x'`. (Issues [#3](../../../issues/3), [#5](../../../issues/5) and [#15](../../../issues/15#issuecomment-854458413))**
     
-    A: Please refer to [Modification in the mmcv Package](installation.md#modification-in-the-mmcv-package).
+    **A:** Please refer to [Modification in the mmcv Package](installation.md#modification-in-the-mmcv-package).
     That is, you are supposed to copy the `epoch_based_runner.py` provided in this repository to the mmcv directory again (as described in the installation.md)
     if you have modified anything in the mmcv package (including but not limited to: updating/re-installing Python, PyTorch, mmdetection, mmcv, mmcv-full, conda environment).
 
-2.  Q: `AssertionError: MMCV==1.3.1 is used but incompatible. Please install mmcv>=1.0.5, <=1.0.5`. (Issue [#10](../../../issues/10))
+2.  **Q: `AssertionError: MMCV==1.3.1 is used but incompatible. Please install mmcv>=1.0.5, <=1.0.5`. (Issue [#10](../../../issues/10))**
 
-    A: Please uninstall **mmcv** and **mmcv-full**, and then reinstall **mmcv-full==1.0.5**.
+    **A:** Please uninstall **mmcv** and **mmcv-full**, and then reinstall **mmcv-full==1.0.5**.
     
-3.  Q: After installing mmcv==1.0.5, there are still some errors:
+3.  **Q: After installing mmcv==1.0.5, there are still some errors:**
     
     ```
     ImportError: cannot import name 'Config' from 'mmcv' (unknown location)
     ModuleNotFoundError: No module named 'mmcv.utils'
     ```
     
-    A: Please refer to the step 5 [here](../../../blob/master/docs/installation.md#environment-installation) to install build requirements and install and compile MMDetection.
+    **A:** Please refer to the step 5 [here](../../../blob/master/docs/installation.md#environment-installation) to install build requirements and install and compile MMDetection.
     
 
 ## Training and Test
 
-1.  Q: `AttributeError: 'Tensor' object has no attribute 'isnan'`. (Issues [#2](../../../issues/2) and [#9](../../../issues/9))
+1.  **Q: `AttributeError: 'Tensor' object has no attribute 'isnan'`. (Issues [#2](../../../issues/2) and [#9](../../../issues/9))**
 
-    A: Option 1. Re-install the **Pytorch==1.6.0** and **TorchVision==0.7.0** with the [PyTorch official instructions](https://pytorch.org/get-started/previous-versions/#v160).
+    **A:** Option 1. Re-install the **Pytorch==1.6.0** and **TorchVision==0.7.0** with the [PyTorch official instructions](https://pytorch.org/get-started/previous-versions/#v160).
     
     Option 2. Check the lines of `AttributeError`, and replace the `if value.isnan()` with `if value != value` ( considering that only nan != nan).
     
     The error must be in the Line 483 and 569 of the `./mmdet/models/dense_heads/MIAOD_head.py`.
     
-2.  Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))
+2.  **Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))**
 
-    A: When running `script.sh`, the code is executed in the background.
+    **A:** When running `script.sh`, the code is executed in the background.
     You can view the output log by running this command in the root directory: `vim log_nohup/nohup_0.log`.
     
     There is another solution to flush the logs in the terminal [in another section](#fixed-bugs-and-new-features).
     
-3.  Q: `StopIteration`. (Issue [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))
+3.  **Q: `StopIteration`. (Issue [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))**
 
-    A: Thanks for the solution from [@KevinChow](https://github.com/kevinchow1993).
+    **A:** Thanks for the solution from [@KevinChow](https://github.com/kevinchow1993).
     
     In the functions `create_X_L_file()` and `create_X_U_file()` of `mmdet/utils/active_datasets.py`, before writing into the txt files,
     sleep for some time randomly to make them write files not at the same time:
@@ -76,13 +76,13 @@ The open issues are not included here for now, just in case someone will ask fur
                   torch.distributed.barrier()
     ```
 
-4.  Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13))
+4.  **Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13))**
 
-    A: You should only modify `configs/MIAOD.py` if you can convert your other training and test data into PASCAL VOC format. It contains all parameters and settings.
+    **A:** You should only modify `configs/MIAOD.py` if you can convert your other training and test data into PASCAL VOC format. It contains all parameters and settings.
     
-5.  Q: Validation error: `TypeError: 'DataContainer' object is not subscriptable`. (Issue [#14](../../../issues/14))
+5.  **Q: Validation error: `TypeError: 'DataContainer' object is not subscriptable`. (Issue [#14](../../../issues/14))**
 
-    A: In `get_bboxes` function of `mmdet/models/dense_heads/MIAOD_head.py`, please change
+    **A:** In `get_bboxes` function of `mmdet/models/dense_heads/MIAOD_head.py`, please change
     
     ```python
     img_shape = img_metas[img_id]['img_shape']
@@ -99,32 +99,32 @@ The open issues are not included here for now, just in case someone will ask fur
 
 ## Paper Details
 
-1.  Q: Will the code be open sourced to MMDetection for wider spread? (Issue [#1](../../../issues/1))
+1.  **Q: Will the code be open sourced to MMDetection for wider spread? (Issue [#1](../../../issues/1))**
 
-    A: MI-AOD is mainly for active learning, but MMDetection is more for object detection.
+    **A:** MI-AOD is mainly for active learning, but MMDetection is more for object detection.
     It would be better for MI-AOD to open source to an active learning toolbox. 
 
-2.  Q: There are differences on the order of maximizing/minimizing uncertainty and the fixed layers between paper and code. (Issue [#4](../../../issues/4))
+2.  **Q: There are differences on the order of maximizing/minimizing uncertainty and the fixed layers between paper and code. (Issue [#4](../../../issues/4))**
 
-    A: Our experiments have shown that, if the order of max step and min step is reversed (including the fixed layers), the performance will change little.
+    **A:** Our experiments have shown that, if the order of max step and min step is reversed (including the fixed layers), the performance will change little.
         
-3.  Q: The initial labeled experiment in Figure 5 of this paper should be similar in theory. Why not in experiments? (Issue [#4](../../../issues/4))
+3.  **Q: The initial labeled experiment in Figure 5 of this paper should be similar in theory. Why not in experiments? (Issue [#4](../../../issues/4))**
 
-    A: The reason can be summarized as:
+    **A:** The reason can be summarized as:
     - Intentional use of unlabeled data
     - -> Better aligned instance distributions of the labeled and unlabeled set
     - -> Effective information (prediction discrepancy) of the unlabeled set
     - -> Naturally formed unsupervised learning procedure
     - -> Performance improvement
 
-4.  Q: How to guarantee the distribution bias between the labeled data and the unlabeled data is minimized based on my derivation? (Issue [#8](../../../issues/8))
+4.  **Q: How to guarantee the distribution bias between the labeled data and the unlabeled data is minimized based on my derivation? (Issue [#8](../../../issues/8))**
 
-    A: There is something wrong in the process and result of your derivation.
+    **A:** There is something wrong in the process and result of your derivation.
     And minimizing the distribution bias is achieved by two steps (maximizing and minimizing uncertainty, as shown in Fig. 2(a) ) but not only minimizing uncertainty.
 
-5.  Q: What is the main difference between the active learning and semi-supervision, and can I directly use active learning for semi-supervision? (Issue [#12](../../../issues/12))
+5.  **Q: What is the main difference between the active learning and semi-supervision, and can I directly use active learning for semi-supervision? (Issue [#12](../../../issues/12))**
 
-    A: The core of active learning is that we first train a model with small amount of data,
+    **A:** The core of active learning is that we first train a model with small amount of data,
     and then calculate the uncertainty (or other designed metrics) to select the informative samples for the next active learning cycle.
     However, the semi-supervised learning tries to mine and utilize unlabeled samples in a static perspective but not a dynamic perspective.
     
@@ -136,12 +136,12 @@ The open issues are not included here for now, just in case someone will ask fur
     
 ## Fixed Bugs and New Features
     
-1.  Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))
+1.  **Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))**
 
-    A: Please refer to [here](../../../#train-and-test) if you want to directly flush the running log in the terminal.
+    **A:** Please refer to [here](../../../#train-and-test) if you want to directly flush the running log in the terminal.
     
-2.  Q: `AttributeError: 'NoneType' object has no attribute 'param_lambda'`. (Issue [#7](../../../issues/7))
+2.  **Q: `AttributeError: 'NoneType' object has no attribute 'param_lambda'`. (Issue [#7](../../../issues/7))**
 
-    A: The bug has been fixed, please update to the latest version.
+    **A:** The bug has been fixed, please update to the latest version.
     
     
