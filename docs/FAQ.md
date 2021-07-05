@@ -106,7 +106,7 @@ The open issues are not included here for now, just in case someone will ask fur
     **A:** MI-AOD is mainly for active learning, but MMDetection is more for object detection.
     It would be better for MI-AOD to open source to an active learning toolbox. 
 
-2.  **Q: There are differences on the order of maximizing/minimizing uncertainty and the fixed layers between paper and code. (Issue [#4](../../../issues/4))**
+2.  **Q: There are differences on the order of maximizing/minimizing uncertainty and the fixed layers between paper and code. (Issue [#4](../../../issues/4) and [#16](../../../issues/16#issuecomment-859363894))**
 
     **A:** Our experiments have shown that, if the order of max step and min step is reversed (including the fixed layers), the performance will change little.
         
