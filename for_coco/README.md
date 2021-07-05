@@ -54,7 +54,7 @@ The following instructions are for data preparation of MS COCO. Please ensure yo
     
 2. Please modify the corresponding dataset directory in `MIAOD.py` in this folder, they are located in:
     
-    ```bash
+    ```python
     Line 1: data_root_coco='$YOUR_DATASET_PATH/coco/'
     Line 2: data_root_voc='$YOUR_DATASET_PATH/coco2voc/'
     ```
