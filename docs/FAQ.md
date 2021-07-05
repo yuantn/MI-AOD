@@ -50,14 +50,14 @@ The open issues are not included here for now, just in case someone will ask fur
     
     The error must be in the Line 483 and 569 of the `./mmdet/models/dense_heads/MIAOD_head.py`.
     
-2.  **Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))**
+2.  **Q: There is not any reaction when running `./script.sh 0`. (Issues [#6](../../../issues/6) and [#13](../../../issues/13))**
 
     **A:** When running `script.sh`, the code is executed in the background.
     You can view the output log by running this command in the root directory: `vim log_nohup/nohup_0.log`.
     
     There is another solution to flush the logs in the terminal [in another section](#fixed-bugs-and-new-features).
     
-3.  **Q: `StopIteration`. (Issue [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))**
+3.  **Q: `StopIteration`. (Issues [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))**
 
     **A:** Thanks for the solution from [@KevinChow](https://github.com/kevinchow1993).
     
@@ -106,7 +106,7 @@ The open issues are not included here for now, just in case someone will ask fur
     **A:** MI-AOD is mainly for active learning, but MMDetection is more for object detection.
     It would be better for MI-AOD to open source to an active learning toolbox. 
 
-2.  **Q: There are differences on the order of maximizing/minimizing uncertainty and the fixed layers between paper and code. (Issue [#4](../../../issues/4) and [#16](../../../issues/16#issuecomment-859363894))**
+2.  **Q: There are differences on the order of maximizing/minimizing uncertainty and the fixed layers between paper and code. (Issues [#4](../../../issues/4) and [#16](../../../issues/16#issuecomment-859363894))**
 
     **A:** Our experiments have shown that, if the order of max step and min step is reversed (including the fixed layers), the performance will change little.
         
@@ -135,10 +135,34 @@ The open issues are not included here for now, just in case someone will ask fur
     and use active learning to select informative unlabeled data and annotate them.
     This is the trend of the recent research in active learning, and use active learning for semi-supervised learning is also a good idea.
     
+6.  **Q: There are differences on the `y_head_cls` (in Eq. (5) of the paper, and `forward_single` function in `mmdet/dense_heads/MIAOD_retina_head.py` of the code) between paper and code. What does the `maximum` and `softmax` function in the code mean? (Issue [#16](../../../issues/16))**
+
+    **A:** The equation in the code is:
+    
+    ```python
+    y_head_cls = y_head_f_mil.softmax(2) * y_head_cls_term2.sigmoid().max(2, keepdim=True)[0].softmax(1)
+    ```
+    
+    which can be simplified to:
+    
+    ```python
+    y_head_cls = A.softmax() * B.max().softmax()
+    ```
+    
+    where A and B are the output of MIL head and averaged classifier heads.
+    
+    `max(2, keepdim=True)[0]` is to highlight the class with the highest score, which are most likely to be predicted as the foreground.
+    
+    `softmax(x)` means `exp(x)/sum_c(x)`, which corresponds to the Eq. (5) in the paper.
+    
+7.  **Q: There are differences on the discrepancy loss in uncertainty calculation between paper and code. (Issue [#16](../../../issues/16))**
+
+    **A:** Our experiments have shown that, there are not much differences in performance between using two types of loss, L1 loss and L2 loss.
+    
     
 ## Fixed Bugs and New Features
     
-1.  **Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))**
+1.  **Q: There is not any reaction when running `./script.sh 0`. (Issues [#6](../../../issues/6) and [#13](../../../issues/13))**
 
     **A:** Please refer to [here](../../../#train-and-test) if you want to directly flush the running log in the terminal.
     
