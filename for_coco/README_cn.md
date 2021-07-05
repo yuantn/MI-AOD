@@ -54,7 +54,7 @@
     
 2. 请修改这个目录下 `MIAOD.py` 中对应的数据集地址部分，它们位于：
 
-    ```
+    ```python
     第 1 行：data_root_coco='$YOUR_DATASET_PATH/coco/'
     第 2 行：data_root_voc='$YOUR_DATASET_PATH/coco2voc/'
     ```
