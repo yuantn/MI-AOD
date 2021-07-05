@@ -30,7 +30,7 @@ The open issues are not included here for now, just in case someone will ask fur
     
 3.  **Q: After installing mmcv==1.0.5, there are still some errors:**
     
-    ```
+    ```bash
     ImportError: cannot import name 'Config' from 'mmcv' (unknown location)
     ModuleNotFoundError: No module named 'mmcv.utils'
     ```
