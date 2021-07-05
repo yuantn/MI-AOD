@@ -135,13 +135,13 @@ The open issues are not included here for now, just in case someone will ask fur
     
     
 ## Fixed Bugs and New Features
-
-1.  Q: `AttributeError: 'NoneType' object has no attribute 'param_lambda'`. (Issue [#7](../../../issues/7))
-
-    A: The bug has been fixed, please update to the latest version.
     
-2.  Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))
+1.  Q: There is not any reaction when running `./script.sh 0`. (Issue [#6](../../../issues/6) and [#13](../../../issues/13))
 
     A: Please refer to [here](../../../#train-and-test) if you want to directly flush the running log in the terminal.
+    
+2.  Q: `AttributeError: 'NoneType' object has no attribute 'param_lambda'`. (Issue [#7](../../../issues/7))
+
+    A: The bug has been fixed, please update to the latest version.
     
     
