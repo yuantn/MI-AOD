@@ -12,6 +12,7 @@
 - [环境安装](#环境安装)
 - [训练和测试](#训练和测试)
 - [论文细节](#论文细节)
+- [已修复错误和新功能](#已修复错误和新功能)
 
 <!-- TOC -->
 
@@ -50,17 +51,11 @@
 2.  问：在运行 `./script.sh 0` 时没有反应。（问题 [#6](../../../issues/6) 和 [#13](../../../issues/13)）
 
     答：当运行 `script.sh` 时，代码是在后台运行的。
-    你可以通过在代码根目录下运行这个命令来查看输出日志：`vim log_nohup/nohup_0.log`
+    你可以通过在代码根目录下运行这个命令来查看输出日志：`vim log_nohup/nohup_0.log`。
     
-    或者如果你想直接在前台输出运行日志的话，你可以在代码根目录下运行如下命令：（参考自 [这里](https://github.com/open-mmlab/mmdetection/blob/v2.3.0/docs/getting_started.md#train-with-a-single-gpu)）
+    在 [另一章节](#已修复错误和新功能) 中，提供了另一个解决方案，可将日志直接输出到终端中。
     
-    `python tools/train.py configs/MIAOD.py`
-    
-3.  问：报错：`AttributeError: 'NoneType' object has no attribute 'param_lambda'`。（问题 [#7](../../../issues/7)）
-
-    答：该错误已被修复，请更新到最新版本。
-    
-4.  问：报错：`StopIteration`。（问题 [#7](../../../issues/7#issuecomment-823068004) 和 [#11](../../../issues/11)）
+3.  问：报错：`StopIteration`。（问题 [#7](../../../issues/7#issuecomment-823068004) 和 [#11](../../../issues/11)）
 
     答：感谢 [@KevinChow](https://github.com/kevinchow1993) 提供的解决方案。
     
@@ -80,10 +75,26 @@
               if dist.is_initialized():
                   torch.distributed.barrier()
     ```
-5.  问：我想在其他数据上运行 MI-AOD，我应该修改哪些文件？（Issue [#13](../../../issues/13))
+4.  问：我想在其他数据上运行 MI-AOD，我应该修改哪些文件？（问题 [#13](../../../issues/13)）
 
     答：如果你可以将你其他的训练和测试数据转换为 PASCAL VOC 格式的话，你只需要修改 `configs/MIAOD.py`。它包含了所有的参数和设置。
     
+5.  问：验证时错误：`TypeError: 'DataContainer' object is not subscriptable`。（问题 [#14](../../../issues/14)）
+
+    答：在 `mmdet/models/dense_heads/MIAOD_head.py` 文件的 `get_bboxes` 函数中，请将
+    
+    ```python
+    img_shape = img_metas[img_id]['img_shape']
+    ```
+    
+    修改为
+
+    ```python
+    img_shape = img_metas.data[0]
+    ```
+
+    注意：只有当你遇到这个问题时，你才需要做出修改。通常它不会在一个 GPU 环境中出现。
+
 
 ## 论文细节
 
@@ -117,3 +128,13 @@
     我认为我们的工作 MI-AOD 巧妙地将半监督学习和主动学习结合了起来。即我们用半监督学习（或其核心思想）来在有限的已标注数据和足够的未标注数据下学习，
     并且使用主动学习来挑选信息量大的未标注数据并标记他们，此即为目前主动学习研究的趋势。当然将主动学习用于半监督学习中也是一个好的想法。
     
+    
+## 已修复错误和新功能    
+    
+1.  问：在运行 `./script.sh 0` 时没有反应。（问题 [#6](../../../issues/6) 和 [#13](../../../issues/13)）
+
+    答：如果你想直接在终端输出运行日志，请参考 [这里](../../../blob/master/README_cn.md#训练和测试)。
+    
+2.  问：报错：`AttributeError: 'NoneType' object has no attribute 'param_lambda'`。（问题 [#7](../../../issues/7)）
+
+    答：该错误已被修复，请更新到最新版本。
