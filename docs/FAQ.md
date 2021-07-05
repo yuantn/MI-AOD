@@ -82,9 +82,17 @@ The open issues are not included here for now, just in case someone will ask fur
     
 5.  Q: Validation error: `TypeError: 'DataContainer' object is not subscriptable`. (Issue [#14](../../../issues/14))
 
-    A: In `get_bboxes` function of `mmdet/models/dense_heads/MIAOD_head.py`, please change `img_shape = img_metas[img_id]['img_shape']` to:
+    A: In `get_bboxes` function of `mmdet/models/dense_heads/MIAOD_head.py`, please change
     
-    `img_shape = img_metas.data[0]`.
+    ```python
+    img_shape = img_metas[img_id]['img_shape']
+    ```
+    
+    to
+    
+    ```python
+    img_shape = img_metas.data[0]
+    ```
     
     Note: You only need to make changes when you encounter this problem, usually it won't occur on a GPU environment.
     
