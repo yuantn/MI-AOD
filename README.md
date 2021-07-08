@@ -197,11 +197,7 @@ where `$CKPT_PATH` should be replaced by the path of the checkpoint file (\*.pth
 If you want to inference on single image, the commands are as follows:
 
 ```bash
-python tools/test_single.py \
-	$CONFIG_PATH \
-	$CKPT_PATH \
-	$IMG_PATH \
-	$OUT_NAME
+python tools/test_single.py $CONFIG_PATH $CKPT_PATH $IMG_PATH $OUT_NAME
 ```
 
 where `$IMG_PATH` should be replaced by the image on which you want to inference on,
