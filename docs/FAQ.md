@@ -174,3 +174,6 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** Please refer to [here](../../../#train-and-test) if only using a single machine and a single GPU to train.
 
+4.  **Q: `AssertionError: Please specify at least one operation (save/eval/format/show the results / save the results) with the argument "--out", "--eval", "--format-only", "--show" or "--show-dir"`. (Issue [#17](../../../issues/17))**
+
+    **A:** The bug has been fixed, please update to the latest version.
