@@ -181,3 +181,11 @@
 4.  **问： 报错：`AssertionError: Please specify at least one operation (save/eval/format/show the results / save the results) with the argument "--out", "--eval", "--format-only", "--show" or "--show-dir"`。（问题 [#17](../../../issues/17)）**
 
     **答：** 该错误已被修复，请更新到最新版本。
+
+5.  **问： 如何在 COCO 数据集上运行，如何修改 `active_datasets.py`？（问题 [#18](../../../issues/18)）**
+
+    **答：** [这个代码库中](https://github.com/KapilM26/coco2VOC) 的代码可以用来将 COCO 数据集的 json 格式标注转为 PASCAL VOC 数据集的 xml 格式标注。COCO 数据集的 JPEG 格式图像可以直接被用作 PASCAL VOC 数据集的 JPEG 格式图像。
+    
+    如果使用这种方式，训练部分的代码大体不变，测试部分的代码可以直接用 mmdetection 中的配置文件替换掉。
+    
+    具体而言，[这里]() 意境准备好了 MS COCO 数据集上数据准备的说明。
