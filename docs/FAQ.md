@@ -97,6 +97,14 @@ The open issues are not included here for now, just in case someone will ask fur
     ```
     
     Note: You only need to make changes when you encounter this problem, usually it won't occur on a GPU environment.
+
+6.  **Q: What is `$CONFIG_PATH` and `$CKPT_PATH` in `python tools/test.py $CONFIG_PATH $CKPT_PATH`? (Issue [#17](../../../issues/17))**
+
+    **A:** Please refer to [here](../../../#train-and-test) for explanation. That is:
+    
+    > where $CONFIG_PATH should be replaced by the path of the config file in the configs folder (usually it would be configs/MIAOD.py)
+    
+    > $CKPT_PATH should be replaced by the path of the checkpoint file (*.pth) in the work_dirs folder after training.
     
 
 ## Paper Details
