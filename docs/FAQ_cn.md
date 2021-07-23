@@ -169,4 +169,7 @@
 3.  **问： 如果只在单机单卡上训练，还需要像 `script.sh` 和 `tools/dist_train.py` 那样分布式训练吗？（问题 [#15](../../../issues/15)）**
 
     **答：** 如果只在单机单卡上训练，请参考 [这里](../../../blob/master/README_cn.md#训练和测试)。
+    
+4.  **问： 报错：`AssertionError: Please specify at least one operation (save/eval/format/show the results / save the results) with the argument "--out", "--eval", "--format-only", "--show" or "--show-dir"`。（问题 [#17](../../../issues/17)）**
 
+    **答：** 该错误已被修复，请更新到最新版本。
