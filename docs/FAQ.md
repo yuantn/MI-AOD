@@ -192,4 +192,4 @@ The open issues are not included here for now, just in case someone will ask fur
 
     In this way, the code for training generally remains, while the code for test can be replaced with the part of config files in mmdetection.
 
-    Specifically, the instruction of data preparation on MS COCO is ready [here](../tree/master/for_coco).
+    Specifically, the instruction of data preparation on MS COCO is ready [here](../../../tree/master/for_coco).
