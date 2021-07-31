@@ -167,6 +167,17 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** Our experiments have shown that, there are not much differences in performance between using two types of loss, L1 loss and L2 loss.
     
+8.  **Q: Why is there not such significant difference as (a) between MI-AOD and other methods in the first cycle in Fig. 5(b) and (c) of the paper? (Issue [#19](../../../issues/19))**
+
+    **A:** The number of initial labeled samples is 827 in (a) but 1000 in (b).
+    The number of training epochs is 26 in (a) but 300 in (b), although RetinaNet is ahead of SSD to a certain extent.
+    The more data and epochs, the more fitting models, and the smaller difference between MI-AOD and other methods.
+    
+    Similarly, there are 2345 initial labeled samples in (c).
+    And notice that MS COCO is a more challenging dataset,
+    so the performances of all methods in early learning cycles are not so satisfactory with 2.0% of the labeled data,
+    resulting in the little difference between the lower performances.
+    
     
 ## Fixed Bugs and New Features
     
