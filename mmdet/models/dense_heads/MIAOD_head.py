@@ -440,7 +440,7 @@ class MIAODHead(BaseDenseHead):
         # mil weight
         w_i = y_head_cls_single.detach()
         l_det_cls_all = (abs(y_head_f_1_single - y_head_f_2_single) *
-                         w_i.reshape(-1, self.C)).mean(dim=1).sum() * self.param_lambda
+                         w_i.reshape(-1, self.cls_out_channels)).mean(dim=1).sum() * self.param_lambda
         l_det_loc = torch.tensor([0.0], device=y_head_f_1_single.device)
         return l_det_cls_all, l_det_loc
 
@@ -505,8 +505,8 @@ class MIAODHead(BaseDenseHead):
         # predict image pseudo label
         with torch.no_grad():
             for s in range(len(y_f[0])):
-                y_head_f_i = y_f[0][s].permute(0, 2, 3, 1).reshape(batch_size, -1, self.C).sigmoid()
-                y_head_f_i = y_f[1][s].permute(0, 2, 3, 1).reshape(batch_size, -1, self.C).sigmoid() + y_head_f_i
+                y_head_f_i = y_f[0][s].permute(0, 2, 3, 1).reshape(batch_size, -1, self.cls_out_channels).sigmoid()
+                y_head_f_i = y_f[1][s].permute(0, 2, 3, 1).reshape(batch_size, -1, self.cls_out_channels).sigmoid() + y_head_f_i
                 y_head_f_i = y_head_f_i.max(1)[0] / 2
                 y_pseudo = torch.max(y_pseudo, y_head_f_i)
             y_pseudo[y_pseudo >= 0.5] = 1
@@ -526,7 +526,7 @@ class MIAODHead(BaseDenseHead):
         # mil weight
         w_i = y_head_cls_single.detach()
         l_det_cls_all = ((1 - abs(y_head_f_1_single - y_head_f_2_single)) *
-                         w_i.view(-1, self.C)).mean(dim=1).sum() * self.param_lambda
+                         w_i.view(-1, self.cls_out_channels)).mean(dim=1).sum() * self.param_lambda
         l_det_loc = torch.tensor([0.0], device=y_head_f_1_single.device)
         return l_det_cls_all, l_det_loc
 
