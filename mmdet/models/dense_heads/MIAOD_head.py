@@ -421,8 +421,8 @@ class MIAODHead(BaseDenseHead):
 
     @force_fp32(apply_to=('y_f', 'y_f_r'))
     def get_img_gtlabel_score(self, y_cls_img, y_head_cls):
-        y_head_cls_1level = torch.zeros(len(y_cls_img), self.C).cuda(torch.cuda.current_device())
-        y_cls_1level = torch.zeros(len(y_cls_img), self.C).cuda(torch.cuda.current_device())
+        y_head_cls_1level = torch.zeros(len(y_cls_img), self.cls_out_channels).cuda(torch.cuda.current_device())
+        y_cls_1level = torch.zeros(len(y_cls_img), self.cls_out_channels).cuda(torch.cuda.current_device())
         for i_img in range(len(y_cls_img)):
             for i_obj in range(len(y_cls_img[i_img])):
                 y_cls_1level[i_img, y_cls_img[i_img][i_obj]] = 1
@@ -500,8 +500,8 @@ class MIAODHead(BaseDenseHead):
     @force_fp32(apply_to=('y_f', 'y_f_r'))
     def get_img_pseudolabel_score(self, y_f, y_head_cls):
         batch_size = y_head_cls[0].shape[0]
-        y_head_cls_1level = torch.zeros(batch_size, self.C).cuda(torch.cuda.current_device())
-        y_pseudo = torch.zeros(batch_size, self.C).cuda(torch.cuda.current_device())
+        y_head_cls_1level = torch.zeros(batch_size, self.cls_out_channels).cuda(torch.cuda.current_device())
+        y_pseudo = torch.zeros(batch_size, self.cls_out_channels).cuda(torch.cuda.current_device())
         # predict image pseudo label
         with torch.no_grad():
             for s in range(len(y_f[0])):
