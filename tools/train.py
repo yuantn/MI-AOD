@@ -118,16 +118,6 @@ def main():
     np.save(cfg.work_directory + '/X_L_' + '0' + '.npy', X_L)
     np.save(cfg.work_directory + '/X_U_' + '0' + '.npy', X_U)
     initial_step = cfg.lr_config.step
-    theta_f_1 = ['bbox_head.f_1_convs.0.conv.weight', 'bbox_head.f_1_convs.0.conv.bias',
-                 'bbox_head.f_1_convs.1.conv.weight', 'bbox_head.f_1_convs.1.conv.bias',
-                 'bbox_head.f_1_convs.2.conv.weight', 'bbox_head.f_1_convs.2.conv.bias',
-                 'bbox_head.f_1_convs.3.conv.weight', 'bbox_head.f_1_convs.3.conv.bias',
-                 'bbox_head.f_1_retina.weight', 'bbox_head.f_1_retina.bias']
-    theta_f_2 = ['bbox_head.f_2_convs.0.conv.weight', 'bbox_head.f_2_convs.0.conv.bias',
-                 'bbox_head.f_2_convs.1.conv.weight', 'bbox_head.f_2_convs.1.conv.bias',
-                 'bbox_head.f_2_convs.2.conv.weight', 'bbox_head.f_2_convs.2.conv.bias',
-                 'bbox_head.f_2_convs.3.conv.weight', 'bbox_head.f_2_convs.3.conv.bias',
-                 'bbox_head.f_2_retina.weight', 'bbox_head.f_2_retina.bias']
     for cycle in cfg.cycles:
         # set random seeds
         if args.seed is not None:
@@ -193,9 +183,9 @@ def main():
             cfg_bak = cfg.deepcopy()
             time.sleep(2)
             for name, value in model.named_parameters():
-                if name in theta_f_1:
+                if name in cfg.theta_f_1:
                     value.requires_grad = False
-                elif name in theta_f_2:
+                elif name in cfg.theta_f_2:
                     value.requires_grad = False
                 else:
                     value.requires_grad = True
@@ -217,9 +207,9 @@ def main():
             cfg_bak = cfg.deepcopy()
             time.sleep(2)
             for name, value in model.named_parameters():
-                if name in theta_f_1:
+                if name in cfg.theta_f_1:
                     value.requires_grad = True
-                elif name in theta_f_2:
+                elif name in cfg.theta_f_2:
                     value.requires_grad = True
                 else:
                     value.requires_grad = False
