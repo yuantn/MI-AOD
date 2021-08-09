@@ -61,7 +61,7 @@ def main():
         cfg.work_directory = args.work_directory
     elif cfg.get('work_directory', None) is None:
         # use config filename as default work_directory if cfg.work_directory is None
-        cfg.work_directory = osp.join('./work_directory/retina', osp.splitext(osp.basename(args.config))[0])
+        cfg.work_directory = osp.join('./work_dirs', osp.splitext(osp.basename(args.config))[0])
     if args.resume_from is not None:
         cfg.resume_from = args.resume_from
     if args.gpu_ids is not None:
