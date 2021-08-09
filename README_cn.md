@@ -127,11 +127,18 @@ tar -xf VOCtest_06-Nov-2007.tar
 tar -xf VOCtrainval_11-May-2012.tar
 ```
 
+如果你想使用 SSD 检测器而不是 RetinaNet 检测器，你可以像下面这样替换这个代码库中的配置文件：
+
+```bash
+mv configs/MIAOD.py configs/MIAOD_Retina.py
+mv configs/MIAOD_SSD.py configs/MIAOD.py
+```bash
+
 之后，请修改这个代码库中对应的数据集地址部分，它们位于：
 
 ```python
-configs/MIAOD.py 的第 1 行：data_root='$YOUR_DATASET_PATH/VOCdevkit/'
-configs/_base_/voc0712.py 的第 1 行：data_root='$YOUR_DATASET_PATH/VOCdevkit/'
+configs/MIAOD.py 的第 2 行：data_root='$YOUR_DATASET_PATH/VOCdevkit/'
+configs/_base_/voc0712.py 的第 2 行：data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
 
 请把上面的 `$YOUR_DATASET_PATH` 和 `$你的数据集地址` 改为你实际的数据集地址（即你下载的 VOC 数据集的 tar 文件的地址）。
