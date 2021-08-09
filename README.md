@@ -370,7 +370,7 @@ You can also use other files in the directory `work_dirs/MI-AOD/` if you like, t
 
   You can load the model state dictionary from them.
 
-  An example code for loading these files is the Line 109, 143-145 in the `tools/train.py` file (which are in comments now).
+  An example code for loading these files is the Line 109, 133-135 in the `tools/train.py` file (which are in comments now).
 
 - **txt file `trainval_L_07.txt`, `trainval_U_07.txt`, `trainval_L_12.txt` and `trainval_U_12.txt` in each `cycle$CYCLE` directory**
 
