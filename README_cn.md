@@ -371,7 +371,7 @@ python tools/test_single.py $配置文件地址 $模型文件地址 $图像地�
    
   你可以直接从这些文件中加载训练的模型状态参数字典（model state dictionary）
   
-  加载这些文件的一段示例代码可以参考 `tools/train.py` 文件的第 109 行，第 143-145 行（它们现在被注释掉了）。
+  加载这些文件的一段示例代码可以参考 `tools/train.py` 文件的第 109 行，第 133-135 行（它们现在被注释掉了）。
   
 - **在每个 `cycle$循环次数` 目录 下的 txt 文件 `trainval_L_07.txt`、 `trainval_U_07.txt`、 `trainval_L_12.txt` 和 `trainval_U_12.txt`**
 
