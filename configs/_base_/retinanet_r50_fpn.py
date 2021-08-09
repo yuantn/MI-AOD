@@ -59,3 +59,13 @@ test_cfg = dict(
     score_thr=0.05,
     nms=dict(type='nms', iou_threshold=0.5),
     max_per_img=100)
+theta_f_1 = ['bbox_head.f_1_convs.0.conv.weight', 'bbox_head.f_1_convs.0.conv.bias',
+             'bbox_head.f_1_convs.1.conv.weight', 'bbox_head.f_1_convs.1.conv.bias',
+             'bbox_head.f_1_convs.2.conv.weight', 'bbox_head.f_1_convs.2.conv.bias',
+             'bbox_head.f_1_convs.3.conv.weight', 'bbox_head.f_1_convs.3.conv.bias',
+             'bbox_head.f_1_retina.weight', 'bbox_head.f_1_retina.bias']
+theta_f_2 = ['bbox_head.f_2_convs.0.conv.weight', 'bbox_head.f_2_convs.0.conv.bias',
+             'bbox_head.f_2_convs.1.conv.weight', 'bbox_head.f_2_convs.1.conv.bias',
+             'bbox_head.f_2_convs.2.conv.weight', 'bbox_head.f_2_convs.2.conv.bias',
+             'bbox_head.f_2_convs.3.conv.weight', 'bbox_head.f_2_convs.3.conv.bias',
+             'bbox_head.f_2_retina.weight', 'bbox_head.f_2_retina.bias']
