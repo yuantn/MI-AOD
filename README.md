@@ -127,11 +127,18 @@ tar -xf VOCtest_06-Nov-2007.tar
 tar -xf VOCtrainval_11-May-2012.tar
 ```
 
-After that, please modify the corresponding dataset directory in this repository, they are located in:
+If you want to use SSD detectors instead of RetinaNet detectors, you can replace the configuration file in this repository as below:
+
+```bash
+mv configs/MIAOD.py configs/MIAOD_Retina.py
+mv configs/MIAOD_SSD.py configs/MIAOD.py
+```
+
+After that, please modify the corresponding dataset directory, they are located in:
 
 ```python
-Line 1 of configs/MIAOD.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
-Line 1 of configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
+Line 2 of configs/MIAOD.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
+Line 2 of configs/_base_/voc0712.py: data_root='$YOUR_DATASET_PATH/VOCdevkit/'
 ```
 
 Please change the `$YOUR_DATASET_PATH`s above to your actual dataset directory (i.e., the directory where you intend to put the downloaded VOC tar file).
