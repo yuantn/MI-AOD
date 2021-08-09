@@ -132,7 +132,7 @@ tar -xf VOCtrainval_11-May-2012.tar
 ```bash
 mv configs/MIAOD.py configs/MIAOD_Retina.py
 mv configs/MIAOD_SSD.py configs/MIAOD.py
-```bash
+```
 
 之后，请修改这个代码库中对应的数据集地址部分，它们位于：
 
