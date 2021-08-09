@@ -47,3 +47,15 @@ test_cfg = dict(
     min_bbox_size=0,
     score_thr=0.02,
     max_per_img=200)
+theta_f_1 = ['bbox_head.f_1_convs.0.weight', 'bbox_head.f_1_convs.0.bias',
+             'bbox_head.f_1_convs.1.weight', 'bbox_head.f_1_convs.1.bias',
+             'bbox_head.f_1_convs.2.weight', 'bbox_head.f_1_convs.2.bias',
+             'bbox_head.f_1_convs.3.weight', 'bbox_head.f_1_convs.3.bias',
+             'bbox_head.f_1_convs.4.weight', 'bbox_head.f_1_convs.4.bias',
+             'bbox_head.f_1_convs.5.weight', 'bbox_head.f_1_convs.5.bias']
+theta_f_2 = ['bbox_head.f_2_convs.0.weight', 'bbox_head.f_2_convs.0.bias',
+             'bbox_head.f_2_convs.1.weight', 'bbox_head.f_2_convs.1.bias',
+             'bbox_head.f_2_convs.2.weight', 'bbox_head.f_2_convs.2.bias',
+             'bbox_head.f_2_convs.3.weight', 'bbox_head.f_2_convs.3.bias',
+             'bbox_head.f_2_convs.4.weight', 'bbox_head.f_2_convs.4.bias',
+             'bbox_head.f_2_convs.5.weight', 'bbox_head.f_2_convs.5.bias']
