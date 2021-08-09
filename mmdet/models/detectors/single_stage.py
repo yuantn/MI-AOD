@@ -101,16 +101,16 @@ class SingleStageDetector(BaseDetector):
             y_head_f_1_1level = []
             y_head_f_2_1level = []
             for y_head_f_i_single in y_head_f_1:
-                y_head_f_1_1level.append(y_head_f_i_single.permute(0,2,3,1).reshape(-1, self.bbox_head.C))
+                y_head_f_1_1level.append(y_head_f_i_single.permute(0,2,3,1).reshape(-1, self.bbox_head.cls_out_channels))
             for y_head_f_i_single in y_head_f_2:
-                y_head_f_2_1level.append(y_head_f_i_single.permute(0,2,3,1).reshape(-1, self.bbox_head.C))
+                y_head_f_2_1level.append(y_head_f_i_single.permute(0,2,3,1).reshape(-1, self.bbox_head.cls_out_channels))
             return y_head_f_1_1level, y_head_f_2_1level, y_head_cls
         outs = (y_head_f_1, y_head_f_r)
         y_head_loc_cls = self.bbox_head.get_bboxes(*outs, img_metas, rescale=rescale)
         # skip post-processing when exporting to ONNX
         if torch.onnx.is_in_onnx_export():
             return y_head_loc_cls
-        y_head = [bbox2result(y_head_loc, y_head_cls, self.bbox_head.C)
+        y_head = [bbox2result(y_head_loc, y_head_cls, self.bbox_head.cls_out_channels)
                         for y_head_loc, y_head_cls in y_head_loc_cls]
         return y_head[0]
 
