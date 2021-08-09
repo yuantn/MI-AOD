@@ -98,5 +98,5 @@ X_L_0_size = 1000
 # The active learning cycles can be changed here.
 cycles = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 # The work directory for saving logs and files can be changed here. Please refer to README.md for more information.
-work_directory = './work_dirs/MI-AOD'
+work_directory = './work_dirs/MI-AOD_SSD'
 
