@@ -110,5 +110,5 @@ X_S_size = num_samples//50
 X_L_0_size = num_samples//50
 subset_p = 5
 # subset_p = 100  # debug
-work_directory = './work_dirs/coco'
+work_directory = './work_dirs/MI-AOD_COCO'
 cycles=[0, 1, 2, 3, 4]
