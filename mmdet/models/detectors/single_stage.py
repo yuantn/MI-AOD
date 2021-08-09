@@ -110,7 +110,7 @@ class SingleStageDetector(BaseDetector):
         # skip post-processing when exporting to ONNX
         if torch.onnx.is_in_onnx_export():
             return y_head_loc_cls
-        y_head = [bbox2result(y_head_loc, y_head_cls, self.bbox_head.cls_out_channels)
+        y_head = [bbox2result(y_head_loc, y_head_cls, self.bbox_head.C)
                         for y_head_loc, y_head_cls in y_head_loc_cls]
         return y_head[0]
 
