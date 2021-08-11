@@ -105,7 +105,11 @@ The open issues are not included here for now, just in case someone will ask fur
     > where $CONFIG_PATH should be replaced by the path of the config file in the configs folder (usually it would be configs/MIAOD.py)
     
     > $CKPT_PATH should be replaced by the path of the checkpoint file (*.pth) in the work_dirs folder after training.
-    
+
+7.  **Q: When training on custom dataset (only 1 foreground class), why is l_imgcls always 0 during training? (Issues [#23](../../../issues/23) and [#24](../../../issues/24))**
+
+    **A:** To avoid that, you can create another class without any corresponding image in the dataset.
+
 
 ## Paper Details
 
