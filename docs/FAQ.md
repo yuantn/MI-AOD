@@ -187,6 +187,15 @@ The open issues are not included here for now, just in case someone will ask fur
     **A:** For a image with multiple classes, the label of the image will be a 1\*20 one-hot tensor (20 is the number of classes in PASCAL VOC).
     When training the classifier in the entire network, the label for each class (i.e., image label [i]) will be also trained separately.
     
+10. **Q: Could you share exact numbers (mean and standard deviation) used in Fig. 5(b) for MI-AOD? (Issue [#25](../../../issues/25))**
+
+    **A:** The numbers are as follows.
+    
+    |Number of Labeled Images|1k|2k|3k|4k|5k|6k|7k|8k|9k|10k|
+    |:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
+    |Performance of MI-AOD (%) |53.62|62.86|66.83|69.33|70.80|72.21|72.84|73.74|74.18|74.91|
+    |Std of MI-AOD (%)| 2.15 | 1.52 | 0.77 | 0.54 | 0.34 | 0.28 | 0.23 | 0.21 | 0.18 | 0.17 |
+    
     
 ## Fixed Bugs and New Features
     
