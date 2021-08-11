@@ -219,7 +219,7 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** The bug has been fixed, please update to the latest version.
 
-5.  **Q: How to run it on COCO dataset and how to modify `active_datasets.py`? (Issue [#18](../../../issues/18))**
+5.  **Q: How to run it on COCO dataset and how to modify `active_datasets.py`? (Issues [#18](../../../issues/18) and Issues [#27](../../../issues/27))**
 
     **A:** The code [in this repository](https://github.com/KapilM26/coco2VOC) is used for transfering the COCO json-style annotation to PASCAL VOC xml-style annotation, and COCO JPEG-style images can be directly used as PASCAL VOC JPEG-style images.
 
