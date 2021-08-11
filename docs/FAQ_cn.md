@@ -211,7 +211,7 @@
 
     **答：** 该错误已被修复，请更新到最新版本。
 
-5.  **问： 如何在 COCO 数据集上运行，如何修改 `active_datasets.py`？（问题 [#18](../../../issues/18)）**
+5.  **问： 如何在 COCO 数据集上运行，如何修改 `active_datasets.py`？（问题 [#18](../../../issues/18) 和 [#27](../../../issues/27)）**
 
     **答：** [这个代码库中](https://github.com/KapilM26/coco2VOC) 的代码可以用来将 COCO 数据集的 json 格式标注转为 PASCAL VOC 数据集的 xml 格式标注。COCO 数据集的 JPEG 格式图像可以直接被用作 PASCAL VOC 数据集的 JPEG 格式图像。
     
