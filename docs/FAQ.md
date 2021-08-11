@@ -177,6 +177,11 @@ The open issues are not included here for now, just in case someone will ask fur
     And notice that MS COCO is a more challenging dataset,
     so the performances of all methods in early learning cycles are not so satisfactory with 2.0% of the labeled data,
     resulting in the little difference between the lower performances.
+
+9.  **Q: When training the MIL classifier in Eq. (6), for an image with multiple classes, how to obtain the label of the entire image? (Issue [#20](../../../issues/20))**
+
+    **A:** For a image with multiple classes, the label of the image will be a 1\*20 one-hot tensor (20 is the number of classes in PASCAL VOC).
+    When training the classifier in the entire network, the label for each class (i.e., image label [i]) will be also trained separately.
     
     
 ## Fixed Bugs and New Features
