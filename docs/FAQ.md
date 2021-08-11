@@ -110,7 +110,7 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** To avoid that, you can create another class without any corresponding image in the dataset.
     
-8.  **Q: In `tools/train.py`, is it first trained on the labeled dataset? What is the purpose? (Issue [#25](../../../issues/25))**
+8.  **Q: In `tools/train.py`, is it first trained on the labeled dataset? What is the purpose? (Issue [#25](../../../issues/26))**
 
     **A:** It is necessary to train on the labeled set for the first and last epochs to ensure the stability of the training model.
 
