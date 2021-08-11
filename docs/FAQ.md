@@ -109,6 +109,10 @@ The open issues are not included here for now, just in case someone will ask fur
 7.  **Q: When training on custom dataset (only 1 foreground class), why is l_imgcls always 0 during training? (Issues [#23](../../../issues/23) and [#24](../../../issues/24))**
 
     **A:** To avoid that, you can create another class without any corresponding image in the dataset.
+    
+8.  **Q: In `tools/train.py`, is it first trained on the labeled dataset? What is the purpose? (Issue [#25](../../../issues/25))**
+
+    **A:** It is necessary to train on the labeled set for the first and last epochs to ensure the stability of the training model.
 
 
 ## Paper Details
