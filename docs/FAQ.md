@@ -113,6 +113,17 @@ The open issues are not included here for now, just in case someone will ask fur
 8.  **Q: In `tools/train.py`, is it first trained on the labeled dataset? What is the purpose? (Issue [#25](../../../issues/26))**
 
     **A:** It is necessary to train on the labeled set for the first and last epochs to ensure the stability of the training model.
+    
+9.  **Q: For the unlabeled set, why are the operations on GT information (ie, `gt_bboxes` and `gt_labels`) also involved in lines 70-74 of `epoch_based_runner.py`? If the completely unlabeled data is used as the unlabeled set, what needs to be modified? (Issues [#28](../../../issues/28) and [#29](../../../issues/29))**
+
+    **A:** These lines are to remove the localization information of the images in the unlabeled set.
+    In this way, when calculating the loss on the unlabeled set, we can know the data source without backward propagating the gradient.
+    In fact, the GT information has not been used.
+    
+    If the completely unlabeled data is used as the unlabeled set, you can add any bounding box to the annotation of the unlabeled data arbitrarily.
+    The annotation format of the bounding box needs to be consistent with that of other labeled data.
+    After that, just add the file name to the txt index of the unlabeled data set.
+    To avoid that, you can create another class without any corresponding image in the dataset.
 
 
 ## Paper Details
