@@ -123,7 +123,6 @@ The open issues are not included here for now, just in case someone will ask fur
     If the completely unlabeled data is used as the unlabeled set, you can add any bounding box to the annotation of the unlabeled data arbitrarily.
     The annotation format of the bounding box needs to be consistent with that of other labeled data.
     After that, just add the file name to the txt index of the unlabeled data set.
-    To avoid that, you can create another class without any corresponding image in the dataset.
 
 
 ## Paper Details
