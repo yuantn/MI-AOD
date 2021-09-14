@@ -13,6 +13,7 @@ The open issues are not included here for now, just in case someone will ask fur
 - [Training and Test](#training-and-test)
 - [Paper Details](#paper-details)
 - [Fixed Bugs and New Features](#fixed-bugs-and-new-features)
+- [Custom modifications](#custom-modifications)
 
 <!-- TOC -->
 
@@ -77,12 +78,8 @@ The open issues are not included here for now, just in case someone will ask fur
               if dist.is_initialized():
                   torch.distributed.barrier()
     ```
-
-4.  **Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13#issuecomment-845709365))**
-
-    **A:** You should only modify `configs/MIAOD.py` if you can convert your other training and test data into PASCAL VOC format. It contains all parameters and settings.
     
-5.  **Q: Validation error: `TypeError: 'DataContainer' object is not subscriptable`. (Issue [#14](../../../issues/14))**
+4.  **Q: Validation error: `TypeError: 'DataContainer' object is not subscriptable`. (Issue [#14](../../../issues/14))**
 
     **A:** In `get_bboxes` function of `mmdet/models/dense_heads/MIAOD_head.py`, please change
     
@@ -98,7 +95,7 @@ The open issues are not included here for now, just in case someone will ask fur
     
     Note: You only need to make changes when you encounter this problem, usually it won't occur on a GPU environment.
 
-6.  **Q: What is `$CONFIG_PATH` and `$CKPT_PATH` in `python tools/test.py $CONFIG_PATH $CKPT_PATH`? (Issue [#17](../../../issues/17))**
+5.  **Q: What is `$CONFIG_PATH` and `$CKPT_PATH` in `python tools/test.py $CONFIG_PATH $CKPT_PATH`? (Issue [#17](../../../issues/17))**
 
     **A:** Please refer to [here](../../../#train-and-test) for explanation. That is:
     
@@ -106,23 +103,19 @@ The open issues are not included here for now, just in case someone will ask fur
     
     > $CKPT_PATH should be replaced by the path of the checkpoint file (*.pth) in the work_dirs folder after training.
 
-7.  **Q: When training on custom dataset (only 1 foreground class), why is l_imgcls always 0 during training? (Issues [#23](../../../issues/23) and [#24](../../../issues/24))**
+6.  **Q: When training on custom dataset (only 1 foreground class), why is l_imgcls always 0 during training? (Issues [#23](../../../issues/23) and [#24](../../../issues/24))**
 
     **A:** To avoid that, you can create another class without any corresponding image in the dataset.
     
-8.  **Q: In `tools/train.py`, is it first trained on the labeled dataset? What is the purpose? (Issue [#25](../../../issues/26))**
+7.  **Q: In `tools/train.py`, is it first trained on the labeled dataset? What is the purpose? (Issue [#25](../../../issues/26))**
 
     **A:** It is necessary to train on the labeled set for the first and last epochs to ensure the stability of the training model.
     
-9.  **Q: For the unlabeled set, why are the operations on GT information (ie, `gt_bboxes` and `gt_labels`) also involved in lines 70-74 of `epoch_based_runner.py`? If the completely unlabeled data is used as the unlabeled set, what needs to be modified? (Issues [#28](../../../issues/28) and [#29](../../../issues/29))**
+8.  **Q: For the unlabeled set, why are the operations on GT information (ie, `gt_bboxes` and `gt_labels`) also involved in lines 70-74 of `epoch_based_runner.py`? (Issues [#28](../../../issues/28) and [#29](../../../issues/29))**
 
     **A:** These lines are to remove the localization information of the images in the unlabeled set.
     In this way, when calculating the loss on the unlabeled set, we can know the data source without backward propagating the gradient.
     In fact, the GT information has not been used.
-    
-    If the completely unlabeled data is used as the unlabeled set, you can add any bounding box to the annotation of the unlabeled data arbitrarily.
-    The annotation format of the bounding box needs to be consistent with that of other labeled data.
-    After that, just add the file name to the txt index of the unlabeled data set.
 
 
 ## Paper Details
@@ -240,3 +233,16 @@ The open issues are not included here for now, just in case someone will ask fur
 6.  **Q: How to inference on single image (calculate uncertainty, or return bbox)? (Issues [#21](../../../issues/21) and [#22](../../../issues/22))**
 
     **A:** The new feature has been updated. Please refer to [here](../../../#train-and-test).
+
+
+## Custom modifications
+
+1.  **Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13#issuecomment-845709365))**
+
+    **A:** You should only modify `configs/MIAOD.py` if you can convert your other training and test data into PASCAL VOC format. It contains all parameters and settings.
+
+2.  **Q: If the completely unlabeled data is used as the unlabeled set, what needs to be modified? (Issue [#29](../../../issues/29#issuecomment-871210792))**
+
+    **A:** If the completely unlabeled data is used as the unlabeled set, you can add any bounding box to the annotation of the unlabeled data arbitrarily.
+    The annotation format of the bounding box needs to be consistent with that of other labeled data.
+    After that, just add the file name to the txt index of the unlabeled data set.
