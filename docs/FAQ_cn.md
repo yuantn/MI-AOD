@@ -235,3 +235,7 @@
 
     **答：** 如果使用完全无标注的数据作为未标注集，可以在这些无标注数据的标注信息中添加任意一个定位框，该定位框的标注格式需要和其他有标注数据的标注格式保持一致。
     之后，在未标注集的 txt 索引中加入该数据的文件名即可。
+
+3.  **问： 当将骨干网络从 RetinaNet 改为自定义的 SSD 之后报错：`TypeError: init() missing 1 required positional argument: 'input_size'`。（问题 [#30](../../../issues/30)）**
+
+    **答：** 请在自定义配置文件 `ssd300.py` 中的 dict `model.backbone` 中添加 `input_size=input_size`。为避免更多潜在问题，请在 [2.3.0 版本](https://github.com/open-mmlab/mmdetection/tree/v2.3.0/) 而不是 [最新版本](https://github.com/open-mmlab/mmdetection/) 中自定义修改 MMDetection 内的任何文件。
