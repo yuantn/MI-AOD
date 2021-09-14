@@ -246,3 +246,8 @@ The open issues are not included here for now, just in case someone will ask fur
     **A:** If the completely unlabeled data is used as the unlabeled set, you can add any bounding box to the annotation of the unlabeled data arbitrarily.
     The annotation format of the bounding box needs to be consistent with that of other labeled data.
     After that, just add the file name to the txt index of the unlabeled data set.
+
+3.  **Q: `TypeError: init() missing 1 required positional argument: 'input_size'` (when changing backbone RetinaNet to custom SSD). (Issue [#30](../../../issues/30))**
+
+    **A:** Please add `input_size=input_size` in the dict `model.backbone` in your custom configuration file `ssd300.py`.
+    To avoid more potential problems, please customize any files on the MMDetection in [version 2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0/) but not [the latest version](https://github.com/open-mmlab/mmdetection/).
