@@ -13,7 +13,7 @@ The open issues are not included here for now, just in case someone will ask fur
 - [Training and Test](#training-and-test)
 - [Paper Details](#paper-details)
 - [Fixed Bugs and New Features](#fixed-bugs-and-new-features)
-- [Custom modifications](#custom-modifications)
+- [Custom Modifications](#custom-modifications)
 
 <!-- TOC -->
 
@@ -235,7 +235,7 @@ The open issues are not included here for now, just in case someone will ask fur
     **A:** The new feature has been updated. Please refer to [here](../../../#train-and-test).
 
 
-## Custom modifications
+## Custom Modifications
 
 1.  **Q: I want to run MI-AOD with other data, which files should I modify? (Issue [#13](../../../issues/13#issuecomment-845709365))**
 
