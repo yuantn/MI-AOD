@@ -58,9 +58,15 @@ The open issues are not included here for now, just in case someone will ask fur
     
     There is another solution to flush the logs in the terminal [in another section](#fixed-bugs-and-new-features).
     
-3.  **Q: `StopIteration`. (Issues [#7](../../../issues/7#issuecomment-823068004) and [#11](../../../issues/11))**
+3.  **Q: `StopIteration`. (Issues [#7](../../../issues/7#issuecomment-823068004), [#11](../../../issues/11) and [#31](../../../issues/31))**
 
-    **A:** Thanks for the solution from [@KevinChow](https://github.com/kevinchow1993).
+    **A:** __If the model is trained on single GPU:__
+    
+    Please increase the number of training data. We recommend to use at least 5% of the images (16551 * 5% = 827 images) using RetinaNet on PASCAL VOC.
+    
+    __If the model is trained on multiple GPUs:__
+    
+    Thanks for the solution from [@KevinChow](https://github.com/kevinchow1993).
     
     In the functions `create_X_L_file()` and `create_X_U_file()` of `mmdet/utils/active_datasets.py`, before writing into the txt files,
     sleep for some time randomly to make them write files not at the same time:
@@ -112,6 +118,30 @@ The open issues are not included here for now, just in case someone will ask fur
     **A:** These lines are to remove the localization information of the images in the unlabeled set.
     In this way, when calculating the loss on the unlabeled set, we can know the data source without backward propagating the gradient.
     In fact, the GT information has not been used.
+
+8.  **Q: What does `epoch_ratio = [3, 1]` mean in `configs/MIAOD.py`? Can I change it to `epoch_ratio = [3, 0]`? (Issue [#31](../../../issues/31#issuecomment-881190530))**
+
+    **A:** Please refer to [here](../../../tree/master/configs#unique-mi-aod-settings) for config explanations.
+    
+    If you change it to [3, 0], there will not be maximizing and minimizing uncertainty.
+
+9.  **Q: `IndexError: index 0 is out of bounds for dimension 0 with size 0`. (Issue [#31](../../../issues/31#issuecomment-881223658))**
+
+    **A:** A possible solution can be changing
+    
+    ```python
+    if y_loc_img[0][0][0] < 0:
+    ```
+
+    in Line 479 in `L_wave_min` in `mmdet/models/dense_heads/MIAOD_head.py` to:
+
+    ```python
+    if y_loc_img[0][0] < 0:
+    ```
+    
+    If it doesn't work, please insert an exception detection or use IDEs like PyCharm to set a breakpoint in the error line, and print `y_loc_img[0][0][0]` and `y_loc_img[0][0]` only when the error occurs to find if `y_loc_img` is an empty list.
+    
+    If it is, please re-prepare the annotations of the datasets.
 
 
 ## Paper Details
