@@ -58,9 +58,15 @@
     
     在 [另一章节](#已修复错误和新功能) 中，提供了另一个解决方案，可将日志直接输出到终端中。
     
-3.  **问： 报错：`StopIteration`。（问题 [#7](../../../issues/7#issuecomment-823068004) 和 [#11](../../../issues/11)）**
+3.  **问： 报错：`StopIteration`。（问题 [#7](../../../issues/7#issuecomment-823068004)、[#11](../../../issues/11) 和 [#31](../../../issues/31)）**
 
-    **答：** 感谢 [@KevinChow](https://github.com/kevinchow1993) 提供的解决方案。
+    **答：** __如果使用单 GPU 训练：__
+    
+    请增加训练数据的数量。我们建议在 PASCAL VOC 数据集上用 RetinaNet 使用至少 5% 的图像（16551 * 5% = 827 张图像）。
+    
+    __如果使用多 GPU 训练：__
+    
+    感谢 [@KevinChow](https://github.com/kevinchow1993) 提供的解决方案。
     
     在 `mmdet/utils/active_datasets.py` 代码里的 `create_X_L_file()` 和 `create_X_U_file()` 函数中，在向 txt 文件写入之前，
     先让程序随机地 sleep 一段时间，让它们不在同时写入文件：
@@ -110,6 +116,30 @@
 7.  **问： 为什么对于未标注集，在 `epoch_based_runner.py` 的第 70-74 行也涉及到了对 GT 信息的操作（即 `gt_bboxes` 和 `gt_labels`）？（问题 [#28](../../../issues/28) 和 [#29](../../../issues/29)）**
 
     **答：** 这几行的操作是为了抹除未标注集图像的定位信息，这样在计算涉及到未标注集的损失时，就可以知道数据来源从而不反传梯度，如此实际上是没有使用其 GT 信息的。
+
+8.  **问： `configs/MIAOD.py` 中的 `epoch_ratio = [3, 1]` 是什么意思？我可以将其更改为 `epoch_ratio = [3, 0]` 吗？（问题 [#31](../../../issues/31#issuecomment-881190530)）**
+
+    **答：** 有关配置文件的说明请参考 [这里](../../../blob/master/configs/README_cn.md#mi-aod-的特有设定)。
+    
+    如果将其更改为 [3, 0]，则不会存在最大化和最小化不确定性。
+
+9.  **问： 报错：`IndexError: index 0 is out of bounds for Dimension 0 with size 0`。（问题 [#31](../../../issues/31#issuecomment-881223658)）**
+
+    **答：** 一个可能的解决方案是：将 `mmdet/models/dense_heads/MIAOD_head.py` 中 `L_wave_min` 的第 479 行的
+    
+    ```python
+    if y_loc_img[0][0][0] < 0：
+    ```
+
+    改为
+
+    ```python
+    if y_loc_img[0][0] < 0：
+    ```
+    
+    如果不行，请仅在会报错时在错误行插入异常检测或使用 PyCharm 之类的 IDE 设置断点，并打印 `y_loc_img[0][0][0]` 和 `y_loc_img[0][0]` ，确认 `y_loc_img` 是否为空列表。
+    
+    如果是，请重新准备数据集的标注信息。
 
 
 ## 论文细节
