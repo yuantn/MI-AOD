@@ -143,6 +143,16 @@ The open issues are not included here for now, just in case someone will ask fur
     
     If it is, please re-prepare the annotations of the datasets.
 
+10. **Q: How to save the trained model for each cycle? (Issue [#32](../../../issues/32))**
+
+    **A:** At present, this repository can save the trained model for each cycle.
+    
+    [Here](../../../#results) is a link to the cloud drive of an example output folder.
+
+11. **Q: When using `tools/test.py` for test, do I need to change the `data.test.ann_file` in `config` to the true test set (instead of using _trainval_ data to calculate uncertainty)? (Issue [#32](../../../issues/32#issuecomment-879984647))**
+
+    **A:** No, in this repository, we use the _test_ set for test, but we use `data.val` in `config`. Please refer to [here](../../../blob/master/configs/_base_/voc0712.py).
+
 
 ## Paper Details
 
