@@ -293,7 +293,7 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** You should only modify `configs/MIAOD.py` if you can convert your other training and test data into PASCAL VOC format. It contains all parameters and settings.
     
-2.  **Q: When training on custom dataset (only 1 foreground class), why is l_imgcls always 0 during training? (Issues [#23](../../../issues/23) and [#24](../../../issues/24))**
+2.  **Q: When training on custom dataset (only 1 foreground class), why is l_imgcls always 0 during training? (Issues [#23](../../../issues/23)， [#24](../../../issues/24)， [#34](../../../issues/34) and [#35](../../../issues/35))**
 
     **A:** To avoid that, you can create another class without any corresponding image in the dataset.
 
@@ -307,3 +307,7 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** Please add `input_size=input_size` in the dict `model.backbone` in your custom configuration file `ssd300.py`.
     To avoid more potential problems, please customize any files on the MMDetection in [version 2.3.0](https://github.com/open-mmlab/mmdetection/tree/v2.3.0/) but not [the latest version](https://github.com/open-mmlab/mmdetection/).
+
+5.  **Q: When testing the code with my own dataset (pedestrian class only), the loss of `l_det_loc` and `L_det` is nan. (Issue [#34](../../../issues/34) and [#35](../../../issues/35))**
+
+    **A:** Please check whether there is any problem with the bounding box annotation of your dataset.
