@@ -39,7 +39,12 @@ The open issues are not included here for now, just in case someone will ask fur
     **(Issue [#13](../../../issues/13#issuecomment-841080219))**
     
     **A:** Please refer to the step 5 [here](../../../blob/master/docs/installation.md#environment-installation) to install build requirements and install and compile MMDetection.
-    
+
+4.  **Q: After the model normally trained for a cycle and the weight file `*.npy` generated, it suddenly reported an error when entering the next cycle: `RuntimeError: CUDA error: no kernel image is available for execution on the device`. (Issue [#36](../../../issues/36))**
+
+    **A:** The training has not started, the `*0.npy` is generated before the first training cycle.
+    The reason of the error is that the CUDA runtime version and compiler version in mmdet do not match.
+
 
 ## Training and Test
 
