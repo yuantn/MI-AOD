@@ -39,6 +39,10 @@
     **（问题 [#13](../../../issues/13#issuecomment-841080219)）**
     
     **答：** 请按照 [这里](../../../blob/master/docs/installation_cn.md#环境安装) 的步骤 5 来安装搭建代码需要的包，并安装与编译 MMDetection 。
+
+4.  **问： 模型已经正常训练了一个循环，也生成了 `*.npy` 的权重文件后，在进入下一个循环时突然报错：`RuntimeError: CUDA error: no kernel image is available for execution on the device`。（问题 [#36](../../../issues/36)）**
+
+    **答：** 训练过程并没有开始，`*0.npy` 是在第一次循环训练之前生成的。报错的原因是 mmdet 中 CUDA runtime version 和 compiler version 不匹配。
     
 
 ## 训练和测试
