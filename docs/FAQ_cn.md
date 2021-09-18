@@ -281,7 +281,7 @@
 
     **答：** 如果你可以将你其他的训练和测试数据转换为 PASCAL VOC 格式的话，你只需要修改 `configs/MIAOD.py`。它包含了所有的参数和设置。
 
-2.  **问： 当训练自定义数据集（前景类别数为 1）时，在训练过程中为何 `l_imgcls` 指标一直为 0 呢？（问题 [#23](../../../issues/23) 和 [#24](../../../issues/24)）**
+2.  **问： 当训练自定义数据集（前景类别数为 1）时，在训练过程中为何 `l_imgcls` 指标一直为 0 呢？（问题 [#23](../../../issues/23)、[#24](../../../issues/24)、[#34](../../../issues/34)、[#35](../../../issues/35)）**
 
     **答：** 为避免该情况，你可以在数据集中新建另一个类别，但那个类别没有对应的图像。
 
@@ -293,3 +293,7 @@
 4.  **问： 当将骨干网络从 RetinaNet 改为自定义的 SSD 之后报错：`TypeError: init() missing 1 required positional argument: 'input_size'`。（问题 [#30](../../../issues/30)）**
 
     **答：** 请在自定义配置文件 `ssd300.py` 中的 dict `model.backbone` 中添加 `input_size=input_size`。为避免更多潜在问题，请在 [2.3.0 版本](https://github.com/open-mmlab/mmdetection/tree/v2.3.0/) 而不是 [最新版本](https://github.com/open-mmlab/mmdetection/) 中自定义修改 MMDetection 内的任何文件。
+
+5.  **问： 当使用自己的数据集（只有行人类）测试代码时，`l_det_loc`、`L_det` 损失是 nan。（问题 [#34](../../../issues/34) 和 [#35](../../../issues/35)）**
+
+    **答：** 请检查数据集的边界框标注信息是否有问题。
