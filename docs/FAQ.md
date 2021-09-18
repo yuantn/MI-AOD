@@ -238,8 +238,20 @@ The open issues are not included here for now, just in case someone will ask fur
     |:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
     |Performance of MI-AOD (%) |53.62|62.86|66.83|69.33|70.80|72.21|72.84|73.74|74.18|74.91|
     |Std of MI-AOD (%)| 2.15 | 1.52 | 0.77 | 0.54 | 0.34 | 0.28 | 0.23 | 0.21 | 0.18 | 0.17 |
-    
-    
+
+11. **Q: What is the pre-trained model corresponding to the SSD network? (Issue [#33](../../../issues/33))**
+
+    **A:** The model is the `vgg16_caffe model` provided by `open-mmlab`.
+
+12. **Q: The epoch number of the SSD code is inconsistent with the 100 described in the paper. (Issue [#33](../../../issues/33#issuecomment-895883958))**
+
+    **A:** I have not declared in the paper that the epoch number of SSD is 100, but 300 (240+60, as described in section 4.1 of the paper).
+
+13. **Q: What are the experimental settings for the results of Random? (Issue [#33](../../../issues/33#issuecomment-895883958))**
+
+    **A:** I removed all the training process on the unlabeled set, and selected the image randomly.
+ 
+ 
 ## Fixed Bugs and New Features
     
 1.  **Q: There is not any reaction when running `./script.sh 0`. (Issues [#6](../../../issues/6) and [#13](../../../issues/13))**
@@ -269,6 +281,10 @@ The open issues are not included here for now, just in case someone will ask fur
 6.  **Q: How to inference on single image (calculate uncertainty, or return bbox)? (Issues [#21](../../../issues/21) and [#22](../../../issues/22))**
 
     **A:** The new feature has been updated. Please refer to [here](../../../#train-and-test).
+
+7.  **Q: Is there a code to use SSD network? (Issue [#33](../../../issues/33))**
+
+    **A:** The code has been updated. Please refer to [here](../../../#data-preparation) for the instruction of using the SSD detector.
 
 
 ## Custom Modifications
