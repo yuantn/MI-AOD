@@ -10,7 +10,7 @@ def get_X_L_0(cfg):
     # randomly select labeled set
     np.random.shuffle(X_all)
     X_L = X_all[:cfg.X_L_0_size].copy()
-    X_U = X_all[cfg.X_L_0_size:cfg.X_L_0_size*2].copy()
+    X_U = X_all[-cfg.X_L_0_size:].copy()
     X_L.sort()
     X_U.sort()
     return X_L, X_U, X_all, anns
