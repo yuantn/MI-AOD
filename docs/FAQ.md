@@ -45,6 +45,10 @@ The open issues are not included here for now, just in case someone will ask fur
     **A:** The training has not started, the `*0.npy` is generated before the first training cycle.
     The reason of the error is that the CUDA runtime version and compiler version in mmdet do not match.
 
+5.  **Q: `ModuleNotFoundError: No module named 'torchvision.models.segmentation.data_loader'`. (Issue [#37](../../../issues/37))**
+
+    **A:** Please re-install PyTorch, torchvision adapted to your current CUDA version.
+
 
 ## Training and Test
 
