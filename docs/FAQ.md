@@ -259,8 +259,12 @@ The open issues are not included here for now, just in case someone will ask fur
 13. **Q: What are the experimental settings for the results of Random? (Issue [#33](../../../issues/33#issuecomment-895883958))**
 
     **A:** I removed all the training process on the unlabeled set, and selected the image randomly.
- 
- 
+
+14. **Q: The number of labeled images increases by 2k (not 1k in the paper) each cycle according to the output log `...Epoch [1][50/2000]...`. (Issue [#38](../../../issues/38))**
+
+    **A:** The `2000` in the log is `X_L_0_size * X_L_repeat / samples_per_gpu = 1000 * 16 / 8`, and the number of added labeled images should be the shape of `X_L_0.npy` in the output directory, which is `(1000,)`.
+
+
 ## Fixed Bugs and New Features
     
 1.  **Q: There is not any reaction when running `./script.sh 0`. (Issues [#6](../../../issues/6) and [#13](../../../issues/13))**
