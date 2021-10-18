@@ -43,7 +43,11 @@
 4.  **问： 模型已经正常训练了一个循环，也生成了 `*.npy` 的权重文件后，在进入下一个循环时突然报错：`RuntimeError: CUDA error: no kernel image is available for execution on the device`。（问题 [#36](../../../issues/36)）**
 
     **答：** 训练过程并没有开始，`*0.npy` 是在第一次循环训练之前生成的。报错的原因是 mmdet 中 CUDA runtime version 和 compiler version 不匹配。
-    
+
+5.  **问： 报错：`ModuleNotFoundError: No module named 'torchvision.models.segmentation.data_loader'`。（问题 [#37](../../../issues/37)）**
+
+    **答：** 请重新安装适配于你当前 CUDA 版本的 PyTorch 和 torchvision 。
+
 
 ## 训练和测试
 
