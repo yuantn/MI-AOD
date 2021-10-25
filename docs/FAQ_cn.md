@@ -131,7 +131,7 @@
     
     如果将其更改为 [3, 0]，则不会存在最大化和最小化不确定性。
 
-9.  **问： 报错：`IndexError: index 0 is out of bounds for Dimension 0 with size 0`。（问题 [#31](../../../issues/31#issuecomment-881223658)）**
+9.  **问： 报错：`IndexError: index 0 is out of bounds for Dimension 0 with size 0`。（问题 [#31](../../../issues/31#issuecomment-881223658) 和 [#39](../../../issues/39)）**
 
     **答：** 一个可能的解决方案是：将 `mmdet/models/dense_heads/MIAOD_head.py` 中 `L_wave_min` 的第 479 行的
     
@@ -148,6 +148,8 @@
     如果不行，请仅在会报错时在错误行插入异常检测或使用 PyCharm 之类的 IDE 设置断点，并打印 `y_loc_img[0][0][0]` 和 `y_loc_img[0][0]` ，确认 `y_loc_img` 是否为空列表。
     
     如果是，请重新准备数据集的标注信息。
+    
+    如果是在自定义的数据集上进行训练，请参考 [自定义修改中问题 3](#自定义修改) 的注意事项。
 
 10. **问： 如何保存每个 cycle 的训练模型？（问题 [#32](../../../issues/32)）**
 
