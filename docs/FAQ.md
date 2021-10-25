@@ -134,7 +134,7 @@ The open issues are not included here for now, just in case someone will ask fur
     
     If you change it to [3, 0], there will not be maximizing and minimizing uncertainty.
 
-9.  **Q: `IndexError: index 0 is out of bounds for dimension 0 with size 0`. (Issue [#31](../../../issues/31#issuecomment-881223658))**
+9.  **Q: `IndexError: index 0 is out of bounds for dimension 0 with size 0`. (Issue [#31](../../../issues/31#issuecomment-881223658) and [#39](../../../issues/39))**
 
     **A:** A possible solution can be changing
     
@@ -151,6 +151,8 @@ The open issues are not included here for now, just in case someone will ask fur
     If it doesn't work, please insert an exception detection or use IDEs like PyCharm to set a breakpoint in the error line, and print `y_loc_img[0][0][0]` and `y_loc_img[0][0]` only when the error occurs to find if `y_loc_img` is an empty list.
     
     If it is, please re-prepare the annotations of the datasets.
+    
+    If you are training on a custom dataset, please refer to the notes in [Question 3 in Custom Modifications](#custom-modifications).
 
 10. **Q: How to save the trained model for each cycle? (Issue [#32](../../../issues/32))**
 
