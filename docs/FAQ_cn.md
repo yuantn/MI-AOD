@@ -38,7 +38,7 @@
     
     **（问题 [#13](../../../issues/13#issuecomment-841080219)）**
     
-    **答：** 请按照 [这里](../../../blob/master/docs/installation_cn.md#环境安装) 的步骤 5 来安装搭建代码需要的包，并安装与编译 MMDetection 。
+    **答：** 请按照 [这里](installation_cn.md#环境安装) 的步骤 5 来安装搭建代码需要的包，并安装与编译 MMDetection 。
 
 4.  **问： 模型已经正常训练了一个循环，也生成了 `*.npy` 的权重文件后，在进入下一个循环时突然报错：`RuntimeError: CUDA error: no kernel image is available for execution on the device`。（问题 [#36](../../../issues/36)）**
 
@@ -111,7 +111,7 @@
 
 5.  **问： 在 `python tools/test.py $配置文件地址 $模型文件地址` 中，`$配置文件地址` 和 `$模型文件地址` 指的是什么？（问题 [#17](../../../issues/17)）**
 
-    **答：** 有关这些参数的解释请参考 [这里](../../../blob/master/README_cn.md#训练和测试)，即：
+    **答：** 有关这些参数的解释请参考 [这里](../README_cn.md#训练和测试)，即：
     
     > 其中 `$配置文件地址` 应改为 `configs` 文件夹中的配置文件地址（通常应为 `configs/MIAOD.py`）
     
@@ -127,7 +127,7 @@
 
 8.  **问： `configs/MIAOD.py` 中的 `epoch_ratio = [3, 1]` 是什么意思？我可以将其更改为 `epoch_ratio = [3, 0]` 吗？（问题 [#31](../../../issues/31#issuecomment-881190530)）**
 
-    **答：** 有关配置文件的说明请参考 [这里](../../../blob/master/configs/README_cn.md#mi-aod-的特有设定)。
+    **答：** 有关配置文件的说明请参考 [这里](../configs/README_cn.md#mi-aod-的特有设定)。
     
     如果将其更改为 [3, 0]，则不会存在最大化和最小化不确定性。
 
@@ -151,11 +151,11 @@
 
 10. **问： 如何保存每个 cycle 的训练模型？（问题 [#32](../../../issues/32)）**
 
-    **答：** 目前这套代码可以保存每个 cycle 的训练模型，[这里](../../../blob/master/README_cn.md#结果) 提供了一个示例输出文件夹的网盘链接。
+    **答：** 目前这套代码可以保存每个 cycle 的训练模型，[这里](../README_cn.md#结果) 提供了一个示例输出文件夹的网盘链接。
 
 11. **问： 在使用 `tools/test.py` 进行测试时，是否需要将 `config` 中的 `data.test.ann_file` 改为真正的测试集（而不是用 _trainval_ 的数据来计算不确定度）？（问题 [#32](../../../issues/32#issuecomment-879984647)）**
 
-    **答：** 不是的，在这个代码中，我们测试时使用的是 _test_ 集，但在 `config` 中使用的是 `data.val` 的部分。请参见 [这里](../../../blob/master/configs/_base_/voc0712.py)。
+    **答：** 不是的，在这个代码中，我们测试时使用的是 _test_ 集，但在 `config` 中使用的是 `data.val` 的部分。请参见 [这里](../configs/_base_/voc0712.py)。
 
 
 ## 论文细节
@@ -256,7 +256,7 @@
     
 1.  **问： 在运行 `./script.sh 0` 时没有反应。（问题 [#6](../../../issues/6) 和 [#13](../../../issues/13)）**
 
-    **答：** 如果你想直接在终端输出运行日志，请参考 [这里](../../../blob/master/README_cn.md#训练和测试)。
+    **答：** 如果你想直接在终端输出运行日志，请参考 [这里](../README_cn.md#训练和测试)。
     
 2.  **问： 报错：`AttributeError: 'NoneType' object has no attribute 'param_lambda'`。（问题 [#7](../../../issues/7)）**
 
@@ -264,7 +264,7 @@
 
 3.  **问： 如果只在单机单卡上训练，还需要像 `script.sh` 和 `tools/dist_train.py` 那样分布式训练吗？（问题 [#15](../../../issues/15)）**
 
-    **答：** 如果只在单机单卡上训练，请参考 [这里](../../../blob/master/README_cn.md#训练和测试)。
+    **答：** 如果只在单机单卡上训练，请参考 [这里](../README_cn.md#训练和测试)。
     
 4.  **问： 报错：`AssertionError: Please specify at least one operation (save/eval/format/show the results / save the results) with the argument "--out", "--eval", "--format-only", "--show" or "--show-dir"`。（问题 [#17](../../../issues/17)）**
 
@@ -280,11 +280,11 @@
     
 6.  **问： 如何进行单张图像的推理测试（计算不确定性，或返回 bbox）？（问题 [#21](../../../issues/21) 和 [#22](../../../issues/22)）**
 
-    **答：** 新功能已经更新，请参考 [这里](../../../blob/master/README_cn.md#训练和测试)。
+    **答：** 新功能已经更新，请参考 [这里](../README_cn.md#训练和测试)。
 
 7.  **问： 是否有提供使用 SSD 网络的代码？（问题 [#33](../../../issues/33)）**
 
-    **答：** 该代码已经更新，关于使用 SSD 检测器的说明请参考 [这里](../../../blob/master/README_cn.md#数据集准备)。
+    **答：** 该代码已经更新，关于使用 SSD 检测器的说明请参考 [这里](../README_cn.md#数据集准备)。
 
 
 ## 自定义修改
