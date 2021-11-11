@@ -81,17 +81,17 @@ The open issues are not included here for now, just in case someone will ask fur
     sleep for some time randomly to make them write files not at the same time:
 
     ```python
-        time.sleep(random.uniform(0,3))
-        if not osp.exists(save_path):
-            mmcv.mkdir_or_exist(save_folder)
-            np.savetxt(save_path, ann[X_L_single], fmt='%s')
+    time.sleep(random.uniform(0,3))
+    if not osp.exists(save_path):
+        mmcv.mkdir_or_exist(save_folder)
+        np.savetxt(save_path, ann[X_L_single], fmt='%s')
     ```
 
     After calling `create_X_L_file()` and `create_X_U_file()` in the `tools/train.py`, sychronize the threads on each GPUs by adding:
 
     ```python
-              if dist.is_initialized():
-                  torch.distributed.barrier()
+    if dist.is_initialized():
+        torch.distributed.barrier()
     ```
     
 4.  **Q: Validation error: `TypeError: 'DataContainer' object is not subscriptable`. (Issue [#14](../../../issues/14))**
@@ -134,7 +134,7 @@ The open issues are not included here for now, just in case someone will ask fur
     
     If you change it to [3, 0], there will not be maximizing and minimizing uncertainty.
 
-9.  **Q: `IndexError: index 0 is out of bounds for dimension 0 with size 0`. (Issue [#31](../../../issues/31#issuecomment-881223658) and [#39](../../../issues/39))**
+9.  **Q: `IndexError: index 0 is out of bounds for dimension 0 with size 0`. (Issue [#31](../../../issues/31#issuecomment-881223658), [#39](../../../issues/39) and [#40](../../../issues/39))**
 
     **A:** A possible solution can be changing
     
@@ -163,6 +163,30 @@ The open issues are not included here for now, just in case someone will ask fur
 11. **Q: When using `tools/test.py` for test, do I need to change the `data.test.ann_file` in `config` to the true test set (instead of using _trainval_ data to calculate uncertainty)? (Issue [#32](../../../issues/32#issuecomment-879984647))**
 
     **A:** No, in this repository, we use the _test_ set for test, but we use `data.val` in `config`. Please refer to [here](../configs/_base_/voc0712.py).
+
+12. **Q: What does `y_loc_img[0][0][0] < 0` mean? (Issue [#40](../../../issues/40))**
+
+    **A:** It means that the current data batch is unlabeled, because we have set all the coordinates of the bounding box of the unlabeled data to -1 in Lines 70-74 in `epoch_based_runner.py`.
+    
+    In addition, thanks to [@horadrim-coder](https://github.com/horadrim-coder) for an alternative solution, which can avoid the error `IndexError: index 0 is out of bounds for dimension 0 with size 0`:
+    
+    1. Add the following method to `epoch_based_runner.py`:
+    
+    ```python
+    def _add_dataset_flag(self, X, is_unlabeled):
+        or _img_meta in X['img_metas'].data[0]:
+         _img_meta.update({'is_unlabeled': is_unlabeled})
+    ```
+    
+    2. Add these codes in the following lines in `epoch_based_runner.py`:
+
+    ```python
+    Line 31: `self._add_dataset_flag(X_L, is_unlabeled=False)`
+    Line 60: `self._add_dataset_flag(X_L, is_unlabeled=False)`
+    Line 79: `self._add_dataset_flag(X_U, is_unlabeled=True)`
+    ```
+    
+    3. Replace `y_loc_img[0][0][0] < 0` with `img_metas[0]['is_unlabeled']` in `MIAOD_head.py` (_e.g._, Lines 479 and 565).
 
 
 ## Paper Details
