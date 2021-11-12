@@ -290,6 +290,14 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** The `2000` in the log is `X_L_0_size * X_L_repeat / samples_per_gpu = 1000 * 16 / 8`, and the number of added labeled images should be the shape of `X_L_0.npy` in the output directory, which is `(1000,)`.
 
+15. **Q: How are the heatmaps drawn in the paper? (Issue [#41](../../../issues/41))**
+
+    **A:** We respectively calculated the `l_dis`, `{y^}^cls` and `{l~}_dis` of the two classifiers on each anchor, and fill the anchors corresponding to these values with the color of the heatmap.
+    
+    The larger the value, the more red. The smaller the value, the more blue-violet.
+    
+    Finally, we add the heat map of multiple anchors to the original image in a certain proportion to get Fig. 6 in the paper.
+
 
 ## Fixed Bugs and New Features
     
