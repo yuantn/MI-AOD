@@ -134,6 +134,15 @@ mv configs/MIAOD.py configs/MIAOD_Retina.py
 mv configs/MIAOD_SSD.py configs/MIAOD.py
 ```
 
+For the SSD detector, because the vgg16 pre-trained model link provided in the mmcv 1.0.5 package is no longer available, the json file that loads the pre-trained model link needs to be updated to the latest version:
+
+```bash
+wget https://github.com/open-mmlab/mmcv/raw/master/mmcv/model_zoo/open_mmlab.json
+cp -v open_mmlab.json $YOUR_ANACONDA_PATH/envs/miaod/lib/python3.7/site-packages/mmcv/model_zoo/
+```
+
+Please change the `$YOUR_ANACONDA_PATH` to your actual Anaconda3 installation directory. Usually it would be `~/anaconda3`.
+
 After that, please modify the corresponding dataset directory, they are located in:
 
 ```python
