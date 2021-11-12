@@ -131,7 +131,7 @@
     
     如果将其更改为 [3, 0]，则不会存在最大化和最小化不确定性。
 
-9.  **问： 报错：`IndexError: index 0 is out of bounds for Dimension 0 with size 0`。（问题 [#31](../../../issues/31#issuecomment-881223658) 和 [#39](../../../issues/39)）**
+9.  **问： 报错：`IndexError: index 0 is out of bounds for Dimension 0 with size 0`。（问题 [#31](../../../issues/31#issuecomment-881223658)、[#39](../../../issues/39)、[#40](../../../issues/40)）**
 
     **答：** 一个可能的解决方案是：将 `mmdet/models/dense_heads/MIAOD_head.py` 中 `L_wave_min` 的第 479 行的
     
@@ -158,6 +158,30 @@
 11. **问： 在使用 `tools/test.py` 进行测试时，是否需要将 `config` 中的 `data.test.ann_file` 改为真正的测试集（而不是用 _trainval_ 的数据来计算不确定度）？（问题 [#32](../../../issues/32#issuecomment-879984647)）**
 
     **答：** 不是的，在这个代码中，我们测试时使用的是 _test_ 集，但在 `config` 中使用的是 `data.val` 的部分。请参见 [这里](../configs/_base_/voc0712.py)。
+
+12. **问： `y_loc_img[0][0][0] < 0` 的意思是什么？（问题 [#40](../../../issues/40)）**
+
+    **答：** 它的意思是当前批数据是未标注的数据，因为我们已经在 `epoch_based_runner.py` 中第 70-74 行将未标注数据的边界框的所有坐标设置为了 -1。
+    
+    此外，感谢 [@horadrim-coder](https://github.com/horadrim-coder) 提出的一种可避免报错 `IndexError: index 0 is out of bounds for dimension 0 with size 0` 的替代解决方案：
+    
+    1. 在 `epoch_based_runner.py` 中加入如下方法：
+    
+    ```python
+    def _add_dataset_flag(self, X, is_unlabeled):
+        or _img_meta in X['img_metas'].data[0]:
+         _img_meta.update({'is_unlabeled': is_unlabeled})
+    ```
+
+    2. 在 `epoch_based_runner.py` 中的如下行加入代码：
+
+    ```python
+    第 31 行：`self._add_dataset_flag(X_L, is_unlabeled=False)`
+    第 60 行：`self._add_dataset_flag(X_L, is_unlabeled=False)`
+    第 79 行：`self._add_dataset_flag(X_U, is_unlabeled=True)`
+    ```
+
+    3. 在 `MIAOD_head.py` 中将 `y_loc_img[0][0][0] < 0` 替换为 `img_metas[0]['is_unlabeled']` （如第 479 和第 565 行）。
 
 
 ## 论文细节
