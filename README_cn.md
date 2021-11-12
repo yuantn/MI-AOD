@@ -134,6 +134,15 @@ mv configs/MIAOD.py configs/MIAOD_Retina.py
 mv configs/MIAOD_SSD.py configs/MIAOD.py
 ```
 
+对于 SSD 检测器而言，由于 mmcv 1.0.5 版本的包中所提供的 vgg16 预训练模型链接已不可用，需要将加载预训练模型链接的 json 文件更新到最新版本：
+
+```bash
+wget https://github.com/open-mmlab/mmcv/raw/master/mmcv/model_zoo/open_mmlab.json
+cp -v open_mmlab.json $你的_ANACONDA_安装地址/envs/miaod/lib/python3.7/site-packages/mmcv/model_zoo/
+```
+
+请将 `$你的_ANACONDA_安装地址` 改为你实际的 Anaconda3 安装目录。通常它是 `~/anaconda3`。
+
 之后，请修改这个代码库中对应的数据集地址部分，它们位于：
 
 ```python
