@@ -183,6 +183,14 @@
 
     3. 在 `MIAOD_head.py` 中将 `y_loc_img[0][0][0] < 0` 替换为 `img_metas[0]['is_unlabeled']` （如第 479 和第 565 行）。
 
+13. **问： 不能下载预训练的 SSD 模型。（问题 [#42](../../../issues/42)）**
+
+    **答：** SSD的预训练模型 [链接](https://download.openmmlab.com/pretrain/third_party/vgg16_caffe-292e1171.pth) 可在 [最新版本的 mmcv](https://github.com/open-mmlab/mmcv/blob/master/mmcv/model_zoo/open_mmlab.json#L2) 中获取，下载后可在下载文件夹中将其移动到预训练模型的默认缓存文件夹中：
+    
+    ```bash
+    mv vgg16_caffe-292e1171.pth ~/.cache/torch/hub/checkpoints
+    ```
+
 
 ## 论文细节
 
