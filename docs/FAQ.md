@@ -188,6 +188,15 @@ The open issues are not included here for now, just in case someone will ask fur
     
     3. Replace `y_loc_img[0][0][0] < 0` with `img_metas[0]['is_unlabeled']` in `MIAOD_head.py` (_e.g._, Lines 479 and 565).
 
+13. **Q: Unable to download pre-trained SSD model. (Issue [#42](../../../issues/42))**
+
+    **A:** The pre-trained SSD model [link](https://download.openmmlab.com/pretrain/third_party/vgg16_caffe-292e1171.pth) is available in [the latest version of mmcv](https://github.com/open-mmlab/mmcv/blob/master/mmcv/model_zoo/open_mmlab.json#L2).
+    After downloading, you can move it from the download folder to the default cache folder of the pre-trained model:
+    
+    ```bash
+    mv vgg16_caffe-292e1171.pth ~/.cache/torch/hub/checkpoints
+    ```
+
 
 ## Paper Details
 
