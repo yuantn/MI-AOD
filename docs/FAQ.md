@@ -367,3 +367,8 @@ The open issues are not included here for now, just in case someone will ask fur
 5.  **Q: When testing the code with my own dataset (pedestrian class only), the loss of `l_det_loc` and `L_det` is nan. (Issue [#34](../../../issues/34) and [#35](../../../issues/35))**
 
     **A:** Please check whether there is any problem with the bounding box annotation of your dataset.
+
+6.  **Q: How to implement the other 4 comparison methods (including two baselines (Random Sampling and Entropy Sampling) and two other methods (Core-set and CDAL)) in the code? (Issue [#43](../../../issues/43))**
+
+    **A:** The two baselines can be implemented by modifying [`calculate_uncertainty`](../mmdet/apis/test.py#L15) in `mmdet/apis/test.py`, and two other methods can be referred to [here](https://github.com/ozansener/active_learning_coreset) (Core-set) and [here](https://github.com/sharat29ag/CDAL) (CDAL).
+    It should be noted that all the above methods do not use the two adversarial classifiers and the MIL classifier.
