@@ -342,6 +342,10 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** The code has been updated. Please refer to [here](../../../#data-preparation) for the instruction of using the SSD detector.
 
+8.  **Q: `StopIteration` (during trying to gradually use the whole dataset, when the labeled data reaches 1100/1659). (Issue [#44](../../../issues/44))**
+
+    **A:** The bug has been fixed, please update to the latest version.
+
 
 ## Custom Modifications
 
@@ -372,3 +376,8 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** The two baselines can be implemented by modifying [`calculate_uncertainty`](../mmdet/apis/test.py#L15) in `mmdet/apis/test.py`, and two other methods can be referred to [here](https://github.com/ozansener/active_learning_coreset) (Core-set) and [here](https://github.com/sharat29ag/CDAL) (CDAL).
     It should be noted that all the above methods do not use the two adversarial classifiers and the MIL classifier.
+
+7.  **Q: `l_wave_dis` may go to 0 when training on the custom dataset. In previous work on the dataset, other models sometimes failed to detect any positives, could this be the reason for this problem? (Issue [#44](../../../issues/44#issuecomment-941943763))**
+
+    **A:** It is possible because `l_wave_dis` is the prediction discrepancy of the two classifiers.
+    `l_wave_dis` will be 0 when they both output the same negative results..
