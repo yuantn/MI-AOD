@@ -210,7 +210,7 @@ The open issues are not included here for now, just in case someone will ask fur
     **A:** MI-AOD is mainly for active learning, but MMDetection is more for object detection.
     It would be better for MI-AOD to open source to an active learning toolbox. 
 
-2.  **Q: There are differences on the order of maximizing/minimizing uncertainty and the fixed layers between paper and code. (Issues [#4](../../../issues/4) and [#16](../../../issues/16#issuecomment-859363894))**
+2.  **Q: There are differences on the order of maximizing/minimizing uncertainty and the fixed layers between paper and code. (Issues [#4](../../../issues/4), [#16](../../../issues/16#issuecomment-859363894) and [#46](../../../issues/46#issuecomment-944126056))**
 
     **A:** Our experiments have shown that, if the order of max step and min step is reversed (including the fixed layers), the performance will change little.
         
@@ -386,3 +386,8 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** It is possible because `l_wave_dis` is the prediction discrepancy of the two classifiers.
     `l_wave_dis` will be 0 when they both output the same negative results..
+
+8.  **Q: How to test whether using 50% of the data can achieve the performance of 100% of the data? (Issue [#46](../../../issues/46))**
+
+    **A:** You can modify the size of initial labeled set [`X_L_0_size`](../configs/MIAOD.py#L44), the number of added labeled samples after each cycle [`X_S_size`](../configs/MIAOD.py#L43) and the number of cycles [`cycles`](../configs/MIAOD.py#L46) in [`configs/MIAOD.py`](../configs/MIAOD.py) to achieve the effect you want.
+    The amount of labeled data in the last cycle is `X_L_0_size + X_S_size * (len(cycles)-1)`.
