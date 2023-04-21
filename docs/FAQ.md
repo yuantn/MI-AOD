@@ -67,7 +67,7 @@ The open issues are not included here for now, just in case someone will ask fur
     
     There is another solution to flush the logs in the terminal [in another section](#fixed-bugs-and-new-features).
     
-3.  **Q: `StopIteration`. (Issues [#7](../../../issues/7#issuecomment-823068004), [#11](../../../issues/11) and [#31](../../../issues/31))**
+3.  **Q: `StopIteration`. (Issues [#7](../../../issues/7#issuecomment-823068004), [#11](../../../issues/11), [#31](../../../issues/31) and [#47](../../../issues/47#issuecomment-949405926))**
 
     **A:** __If the model is trained on single GPU:__
     
@@ -200,7 +200,7 @@ The open issues are not included here for now, just in case someone will ask fur
 14. **Q: How to modify the batch size? (Issue [#45](../../../issues/45))**
 
     **A:** You can modify the `samples_per_gpu` in Line 34 of [`configs/_base_/voc0712.py`](../blob/master/configs/_base_/voc0712.py#L34).
-    It is the total batch size divided by the number of GPU..
+    It is the total batch size divided by the number of GPU.
 
 
 ## Paper Details
@@ -391,3 +391,7 @@ The open issues are not included here for now, just in case someone will ask fur
 
     **A:** You can modify the size of initial labeled set [`X_L_0_size`](../configs/MIAOD.py#L44), the number of added labeled samples after each cycle [`X_S_size`](../configs/MIAOD.py#L43) and the number of cycles [`cycles`](../configs/MIAOD.py#L46) in [`configs/MIAOD.py`](../configs/MIAOD.py) to achieve the effect you want.
     The amount of labeled data in the last cycle is `X_L_0_size + X_S_size * (len(cycles)-1)`.
+
+9.  **Q: When training with a larger batch size, the performance will drop significantly. (Issue [#47](../../../issues/47))**
+
+    **A:** Please confirm the learning rate has been also adjusted accordingly.
