@@ -191,6 +191,10 @@
     mv vgg16_caffe-292e1171.pth ~/.cache/torch/hub/checkpoints
     ```
 
+14. **问： 如何修改训练的批尺寸？（问题 [#45](../../../issues/45)）**
+
+    **答：** 你可以在 [`configs/_base_/voc0712.py`](../configs/_base_/voc0712.py#L34) 的第 34 行修改变量 `samples_per_gpu`。它是总批尺寸除以 GPU 数量的结果。
+
 
 ## 论文细节
 
