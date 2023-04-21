@@ -118,7 +118,7 @@ The open issues are not included here for now, just in case someone will ask fur
     
     > $CKPT_PATH should be replaced by the path of the checkpoint file (*.pth) in the work_dirs folder after training.
     
-6.  **Q: In `tools/train.py`, is it first trained on the labeled dataset? What is the purpose? (Issue [#25](../../../issues/26))**
+6.  **Q: In `tools/train.py`, is it first trained on the labeled dataset? What is the purpose? (Issue [#26](../../../issues/26))**
 
     **A:** It is necessary to train on the labeled set for the first and last epochs to ensure the stability of the training model.
     
@@ -134,7 +134,7 @@ The open issues are not included here for now, just in case someone will ask fur
     
     If you change it to [3, 0], there will not be maximizing and minimizing uncertainty.
 
-9.  **Q: `IndexError: index 0 is out of bounds for dimension 0 with size 0`. (Issue [#31](../../../issues/31#issuecomment-881223658), [#39](../../../issues/39) and [#40](../../../issues/39))**
+9.  **Q: `IndexError: index 0 is out of bounds for dimension 0 with size 0`. (Issue [#31](../../../issues/31#issuecomment-881223658), [#39](../../../issues/39) and [#40](../../../issues/40))**
 
     **A:** A possible solution can be changing
     
