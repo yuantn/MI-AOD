@@ -66,7 +66,7 @@
     
     在 [另一章节](#已修复错误和新功能) 中，提供了另一个解决方案，可将日志直接输出到终端中。
     
-3.  **问： 报错：`StopIteration`。（问题 [#7](../../../issues/7#issuecomment-823068004)、[#11](../../../issues/11) 和 [#31](../../../issues/31)）**
+3.  **问： 报错：`StopIteration`。（问题 [#7](../../../issues/7#issuecomment-823068004)、[#11](../../../issues/11)、[#31](../../../issues/31) 和 [#47](../../../issues/47#issuecomment-949405926)）**
 
     **答：** __如果使用单 GPU 训练：__
     
@@ -374,3 +374,7 @@
 
     **答：** 可以通过修改 [`configs/MIAOD.py`](../configs/MIAOD.py) 中的初始已标注集大小 [`X_L_0_size`](../configs/MIAOD.py#L44) 、每一个循环增加的已标注样本数量 [`X_S_size`](../configs/MIAOD.py#L43) 和循环数 [`cycles`](../configs/MIAOD.py#L46) 来达到你想要的效果。
     最后一个循环使用的已标注样本数据量等于 `X_L_0_size + X_S_size * (len(cycles) - 1)`。
+
+9.  **问： 训练时调大批尺寸，精度会显著下降。（问题 [#47](../../../issues/47)）**
+
+    **答：** 请确认是否同时相应调节了学习率。
