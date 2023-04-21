@@ -328,6 +328,10 @@
 
     **答：** 该代码已经更新，关于使用 SSD 检测器的说明请参考 [这里](../README_cn.md#数据集准备)。
 
+8.  **问： 当尝试逐渐使用全部数据集训练，且已标注数据到达 1100/1659 时，报错： `StopIteration`。（问题 [#44](../../../issues/44)）**
+
+    **答：** 该错误已被修复，请更新到最新版本。
+
 
 ## 自定义修改
 
@@ -356,3 +360,8 @@
 
     **答：** 两个基线方法可以通过修改 `mmdet/apis/test.py` 中的 [`calculate_uncertainty`](../mmdet/apis/test.py#L15) 来实现，两个其他方法可以参考 [这里](https://github.com/ozansener/active_learning_coreset)（Core-set）和 [这里](https://github.com/sharat29ag/CDAL)（CDAL）。
     需要注意上述所有方法都不需要用到两个对抗分类器和 MIL 分类器。。
+
+7.  **问： 当在自己的数据集上训练时，`l_wave_dis` 会变为 0。在之前有关这个数据集的工作中，其他模型有时会检测不到任何正样本，这有可能是这个问题的原因吗？（问题 [#44](../../../issues/44#issuecomment-941943763)）**
+
+    **答：** 这是有可能的，因为 `l_wave_dis` 为两个分类器的预测差异。
+    当它们都输出相同的负的检测结果时，`l_wave_dis` 为 0。
