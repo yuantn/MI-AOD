@@ -197,6 +197,11 @@ The open issues are not included here for now, just in case someone will ask fur
     mv vgg16_caffe-292e1171.pth ~/.cache/torch/hub/checkpoints
     ```
 
+14. **Q: How to modify the batch size? (Issue [#45](../../../issues/45))**
+
+    **A:** You can modify the `samples_per_gpu` in Line 34 of [`configs/_base_/voc0712.py`](../blob/master/configs/_base_/voc0712.py#L34).
+    It is the total batch size divided by the number of GPU..
+
 
 ## Paper Details
 
