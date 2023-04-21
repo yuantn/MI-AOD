@@ -351,3 +351,8 @@
 5.  **问： 当使用自己的数据集（只有行人类）测试代码时，`l_det_loc`、`L_det` 损失是 nan。（问题 [#34](../../../issues/34) 和 [#35](../../../issues/35)）**
 
     **答：** 请检查数据集的边界框标注信息是否有问题。
+
+6.  **问： 如何在代码中实现其他 4 个对比方法（包括随机采样、熵采样两个基线方法和核心集、CDAL 两个其他方法）？（问题 [#43](../../../issues/43)）**
+
+    **答：** 两个基线方法可以通过修改 `mmdet/apis/test.py` 中的 [`calculate_uncertainty`](../mmdet/apis/test.py#L15) 来实现，两个其他方法可以参考 [这里](https://github.com/ozansener/active_learning_coreset)（Core-set）和 [这里](https://github.com/sharat29ag/CDAL)（CDAL）。
+    需要注意上述所有方法都不需要用到两个对抗分类器和 MIL 分类器。。
